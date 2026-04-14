@@ -1,5 +1,6 @@
 <?php
 header('Access-Control-Allow-Origin: *');
+header('Content-Type: application/json');
 require_once '../config.php';
 
 // videoDuration
@@ -26,6 +27,13 @@ require_once '../config.php';
  * viewCount
  */
 
+if (!isset($_GET['q']) || trim($_GET['q']) === '') {
+    echo json_encode([
+        'error' => 'Missing search query'
+    ]);
+    exit;
+}
+
 $q = "q=" . urlencode($_GET['q']);
 $videoDuration = isset($_GET['videoDuration']) ? "&videoDuration=" . $_GET['videoDuration'] : '';
 $publishedAfter = isset($_GET['publishedAfter']) ? "&publishedAfter=" . $_GET['publishedAfter'] : '';
@@ -38,6 +46,27 @@ $params = $q . $videoDuration . $publishedAfter . $publishedBefore . $relevanceL
 
 $url = "https://www.googleapis.com/youtube/v3/search?part=snippet&type=video&" . $params . "&key=" . YT_API_KEY;
 
-$req = file_get_contents($url);
+$req = @file_get_contents($url);
 
-echo $req;
+if ($req === false) {
+    $error = error_get_last();
+
+    echo json_encode([
+        'error' => 'Failed to fetch YouTube API response',
+        'details' => $error ? $error['message'] : 'Unknown error',
+        'url' => $url
+    ]);
+    exit;
+}
+
+$data = json_decode($req, true);
+
+if ($data === null) {
+    echo json_encode([
+        'error' => 'Invalid JSON returned by YouTube API',
+        'raw' => $req
+    ]);
+    exit;
+}
+
+echo json_encode($data);

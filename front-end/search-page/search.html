@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>HTML 5 Boilerplate</title>
+    <link rel="stylesheet" href="../styles/searchModule.css">
+    <link rel="stylesheet" href="../styles/cssReset.css">
+</head>
+
+<body>
+    <div class="search_form">
+        <form id="searchForm">
+            <input type="text" name="q" id="search">
+            <div class="mag_glass">&#128269;</div>
+            <input id="submit" type="submit" value="Submit">
+        </form>
+    </div>
+
+    <div id="results" class="results"></div>
+
+    <script>
+        const form = document.getElementById("searchForm");
+        const resultsDiv = document.getElementById("results");
+
+        form.addEventListener("submit", async function(e) {
+            e.preventDefault();
+
+            const q = document.getElementById("search").value;
+
+            const response = await fetch(
+                "http://localhost:8000/back-end/api/search.php?q=" + encodeURIComponent(q)
+            );
+            const data = await response.json();
+
+            resultsDiv.innerHTML = "";
+
+            if (!data.items || data.items.length === 0) {
+                resultsDiv.innerHTML = "<p>No results found.</p>";
+                return;
+            }
+
+            data.items.forEach(video => {
+                const videoId = video.id.videoId;
+                const title = video.snippet.title;
+                const description = video.snippet.description;
+                const thumbnail = video.snippet.thumbnails.medium.url;
+
+                resultsDiv.innerHTML += `
+                    <div class="video">
+                        <h3>${title}</h3>
+                        <img src="${thumbnail}" alt="${title}">
+                        <p>${description}</p>
+                        <a href="https://www.youtube.com/watch?v=${videoId}" target="_blank">
+                            Watch video
+                        </a>
+                    </div>
+                    <hr>
+                `;
+            });
+        });
+    </script>
+
+</body>
+</html>
