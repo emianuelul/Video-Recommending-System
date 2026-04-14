@@ -1,2 +1,4 @@
 *.sqlite
 **/*.idea
+config.php
+database.sqlite
