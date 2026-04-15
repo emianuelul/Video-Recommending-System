@@ -1,6 +1,7 @@
 <?php
 header('Access-Control-Allow-Origin: *');
 require_once '../config.php';
+require_once '../class/VideoDTO.php';
 
 $q = "q=" . urlencode($_GET['q']);
 $videoDuration = isset($_GET['videoDuration']) ? "&videoDuration=" . $_GET['videoDuration'] : '';
@@ -29,8 +30,18 @@ if (isset($data['items'])) {
 
 $videoIds = implode(',', $idsArray);
 
-$detailsUrl = "https://www.googleapis.com/youtube/v3/videos?part=snippet,contentDetails,statistics,topicDetails&id=" . $videoIds . $apiKey;
-$detailsReq = file_get_contents($detailsUrl);
+if (!empty($videoIds)) {
+    $detailsUrl = "https://www.googleapis.com/youtube/v3/videos?part=snippet,contentDetails,statistics,topicDetails&id=" . $videoIds . $apiKey;
+    $detailsReq = file_get_contents($detailsUrl);
 
-header("Content-Type: application/json");
-echo $detailsReq;
+    $detailsData = json_decode($detailsReq, true);
+    $videoDTOArray = [];
+    if (isset($detailsData['items'])) {
+        foreach ($detailsData['items'] as $item) {
+            $videoDTOArray[] = new VideoDTO($item);
+        }
+    }
+
+    header("Content-Type: application/json");
+    echo json_encode($videoDTOArray);
+}
