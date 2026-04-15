@@ -14,8 +14,7 @@ class ResponseDTO {
         $this->title = isset($data['snippet']['title']) ? $data['snippet']['title'] : '';
         $this->description = isset($data['snippet']['description']) ? $data['snippet']['description'] : '';
         $this->channelId = isset($data['snippet']['channelId']) ? $data['snippet']['channelId'] : '';
-        $this->durationSeconds =
-            // ... restul campurilor
+
         $this->tags = isset($data['snippet']['tags']) ? $data['snippet']['tags'] : [];
     }
 }
