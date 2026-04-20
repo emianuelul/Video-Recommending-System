@@ -1,4 +1,5 @@
 <?php
+session_start();
 header('Access-Control-Allow-Origin: *');
 require_once '../config.php';
 require_once '../class/VideoDTO.php';

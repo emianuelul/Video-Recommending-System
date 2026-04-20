@@ -22,7 +22,7 @@ function convertToRfc3339(dateString) {
     return output;
 }
 
-searchBtn.addEventListener('click', () => {
+searchBtn.addEventListener('click', async () => {
     let queryParams = "?";
     const q = searchBar.value;
     const videoDuration = videoDurationSelect.value;
@@ -50,22 +50,27 @@ searchBtn.addEventListener('click', () => {
         }
 
         let resultsDiv = document.getElementById('results');
-        let data = fetch(`http://localhost:8000/back-end/api/search.php${queryParams}`, {method: 'GET', credentials: 'include'})
+        let data = await fetch(`http://localhost:8000/back-end/api/search.php${queryParams}`,
+            {
+                method: 'GET',
+                credentials: 'include'
+            })
             .then(res => res.json())
-            .then(data => console.log(data));
+            // .then(data => console.log(data));
 
         resultsDiv.innerHTML = "";
+        console.log(data)
 
-        if (!data.items || data.items.length === 0) {
+        if (!data || data.length === 0) {
             resultsDiv.innerHTML = "<p>No results found.</p>";
             return;
         }
-
-        data.items.forEach(video => {
-            const videoId = video.id.videoId;
-            const title = video.snippet.title;
-            const description = video.snippet.description;
-            const thumbnail = video.snippet.thumbnails.medium.url;
+        console.log(data)
+        data.forEach(video => {
+            const videoId = video.id;
+            const title = video.title;
+            const description = video.description;
+            const thumbnail = video.thumbnails.medium.url;
 
             resultsDiv.innerHTML += `
                     <div class="video">
