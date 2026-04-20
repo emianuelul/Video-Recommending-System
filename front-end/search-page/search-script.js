@@ -49,9 +49,36 @@ searchBtn.addEventListener('click', () => {
             queryParams += `&order=${order}`;
         }
 
-        fetch(`http://localhost:8080/api/search.php${queryParams}`)
+        let resultsDiv = document.getElementById('results');
+        let data = fetch(`http://localhost:8000/api/search.php${queryParams}`, {method: 'GET', credentials: 'include'})
             .then(res => res.json())
             .then(data => console.log(data));
+
+        resultsDiv.innerHTML = "";
+
+        if (!data.items || data.items.length === 0) {
+            resultsDiv.innerHTML = "<p>No results found.</p>";
+            return;
+        }
+
+        data.items.forEach(video => {
+            const videoId = video.id.videoId;
+            const title = video.snippet.title;
+            const description = video.snippet.description;
+            const thumbnail = video.snippet.thumbnails.medium.url;
+
+            resultsDiv.innerHTML += `
+                    <div class="video">
+                        <h3>${title}</h3>
+                        <img src="${thumbnail}" alt="${title}">
+                        <p>${description}</p>
+                        <a href="https://www.youtube.com/watch?v=${videoId}" target="_blank">
+                            Watch video
+                        </a>
+                    </div>
+                    <hr>
+                `;
+        });
     }
 
 })
