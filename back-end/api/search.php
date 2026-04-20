@@ -39,7 +39,7 @@ $videoDuration = isset($_GET['videoDuration']) ? "&videoDuration=" . $_GET['vide
 $publishedAfter = isset($_GET['publishedAfter']) ? "&publishedAfter=" . $_GET['publishedAfter'] : '';
 $publishedBefore = isset($_GET['publishedBefore']) ? "&publishedBefore=" . $_GET['publishedBefore'] : '';
 $relevanceLanguage = isset($_GET['relevanceLanguage']) ? "&relevanceLanguage=" . $_GET['relevanceLanguage'] : '';
-$order = isset($_GET['order']) ? "&order=" . $_GET['order'] : '';
+$order = isset($_GET['order']) ? "&orphr=" . $_GET['order'] : '';
 $resultNumber = "&maxResults=" . 20;
 
 $params = $q . $videoDuration . $publishedAfter . $publishedBefore . $relevanceLanguage . $order . $resultNumber;
