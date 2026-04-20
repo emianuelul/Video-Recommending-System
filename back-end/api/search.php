@@ -16,8 +16,38 @@ $params = $q . $videoDuration . $publishedAfter . $publishedBefore . $relevanceL
 
 $url = "https://www.googleapis.com/youtube/v3/search?part=snippet&type=video&" . $params . $apiKey;
 
-$req = file_get_contents($url);
+if (!isset($_GET['q']) || trim($_GET['q']) === '') {
+    echo json_encode([
+        'error' => 'Missing search query'
+    ]);
+    exit;
+}
+
+
+$req = @file_get_contents($url);
+
+if ($req === false) {
+    $error = error_get_last();
+
+    echo json_encode([
+        'error' => 'Failed to fetch YouTube API response',
+        'details' => $error ? $error['message'] : 'Unknown error',
+        'url' => $url
+    ]);
+    exit;
+}
+
+
 $data = json_decode($req, true);
+
+if ($data === null) {
+    echo json_encode([
+        'error' => 'Invalid JSON returned by YouTube API',
+        'raw' => $req
+    ]);
+    exit;
+}
+
 
 $idsArray = [];
 if (isset($data['items'])) {
@@ -41,6 +71,7 @@ if (!empty($videoIds)) {
             $videoDTOArray[] = new VideoDTO($item);
         }
     }
+
 
     header("Content-Type: application/json");
     echo json_encode($videoDTOArray);

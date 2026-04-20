@@ -50,7 +50,7 @@ searchBtn.addEventListener('click', () => {
         }
 
         let resultsDiv = document.getElementById('results');
-        let data = fetch(`http://localhost:8000/api/search.php${queryParams}`, {method: 'GET', credentials: 'include'})
+        let data = fetch(`http://localhost:8000/back-end/api/search.php${queryParams}`, {method: 'GET', credentials: 'include'})
             .then(res => res.json())
             .then(data => console.log(data));
 
