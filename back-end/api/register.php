@@ -1,5 +1,4 @@
 <?php
-session_start();
 require '../../db/database.php';
 header('Access-Control-Allow-Origin: *');
 header('Access-Control-Allow-Headers: Content-Type');
