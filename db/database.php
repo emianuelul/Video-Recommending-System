@@ -38,8 +38,8 @@ $db->exec("CREATE TABLE IF NOT EXISTS user_tags (
 $db->exec("CREATE TABLE IF NOT EXISTS user_categories (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     user_id TEXT NOT NULL,
-    categoryId INT NOT NULL,
-    category TEXT NOT NULL,
+    category_id INT NOT NULL,
+    category_title TEXT NOT NULL,
     weight INTEGER NOT NULL,
     last_interacted_at DATETIME NOT NULL,  
     FOREIGN KEY (user_id) REFERENCES users(id)

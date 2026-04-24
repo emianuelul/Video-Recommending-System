@@ -9,7 +9,7 @@ submitBtn.addEventListener('click', (e) => {
     e.preventDefault();
 
     const checkedCategories = [...document.querySelectorAll('.categories-list input:checked')]
-        .map(btn => btn.value);
+        .map(btn => parseInt(btn.value));
 
     const checkedLanguages = [...document.querySelectorAll('.languages-list input:checked')]
         .map(btn => btn.value);
@@ -23,15 +23,15 @@ submitBtn.addEventListener('click', (e) => {
     const username = usernameInput.value.trim();
     const password = passwordInput.value.trim();
     const confirmPassword = confirmPasswordInput.value.trim();
-    
-    if(confirmPassword !== password){
+
+    if (confirmPassword !== password) {
         confirmPasswordInput.setCustomValidity("Passwords don't match");
         confirmPasswordInput.reportValidity();
         return;
     }
-    
+
     confirmPasswordInput.setCustomValidity("");
-    
+
     fetch(url, {
         method: "POST",
         headers: {
