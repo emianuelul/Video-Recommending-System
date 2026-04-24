@@ -16,3 +16,31 @@ $db->exec("CREATE TABLE IF NOT EXISTS user_tokens (
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (user_id) REFERENCES users(id)
 )");
+
+$db->exec("CREATE TABLE IF NOT EXISTS user_preferences (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    user_id TEXT NOT NULL,
+    languages TEXT,
+    duration TEXT, 
+    country TEXT,    
+    FOREIGN KEY (user_id) REFERENCES users(id)
+)");
+
+$db->exec("CREATE TABLE IF NOT EXISTS user_tags (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    user_id TEXT NOT NULL,
+    tag TEXT NOT NULL,
+    weight INTEGER NOT NULL,
+    last_interacted_at DATETIME NOT NULL,
+    FOREIGN KEY (user_id) REFERENCES users(id)
+)");
+
+$db->exec("CREATE TABLE IF NOT EXISTS user_categories (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    user_id TEXT NOT NULL,
+    categoryId INT NOT NULL,
+    category TEXT NOT NULL,
+    weight INTEGER NOT NULL,
+    last_interacted_at DATETIME NOT NULL,  
+    FOREIGN KEY (user_id) REFERENCES users(id)
+)");

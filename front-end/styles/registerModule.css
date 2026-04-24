@@ -7,12 +7,60 @@ body {
     min-height: 100vh;
 }
 
-.register-container > form {
+.register-container > .account-details {
     display: flex;
-    flex-direction: column;
     justify-content: center;
     align-items: center;
     gap: 50px;
     margin-inline: auto;
     width: 100%;
+}
+
+.user-account-register {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    justify-items: center;
+    align-content: center;
+}
+
+.user-account-register > label{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.user-preferences > h2{
+    text-align: center;
+}
+
+.categories-list{
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    justify-items: center;
+    align-content: center;
+}
+
+.languages-list{
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    justify-items: center;
+    align-content: center;
+}
+
+.duration-list{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    justify-items: center;
+    align-content: center;
+}
+
+.duration-list > #any-checkbox{
+    grid-column: 1/4;
+}
+
+.country-list{
+    display: grid;
+    justify-items: center;
+    align-content: center;
 }
