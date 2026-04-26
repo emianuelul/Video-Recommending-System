@@ -33,3 +33,5 @@ $categoriesList = [
     43 => "Shows",
     44 => "Trailers"
 ];
+
+$AVAILABLE_HOURS = 24;

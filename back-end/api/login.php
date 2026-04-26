@@ -1,5 +1,7 @@
 <?php
-require '../../db/database.php';
+require_once '../../db/database.php';
+require_once '../utilities.php';
+
 header('Access-Control-Allow-Origin: *');
 header('Access-Control-Allow-Headers: Content-Type');
 
@@ -27,7 +29,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         http_response_code(200);
         header('Content-Type: application/json');
-        echo json_encode(["status" => 200, "message" => "Logged In Successfully", "token" => $token, "userId" => $user['id']]);
+        echo json_encode(["status" => 200,
+            "message" => "Logged In Successfully",
+            "token" => $token,
+            "userId" => $user['id'],
+            "createdAt" => date('Y-m-d H:i:s'),
+            "availableHours" => $AVAILABLE_HOURS
+        ]);
     } else {
         http_response_code(500);
         echo json_encode(["status" => 500, "message" => "Failed to log in"]);

@@ -22,13 +22,15 @@ submitBtn.addEventListener('click', () => {
         switch (resp.status) {
             case 200: {
                 alert(resp.message);
-                
+
                 localStorage.setItem("userId", resp.userId);
                 localStorage.setItem("token", resp.token);
-                
+                localStorage.setItem("createdAt", resp.createdAt);
+                localStorage.setItem("availableHours", resp.availableHours);
+
                 // console.log(localStorage);
                 // maybe go to home page or smth
-                
+
                 break;
             }
             case 409: {
