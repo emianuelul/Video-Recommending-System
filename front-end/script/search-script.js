@@ -50,13 +50,15 @@ searchBtn.addEventListener('click', async () => {
         }
 
         let resultsDiv = document.getElementById('results');
-        let data = await fetch(`http://localhost:8000/back-end/api/search.php${queryParams}`,
+        let data = await fetch(`http://localhost:8081/api/search.php${queryParams}`,
             {
                 method: 'GET',
+                headers: {
+                    "Authorization": `Bearer ${localStorage.getItem('token')}`
+                },
                 credentials: 'include'
             })
             .then(res => res.json())
-            // .then(data => console.log(data));
 
         resultsDiv.innerHTML = "";
         console.log(data)

@@ -1,9 +1,25 @@
-.loginContainer {
+body{
     display: flex;
-    flex-flow: column wrap;
+    flex-direction: column;
+    justify-content: center;
+    align-content: center;
+    
+    min-height: 100vh;
+}
+
+.login-container > form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
     gap: 50px;
     margin-inline: auto;
-    align-items: center;
-    justify-content: center;
     width: 100%;
+}
+
+label{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
