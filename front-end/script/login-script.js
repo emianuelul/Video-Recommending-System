@@ -2,7 +2,7 @@ const usernameInput = document.querySelector('#username');
 const passwordInput = document.querySelector('#password');
 const submitBtn = document.querySelector('#login-submit');
 
-const url = "http://localhost:8081/api/login.php";
+const url = "http://localhost:8081/back-end/api/login.php";
 
 submitBtn.addEventListener('click', () => {
     const username = usernameInput.value.trim();
