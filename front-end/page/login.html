@@ -1,80 +1,42 @@
 <!doctype html>
 
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
+<head>
+    <meta charset="UTF-8"/>
     <meta
-      name="viewport"
-      content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"
+            name="viewport"
+            content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"
     />
-    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge"/>
     <title>Log In</title>
-    <link rel="stylesheet" href="/styles/cssReset.css" />
-    <link rel="stylesheet" href="../styles/loginModule.css" />
-    <script src="../script/login-script.js" defer></script>
-  </head>
-  <body>
-    <div style="position: relative">
-      <div class="login-grid-container">
+    <link rel="stylesheet" href="../styles/cssReset.css"/>
+    <link rel="stylesheet" href="../styles/loginModule.css"/>
+    <script src="../script/login-script.js" type="module"></script>
+</head>
+<body>
+<div style="position: relative">
+    <div class="login-grid-container">
         <div class="login-container">
-          <h2>Login</h2>
-          <form method="post" class="login-fields-container">
-            <div class="login-input">
-              <label>
-                Username:
-              </label>
-              <img src="../libs/images/auth/user-icon.svg" alt="mail" width="30" height="15" />
-              <input
-                type="text"
-                id="username"
-                name="usernameP"
-                placeholder="Username"
-                maxlength="30"
-                required
-              />
+            <h2>Login</h2>
+            <form method="post" class="login-fields-container">
+                <div class="login-input user-input"></div>
+                <div class="login-input pass-input"></div>
+                <div class="login-button">
+                    <button type="submit" id="login-submit">Login</button>
+                </div>
+            </form>
+            <div class="links">
+                <a href="#">Don't have an account?</a>
+                <a href="#">Forgot your password?</a>
             </div>
-            <div class="login-input">
-                <label>
-                  Password:
-                </label>
-                <img src="../libs/images/auth/lock-icon.svg" alt="password" width="30" height="15" id="passwordVis"/>
-                <input
-                  type="password"
-                  id="password"
-                  name="password"
-                  placeholder="Password"
-                  required
-                />
-            </div>
-            <div class="login-button">
-              <button type="button" id="login-submit">Login</button>
-            </div>
-          </form>
-          <div class="links">
-            <a href="#">Don't have an account?</a>
-            <a href="#">Forgot your password?</a>
-          </div>
         </div>
 
         <div class="login-container-image">
-          <img src='https://res.cloudinary.com/multimediarog/image/upload/v1653590588/HACKATHON-FIICODE/undraw_access_account_re_8spm_aesgpc.svg' width="400" height="400" />
+            <img src='https://res.cloudinary.com/multimediarog/image/upload/v1653590588/HACKATHON-FIICODE/undraw_access_account_re_8spm_aesgpc.svg'
+                 width="400" height="400"/>
         </div>
-      </div>
     </div>
+</div>
 
-    <script>
-        let imgLock = document.getElementById("passwordVis");
-        let inPass = document.getElementById("password");
-        imgLock.addEventListener("click", (e) => {
-          e.preventDefault();
-          if(imgLock.src.includes("unlock-icon.svg")) {
-            imgLock.src = "../libs/images/auth/lock-icon.svg";
-            inPass.type = "password";
-          } else {
-            imgLock.src = "../libs/images/auth/unlock-icon.svg";
-            inPass.type = "text";
-          }
-        })
-    </script>
-  </body>
+</body>
 </html>

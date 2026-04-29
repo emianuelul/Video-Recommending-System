@@ -1,4 +1,4 @@
-body{
+body {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -114,7 +114,7 @@ body{
 .login-input {
     position: relative;
     display: flex;
-    flex-flow: column wrap;
+    flex-direction: column;
     justify-items: flex-start;
     gap: .1em;
     width: 80%;
@@ -127,6 +127,8 @@ body{
     img {
         position: absolute;
         bottom: 10px;
+        width: 30px;
+        height: 15px;
     }
 
     input {

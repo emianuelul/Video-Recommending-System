@@ -64,9 +64,6 @@ submitBtn.addEventListener('click', (e) => {
     })
 })
 
-
-
-
 const dropdown = document.getElementById("selectDropdown");
 const button = dropdown.querySelector(".dropdown-btn");
 const checkboxes = dropdown.querySelectorAll("input[type='checkbox']");
@@ -101,12 +98,14 @@ const observer1 = new MutationObserver(() => {
     const totalScrollable = button.scrollWidth - button.clientWidth;
 
     if (totalScrollable > 0) {
-        if(totalScrollable > button.clientWidth) { console.log(totalScrollable, button.scrollWidth, button.clientWidth); }
+        if (totalScrollable > button.clientWidth) {
+            console.log(totalScrollable, button.scrollWidth, button.clientWidth);
+        }
         customScrollbar.style.width = `calc(100% - ${totalScrollable}px - 22px)`;
         customScrollbar.style.maxWidth = `calc(100% - ${totalScrollable}px - 22px)`;
 
         //prima oara cand apare scrollbar-ul, caci e nevoie, sa fie vizibil 500ms ca sa stie user-ul ca poate da scroll
-        if(firstAppear) {
+        if (firstAppear) {
             firstAppear = false;
             customScrollbar.style.opacity = 1;
 
@@ -114,7 +113,7 @@ const observer1 = new MutationObserver(() => {
                 customScrollbar.style.opacity = 0;
             }, 500);
         }
-    } else if(totalScrollable === 0 && customScrollbar.style.width !== 0) {
+    } else if (totalScrollable === 0 && customScrollbar.style.width !== 0) {
         customScrollbar.style.width = `0px`;
         customScrollbar.style.transform = `translateX(0px)`;
         firstAppear = true;
@@ -126,7 +125,6 @@ observer1.observe(button, {
     subtree: true,
     characterData: true
 });
-
 
 
 //pentru actualizarea pozitiei scrollbar-ului cand dai scroll si cand scoti ceva din select si se face si marimea scrollbarului mai mica
@@ -146,8 +144,6 @@ observer2.observe(button, {
     subtree: true,
     characterData: true
 })
-
-
 
 
 //pentru ca sa fie vizibil scrollbar-ul numai cand dai scroll

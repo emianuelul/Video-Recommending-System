@@ -1,10 +1,36 @@
-const usernameInput = document.querySelector('#username');
-const passwordInput = document.querySelector('#password');
-const submitBtn = document.querySelector('#login-submit');
+import DOMStuff from "./DOMStuff.js";
 
-const url = "http://localhost:8081/back-end/api/login.php";
+const inputForm = document.querySelector('.login-fields-container')
+const url = "http://localhost:8081/api/login.php";
 
-submitBtn.addEventListener('click', () => {
+const loginInputPass = document.querySelector('.login-input.pass-input');
+const passwordNodes = DOMStuff.createPasswordInput();
+loginInputPass.append(passwordNodes[0], passwordNodes[1], passwordNodes[2]);
+
+const userInputPass = document.querySelector('.login-input.user-input');
+const userNodes = DOMStuff.createUsernameInput();
+userInputPass.append(userNodes[0], userNodes[1], userNodes[2]);
+
+const imgLock = document.querySelector(".passwordVis");
+const inPass = document.querySelector("#password");
+imgLock.addEventListener("click", (e) => {
+    e.preventDefault();
+    if (imgLock.src.includes("unlock-icon.svg")) {
+        imgLock.src = "../libs/images/auth/lock-icon.svg";
+        inPass.type = "password";
+    } else {
+        imgLock.src = "../libs/images/auth/unlock-icon.svg";
+        inPass.type = "text";
+    }
+})
+
+
+inputForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+
+    const usernameInput = document.querySelector('#username');
+    const passwordInput = document.querySelector('#password');
+
     const username = usernameInput.value.trim();
     const password = passwordInput.value.trim();
 
