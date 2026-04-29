@@ -1,8 +1,14 @@
 <?php
-session_start();
 header('Access-Control-Allow-Origin: *');
 require_once '../config.php';
 require_once '../class/VideoDTO.php';
+
+if (!isset($_GET['q']) || trim($_GET['q']) === '') {
+    echo json_encode([
+        'error' => 'Missing search query'
+    ]);
+    exit;
+}
 
 $q = "q=" . urlencode($_GET['q']);
 $videoDuration = isset($_GET['videoDuration']) ? "&videoDuration=" . $_GET['videoDuration'] : '';
