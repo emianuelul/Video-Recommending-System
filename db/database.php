@@ -44,3 +44,13 @@ $db->exec("CREATE TABLE IF NOT EXISTS user_categories (
     last_interacted_at DATETIME NOT NULL,  
     FOREIGN KEY (user_id) REFERENCES users(id)
 )");
+
+$db->exec("CREATE TABLE IF NOT EXISTS friends (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    friend1_id TEXT NOT NULL,
+    friend2_id TEXT NOT NULL,
+    status TEXT DEFAULT 'pending',
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    UNIQUE (friend1_id, friend2_id),
+    FOREIGN KEY (friend1_id) REFERENCES users(id),
+    FOREIGN KEY (friend2_id) REFERENCES users(id))");
