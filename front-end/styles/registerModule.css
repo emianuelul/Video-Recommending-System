@@ -34,13 +34,6 @@ body {
     text-align: center;
 }
 
-.categories-list{
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    justify-items: center;
-    align-content: center;
-}
-
 .languages-list{
     display: grid;
     grid-template-columns: repeat(2, 1fr);
@@ -63,4 +56,184 @@ body {
     display: grid;
     justify-items: center;
     align-content: center;
+}
+
+
+
+
+body{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-content: center;
+    min-height: 100vh;
+}
+
+.register-grid-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    width: min(80vw, 1000px);
+    height: 75vh;
+    max-height: 600px;
+    margin: 12.5vh max(10vw, calc(50vw - 500px)) 12.5vh max(10vw, calc(50vw - 500px));
+    border: 2px solid rgb(240, 240, 240);
+    border-radius: 3px;
+    background-color: rgb(255, 255, 255);
+    align-items: center;
+}
+
+.register-fields-container {
+    display: flex;
+    flex-flow: column wrap;
+    gap: 1.2em;
+    margin-top: 60px;
+    max-width: 450px;
+    margin-inline: auto;
+}
+
+.register-button {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.register-button button {
+    font-family: 'Baloo Bhai 2';
+    font-size: 1.1rem;
+    padding: .6em 1em;
+    color: #6C63FF;
+    border: 1px solid #6C63FF;
+    background-color: white;
+    border-radius: 3px;
+    cursor: pointer;
+    transition: all .25s ease-in;
+}
+
+.register-button button:hover {
+    color: white;
+    background-color: #6C63FF;
+}
+
+.register-button button:focus {
+    outline: none;
+}
+
+.links {
+    display: flex;
+    justify-content: space-around;
+    gap: 3em;
+    margin-top: 20px;
+    font-size: clamp(.8rem, 2.5vw, 1rem);
+    font-family: 'Doppio One', sans-serif;
+
+
+    a {
+        text-decoration: none;
+        color: #6C63FF;
+        opacity: 1;
+        transition: opacity .3s;
+    }
+
+    a:hover {
+        opacity: .7;
+    }
+}
+
+
+.register-container {
+    padding-top: 20px;
+    position: relative;
+    /*box-shadow: 2px 0px 15px -2px rgba(215, 215, 215, 0.33);*/
+
+    h2 {
+        display: flex;
+        justify-content: center;
+        margin-inline: 0;
+        font-family: 'Doppio One', sans-serif;
+        letter-spacing: 2px;
+        font-size: 2.5rem;
+    }
+
+    &::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        right: 0;
+        background: #3F3D56;
+        color: white;
+        height: 100%;
+        width: 2px;
+        border-radius: 5px;
+    }
+}
+
+
+.register-container-image {
+    display: flex;
+    justify-content: center;
+}
+
+
+.register-input {
+    position: relative;
+    display: flex;
+    flex-flow: column wrap;
+    justify-items: flex-start;
+    gap: .1em;
+    width: 80%;
+    margin-left: 10%;
+
+    label {
+        font-family: 'Baloo Bhai 2';
+    }
+
+    img {
+        position: absolute;
+        bottom: 10px;
+    }
+
+    input {
+        border: 0;
+        border-bottom: 2px solid rgb(200, 200, 200);
+        padding: .5em .2em .5em 2em;
+        border-radius: 2px 2px 0 0;
+        font-size: .9rem;
+        font-family: sans-serif;
+        background-color: rgb(245, 245, 245);
+
+        &:focus {
+            outline: none;
+        }
+
+        &:focus-visible {
+            outline: none;
+        }
+    }
+}
+
+
+@media screen and (min-width: 0px) and (max-width: 830px) {
+    .register-grid-container {
+        grid-template-columns: 1fr;
+        max-width: 450px;
+        margin-inline: auto;
+        height: auto;
+        padding-bottom: 20px;
+        margin-block: calc(5vh + clamp(.4rem, 2.5vw, .6rem));
+    }
+
+    .register-fields-container {
+        margin-top: 10px;
+    }
+}
+
+
+@media screen and  (max-width: 830px) {
+    .register-container-image {
+        display: none;
+    }
+
+    .register-container::after {
+        content: none;
+    }
 }
