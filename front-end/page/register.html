@@ -1,105 +1,139 @@
-<!DOCTYPE html>
+<!doctype html>
 
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"
+    />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <title>Register</title>
-    <link rel="stylesheet" href="/front-end/styles/cssReset.css">
-    <link rel="stylesheet" href="/front-end/styles/registerModule.css">
+    <link rel="stylesheet" href="../styles/cssReset.css" />
+    <link rel="stylesheet" href="../styles/registerModule.css" />
     <script src="../script/register-script.js" defer></script>
-</head>
+  </head>
 
-<body>
-<div class="register-container">
-    <form class="user-preferences" method="post">
+  <body>
+    <div class="register-container">
+      <form class="user-preferences" method="post">
         <h2>Create your Account</h2>
         <div class="user-account-register">
-            <label>
-                Username:
-                <input type="text" id="username" name="username" placeholder="Username" maxlength="30" required/>
-            </label>
-            <label>
-                Password:
-                <input type="password" id="password" name="password" placeholder="Password" required/>
-            </label>
-            <label>
-                Confirm Your Password:
-                <input type="password" id="confirm-password" name="password" placeholder="Password" required/>
-            </label>
+          <label>
+            Username:
+            <input
+              type="text"
+              id="username"
+              name="username"
+              placeholder="Username"
+              maxlength="30"
+              required
+            />
+          </label>
+          <label>
+            Password:
+            <input
+              type="password"
+              id="password"
+              name="password"
+              placeholder="Password"
+              required
+            />
+          </label>
+          <label>
+            Confirm Your Password:
+            <input
+              type="password"
+              id="confirm-password"
+              name="password"
+              placeholder="Password"
+              required
+            />
+          </label>
         </div>
         <h2>Choose preferred video categories</h2>
         <div class="categories-list">
-            <label><input type="checkbox" value="1"> Film & Animation</label>
-            <label><input type="checkbox" value="2"> Autos & Vehicles</label>
-            <label><input type="checkbox" value="10"> Music</label>
-            <label><input type="checkbox" value="15"> Pets & Animals</label>
-            <label><input type="checkbox" value="17"> Sports</label>
-            <label><input type="checkbox" value="18"> Short Movies</label>
-            <label><input type="checkbox" value="19"> Travel & Events</label>
-            <label><input type="checkbox" value="20"> Gaming</label>
-            <label><input type="checkbox" value="21"> Videoblogging</label>
-            <label><input type="checkbox" value="22"> People & Blogs</label>
-            <label><input type="checkbox" value="23"> Comedy</label>
-            <label><input type="checkbox" value="24"> Entertainment</label>
-            <label><input type="checkbox" value="25"> News & Politics</label>
-            <label><input type="checkbox" value="26"> Howto & Style</label>
-            <label><input type="checkbox" value="27"> Education</label>
-            <label><input type="checkbox" value="28"> Science & Technology</label>
-            <label><input type="checkbox" value="29"> Nonprofits & Activism</label>
-            <label><input type="checkbox" value="30"> Movies</label>
-            <label><input type="checkbox" value="31"> Anime/Animation</label>
-            <label><input type="checkbox" value="32"> Action/Adventure</label>
-            <label><input type="checkbox" value="33"> Classics</label>
-            <label><input type="checkbox" value="34"> Comedy</label>
-            <label><input type="checkbox" value="35"> Documentary</label>
-            <label><input type="checkbox" value="36"> Drama</label>
-            <label><input type="checkbox" value="37"> Family</label>
-            <label><input type="checkbox" value="38"> Foreign</label>
-            <label><input type="checkbox" value="39"> Horror</label>
-            <label><input type="checkbox" value="40"> Sci-Fi/Fantasy</label>
-            <label><input type="checkbox" value="41"> Thriller</label>
-            <label><input type="checkbox" value="42"> Shorts</label>
-            <label><input type="checkbox" value="43"> Shows</label>
-            <label><input type="checkbox" value="44"> Trailers</label>
+          <label><input type="checkbox" value="1" /> Film & Animation</label>
+          <label><input type="checkbox" value="2" /> Autos & Vehicles</label>
+          <label><input type="checkbox" value="10" /> Music</label>
+          <label><input type="checkbox" value="15" /> Pets & Animals</label>
+          <label><input type="checkbox" value="17" /> Sports</label>
+          <label><input type="checkbox" value="18" /> Short Movies</label>
+          <label><input type="checkbox" value="19" /> Travel & Events</label>
+          <label><input type="checkbox" value="20" /> Gaming</label>
+          <label><input type="checkbox" value="21" /> Videoblogging</label>
+          <label><input type="checkbox" value="22" /> People & Blogs</label>
+          <label><input type="checkbox" value="23" /> Comedy</label>
+          <label><input type="checkbox" value="24" /> Entertainment</label>
+          <label><input type="checkbox" value="25" /> News & Politics</label>
+          <label><input type="checkbox" value="26" /> Howto & Style</label>
+          <label><input type="checkbox" value="27" /> Education</label>
+          <label
+            ><input type="checkbox" value="28" /> Science & Technology</label
+          >
+          <label
+            ><input type="checkbox" value="29" /> Nonprofits & Activism</label
+          >
+          <label><input type="checkbox" value="30" /> Movies</label>
+          <label><input type="checkbox" value="31" /> Anime/Animation</label>
+          <label><input type="checkbox" value="32" /> Action/Adventure</label>
+          <label><input type="checkbox" value="33" /> Classics</label>
+          <label><input type="checkbox" value="34" /> Comedy</label>
+          <label><input type="checkbox" value="35" /> Documentary</label>
+          <label><input type="checkbox" value="36" /> Drama</label>
+          <label><input type="checkbox" value="37" /> Family</label>
+          <label><input type="checkbox" value="38" /> Foreign</label>
+          <label><input type="checkbox" value="39" /> Horror</label>
+          <label><input type="checkbox" value="40" /> Sci-Fi/Fantasy</label>
+          <label><input type="checkbox" value="41" /> Thriller</label>
+          <label><input type="checkbox" value="42" /> Shorts</label>
+          <label><input type="checkbox" value="43" /> Shows</label>
+          <label><input type="checkbox" value="44" /> Trailers</label>
         </div>
         <h2>Choose preferred languages</h2>
         <div class="languages-list">
-            <label><input type="checkbox" value="ro"> Romanian</label>
-            <label><input type="checkbox" value="en"> English</label>
-            <label><input type="checkbox" value="fr"> French</label>
-            <label><input type="checkbox" value="de"> German</label>
-            <label><input type="checkbox" value="es"> Spanish</label>
-            <label><input type="checkbox" value="it"> Italian</label>
-            <label><input type="checkbox" value="el"> Greek</label>
-            <label><input type="checkbox" value="hu"> Hungarian</label>
+          <label><input type="checkbox" value="ro" /> Romanian</label>
+          <label><input type="checkbox" value="en" /> English</label>
+          <label><input type="checkbox" value="fr" /> French</label>
+          <label><input type="checkbox" value="de" /> German</label>
+          <label><input type="checkbox" value="es" /> Spanish</label>
+          <label><input type="checkbox" value="it" /> Italian</label>
+          <label><input type="checkbox" value="el" /> Greek</label>
+          <label><input type="checkbox" value="hu" /> Hungarian</label>
         </div>
         <h2>Choose preferred video duration</h2>
         <div class="duration-list">
-            <label id="any-checkbox"><input type="checkbox" value="any"> Any</label>
-            <label><input type="checkbox" value="short"> Short (< 4 minutes)</label>
-            <label><input type="checkbox" value="medium"> Medium (4-20 minutes)</label>
-            <label><input type="checkbox" value="long"> Long (> 20 minutes)</label>
+          <label id="any-checkbox"
+            ><input type="checkbox" value="any" /> Any</label
+          >
+          <label
+            ><input type="checkbox" value="short" /> Short (< 4 minutes)</label
+          >
+          <label
+            ><input type="checkbox" value="medium" /> Medium (4-20
+            minutes)</label
+          >
+          <label
+            ><input type="checkbox" value="long" /> Long (> 20 minutes)</label
+          >
         </div>
         <h2>Choose your country</h2>
         <div class="country-list">
-            <select name="country" id="country-select" required>
-                <option value="">Choose your country...</option>
-                <option value="RO">Romania</option>
-                <option value="US">United States</option>
-                <option value="GB">United Kingdom</option>
-                <option value="FR">France</option>
-                <option value="DE">Germany</option>
-                <option value="ES">Spain</option>
-                <option value="IT">Italy</option>
-                <option value="GR">Greece</option>
-                <option value="HU">Hungary</option>
-            </select>
+          <select name="country" id="country-select" required>
+            <option value="">Choose your country...</option>
+            <option value="RO">Romania</option>
+            <option value="US">United States</option>
+            <option value="GB">United Kingdom</option>
+            <option value="FR">France</option>
+            <option value="DE">Germany</option>
+            <option value="ES">Spain</option>
+            <option value="IT">Italy</option>
+            <option value="GR">Greece</option>
+            <option value="HU">Hungary</option>
+          </select>
         </div>
         <button type="submit" id="register-submit">Register</button>
-    </form>
-</div>
-</body>
+      </form>
+    </div>
+  </body>
 </html>
