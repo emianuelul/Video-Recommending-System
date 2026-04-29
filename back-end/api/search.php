@@ -1,8 +1,16 @@
 <?php
-session_start();
-header('Access-Control-Allow-Origin: *');
-require_once '../config.php';
-require_once '../class/VideoDTO.php';
+require_once __DIR__ . '/../config.php';
+require_once __DIR__ . '/../class/VideoDTO.php';
+require_once __DIR__ . '/../class/TokenManager.php';
+
+$token = $_SERVER['HTTP_AUTHORIZATION'] ?? '';
+$token = str_replace('Bearer ', '', $token);
+
+if (!TokenManager::checkTokenValidity($token)) {
+    http_response_code(401);
+    echo json_encode(['error' => 'Unauthorized']);
+    exit;
+}
 
 $q = "q=" . urlencode($_GET['q']);
 $videoDuration = isset($_GET['videoDuration']) ? "&videoDuration=" . $_GET['videoDuration'] : '';
@@ -72,8 +80,6 @@ if (!empty($videoIds)) {
             $videoDTOArray[] = new VideoDTO($item);
         }
     }
-
-
-    header("Content-Type: application/json");
+    
     echo json_encode($videoDTOArray);
 }
