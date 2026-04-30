@@ -15,11 +15,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
 }
 
 $path = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
-if (file_exists(__DIR__ . $path) && is_file(__DIR__ . $path)) {
-    return false;
-}
-
-$path = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 $file = __DIR__ . $path;
 
 if (file_exists($file) && is_file($file)) {
