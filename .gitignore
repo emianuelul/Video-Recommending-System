@@ -1,4 +1,5 @@
 *.sqlite
 **/*.idea
+**/.vscode
 config.php
 database.sqlite
