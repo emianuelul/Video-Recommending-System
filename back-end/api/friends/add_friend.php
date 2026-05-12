@@ -10,8 +10,8 @@ if ($_SERVER["REQUEST_METHOD"] === "OPTIONS") {
     exit;
 }
 
-require_once '../../../db/database.php';
-require_once '../../utilities.php';
+require_once __DIR__ . '/../../../db/database.php';
+require_once __DIR__ . '/../../util/utilities.php';
 
 function respond($status, $message) {
     http_response_code($status);

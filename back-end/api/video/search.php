@@ -1,7 +1,9 @@
 <?php
-require_once __DIR__ . '/../config.php';
-require_once __DIR__ . '/../class/VideoDTO.php';
-require_once __DIR__ . '/../class/TokenManager.php';
+
+require_once __DIR__ . '/../../../db/database.php';
+require_once __DIR__ . '/../../util/config.php';
+require_once __DIR__ . '/../../class/VideoDTO.php';
+require_once __DIR__ . '/../../class/TokenManager.php';
 
 $token = $_SERVER['HTTP_AUTHORIZATION'] ?? '';
 $token = str_replace('Bearer ', '', $token);
@@ -39,7 +41,6 @@ if (!isset($_GET['q']) || trim($_GET['q']) === '') {
     exit;
 }
 
-
 $req = @file_get_contents($url);
 
 if ($req === false) {
@@ -53,7 +54,6 @@ if ($req === false) {
     exit;
 }
 
-
 $data = json_decode($req, true);
 
 if ($data === null) {
@@ -63,7 +63,6 @@ if ($data === null) {
     ]);
     exit;
 }
-
 
 $idsArray = [];
 if (isset($data['items'])) {
@@ -83,8 +82,32 @@ if (!empty($videoIds)) {
     $detailsData = json_decode($detailsReq, true);
     $videoDTOArray = [];
     if (isset($detailsData['items'])) {
+        $stmt = $db->prepare("
+                SELECT user_id FROM user_tokens
+                WHERE token = :token;
+            ");
+
+        $stmt->execute([
+            ":token" => $token
+        ]);
+
+        $userId = $stmt->fetch()[0];
+
         foreach ($detailsData['items'] as $item) {
-            $videoDTOArray[] = new VideoDTO($item);
+            $videoDTO = new VideoDTO($item);
+
+            $stmt = $db->prepare("
+            SELECT 1 FROM user_likes
+            WHERE video_id = :video_id AND user_id = :user_id;
+            ");
+
+            $stmt->execute([
+                ":video_id" => $videoDTO->getId(),
+                ":user_id" => $userId
+            ]);
+
+            $videoDTO->setIsLikedByUser($stmt->fetch() != null);
+            $videoDTOArray[] = $videoDTO;
         }
     }
 

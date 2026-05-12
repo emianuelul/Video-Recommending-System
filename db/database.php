@@ -59,7 +59,13 @@ $db->exec("CREATE TABLE IF NOT EXISTS friends (
 $db->exec("CREATE TABLE IF NOT EXISTS user_likes (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         user_id TEXT NOT NULL,
-        video_json TEXT NOT NULL,
+        video_id TEXT NOT NULL,
         created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
         FOREIGN KEY (user_id) REFERENCES users(id)
-    )");
+)");
+
+$db->exec("CREATE TABLE IF NOT EXISTS interacted_videos (
+        id TEXT PRIMARY KEY,
+        video_json TEXT NOT NULL,
+        created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+)");
