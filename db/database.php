@@ -53,4 +53,13 @@ $db->exec("CREATE TABLE IF NOT EXISTS friends (
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
     UNIQUE (friend1_id, friend2_id),
     FOREIGN KEY (friend1_id) REFERENCES users(id),
-    FOREIGN KEY (friend2_id) REFERENCES users(id))");
+    FOREIGN KEY (friend2_id) REFERENCES users(id)
+)");
+
+$db->exec("CREATE TABLE IF NOT EXISTS user_likes (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        user_id TEXT NOT NULL,
+        video_json TEXT NOT NULL,
+        created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+        FOREIGN KEY (user_id) REFERENCES users(id)
+    )");
