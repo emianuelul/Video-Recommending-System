@@ -28,4 +28,17 @@ class TokenManager {
 
         return true;
     }
+
+    public static function getUserId($token) {
+        $stmt = $db->prepare("
+                SELECT user_id FROM user_tokens
+                WHERE token = :token;
+            ");
+
+        $stmt->execute([
+            ":token" => $token
+        ]);
+
+        return $stmt->fetch()[0];
+    }
 }

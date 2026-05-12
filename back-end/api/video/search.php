@@ -82,16 +82,7 @@ if (!empty($videoIds)) {
     $detailsData = json_decode($detailsReq, true);
     $videoDTOArray = [];
     if (isset($detailsData['items'])) {
-        $stmt = $db->prepare("
-                SELECT user_id FROM user_tokens
-                WHERE token = :token;
-            ");
-
-        $stmt->execute([
-            ":token" => $token
-        ]);
-
-        $userId = $stmt->fetch()[0];
+        $userId = TokenManager::getUserId($token);
 
         foreach ($detailsData['items'] as $item) {
             $videoDTO = new VideoDTO($item);
