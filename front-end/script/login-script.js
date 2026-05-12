@@ -1,7 +1,7 @@
 import DOMStuff from "./DOMStuff.js";
 
 const inputForm = document.querySelector('.login-fields-container')
-const url = "http://localhost:8081/api/login.php";
+const url = "http://localhost:8081/api/auth/login.php";
 
 const loginInputPass = document.querySelector('.login-input.pass-input');
 const passwordNodes = DOMStuff.createPasswordInput();

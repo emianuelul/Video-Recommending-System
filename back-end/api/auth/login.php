@@ -1,6 +1,6 @@
 <?php
-require_once __DIR__ . '/../../db/database.php';
-require_once __DIR__ . '/../utilities.php';
+require_once __DIR__ . '/../../../db/database.php';
+require_once __DIR__ . '/../../util/utilities.php';
 
 header('Access-Control-Allow-Origin: *');
 header('Access-Control-Allow-Headers: Content-Type');

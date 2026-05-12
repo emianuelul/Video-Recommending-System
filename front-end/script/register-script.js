@@ -3,7 +3,7 @@ const passwordInput = document.querySelector('#password');
 const confirmPasswordInput = document.querySelector('#confirm-password');
 const submitBtn = document.querySelector('#register-submit');
 
-const url = "http://localhost:8081/api/register.php";
+const url = "http://localhost:8081/api/auth/register.php";
 
 submitBtn.addEventListener('click', (e) => {
     e.preventDefault();

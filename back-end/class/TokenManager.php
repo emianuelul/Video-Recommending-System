@@ -1,6 +1,6 @@
 <?php
 require_once __DIR__ . "/../../db/database.php";
-require_once __DIR__ . "/../utilities.php";
+require_once __DIR__ . "/../util/utilities.php";
 
 class TokenManager {
     private static function cleanUpOldTokens() {

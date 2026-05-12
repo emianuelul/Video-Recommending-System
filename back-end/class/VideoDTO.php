@@ -2,7 +2,7 @@
 
 require_once __DIR__ . '/../../db/database.php';
 
-class VideoDTO {
+class VideoDTO implements JsonSerializable {
     private $id;
     private $title;
     private $description;
@@ -249,5 +249,25 @@ class VideoDTO {
         $this->thumbnails = $data['snippet']['thumbnails'] ?? [];
 
         $this->audioLanguage = $data['snippet']['defaultAudioLanguage'] ?? '';
+    }
+
+    public function jsonSerialize(): mixed {
+        return [
+            'id' => $this->id,
+            'title' => $this->title,
+            'description' => $this->description,
+            'channelId' => $this->channelId,
+            'channelTitle' => $this->channelTitle,
+            'tags' => $this->tags,
+            'durationSeconds' => $this->durationSeconds,
+            'categoryId' => $this->categoryId,
+            'viewCount' => $this->viewCount,
+            'likeCount' => $this->likeCount,
+            'commCount' => $this->commCount,
+            'topicCategories' => $this->topicCategories,
+            'audioLanguage' => $this->audioLanguage,
+            'thumbnails' => $this->thumbnails,
+            'isLikedByUser' => $this->isLikedByUser,
+        ];
     }
 }

@@ -22,6 +22,8 @@ function convertToRfc3339(dateString) {
     return output;
 }
 
+const url = 'http://localhost:8081/api/video/search.php';
+
 searchBtn.addEventListener('click', async () => {
     let queryParams = "?";
     const q = searchBar.value;
@@ -50,7 +52,7 @@ searchBtn.addEventListener('click', async () => {
         }
 
         let resultsDiv = document.getElementById('results');
-        let data = await fetch(`http://localhost:8081/api/search.php${queryParams}`,
+        let data = await fetch(url + "?" + `${queryParams}`,
             {
                 method: 'GET',
                 headers: {
