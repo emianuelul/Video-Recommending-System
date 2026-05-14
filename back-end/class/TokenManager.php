@@ -30,6 +30,7 @@ class TokenManager {
     }
 
     public static function getUserId($token) {
+        global $db;
         $stmt = $db->prepare("
                 SELECT user_id FROM user_tokens
                 WHERE token = :token;

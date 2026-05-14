@@ -1,3 +1,5 @@
+import DOMStuff from "./DOMStuff.js";
+
 const searchBar = document.querySelector('#search-bar');
 const videoDurationSelect = document.querySelector('#video-duration');
 const afterTime = document.querySelector('#after-time');
@@ -63,30 +65,20 @@ searchBtn.addEventListener('click', async () => {
             .then(res => res.json())
 
         resultsDiv.innerHTML = "";
-        console.log(data)
 
         if (!data || data.length === 0) {
             resultsDiv.innerHTML = "<p>No results found.</p>";
             return;
         }
-        console.log(data)
+        
         data.forEach(video => {
             const videoId = video.id;
             const title = video.title;
             const description = video.description;
             const thumbnail = video.thumbnails.medium.url;
+            const isLikedByUser = video.isLikedByUser;
 
-            resultsDiv.innerHTML += `
-                    <div class="video">
-                        <h3>${title}</h3>
-                        <img src="${thumbnail}" alt="${title}">
-                        <p>${description}</p>
-                        <a href="https://www.youtube.com/watch?v=${videoId}" target="_blank">
-                            Watch video
-                        </a>
-                    </div>
-                    <hr>
-                `;
+            resultsDiv.appendChild(DOMStuff.createVideoCard({thumbnail, title, description, videoId, isLikedByUser}))
         });
     }
 

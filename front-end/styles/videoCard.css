@@ -1,0 +1,39 @@
+.video-card {
+    width: 320px;
+    padding: 1rem;
+    border-radius: 12px;
+    background: #4d4343;
+    color: white;
+}
+
+.video-thumbnail {
+    width: 100%;
+    border-radius: 8px;
+}
+
+.video-description {
+    cursor: pointer;
+}
+
+.like-button {
+    cursor: pointer;
+    border: none;
+    background: transparent;
+    font-size: 1.4rem;
+    color: white;
+}
+
+.like-button.liked {
+    color: red;
+}
+
+.video-link {
+    display: inline-block;
+    margin-top: 10px;
+}
+
+#results{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+}
