@@ -116,7 +116,11 @@ export default class DOMStuff {
                             'Content-Type': 'application/json',
                             'Authorization': `Bearer ${localStorage.getItem("token")}`
                         },
-                        body: JSON.stringify({ videoId })
+                        body: JSON.stringify({
+                            videoId,
+                            tags: video.tags || [],
+                            categoryId: video.categoryId
+                        })
                     });
 
                     if (!response.ok) {

@@ -14,6 +14,103 @@ function getBody() {
     return json_decode(file_get_contents("php://input"), true);
 }
 
+function updateTag(PDO $db, string $userId, string $tag, float $delta) {
+
+    $stmt = $db->prepare("
+        SELECT weight FROM user_tags
+        WHERE user_id = :user_id AND tag = :tag
+    ");
+
+    $stmt->execute([
+        ':user_id' => $userId,
+        ':tag' => $tag
+    ]);
+
+    $row = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    if (!$row) {
+        $weight = max(0, min(10, $delta > 0 ? $delta : 1));
+
+        $stmt = $db->prepare("
+            INSERT INTO user_tags (user_id, tag, weight, last_interacted_at)
+            VALUES (:user_id, :tag, :weight, CURRENT_TIMESTAMP)
+        ");
+
+        $stmt->execute([
+            ':user_id' => $userId,
+            ':tag' => $tag,
+            ':weight' => $weight
+        ]);
+
+        return;
+    }
+
+    $newWeight = $row['weight'] + $delta;
+
+    $newWeight = max(0, min(10, $newWeight));
+
+    $stmt = $db->prepare("
+        UPDATE user_tags
+        SET weight = :weight,
+            last_interacted_at = CURRENT_TIMESTAMP
+        WHERE user_id = :user_id AND tag = :tag
+    ");
+
+    $stmt->execute([
+        ':weight' => $newWeight,
+        ':user_id' => $userId,
+        ':tag' => $tag
+    ]);
+}
+
+function updateCategory(PDO $db, string $userId, int $categoryId, float $delta) {
+
+    $stmt = $db->prepare("
+        SELECT weight FROM user_categories
+        WHERE user_id = :user_id AND category_id = :category_id
+    ");
+
+    $stmt->execute([
+        ':user_id' => $userId,
+        ':category_id' => $categoryId
+    ]);
+
+    $row = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    if (!$row) {
+        $weight = max(0, min(10, $delta > 0 ? $delta : 1));
+
+        $stmt = $db->prepare("
+            INSERT INTO user_categories (user_id, category_id, weight, last_interacted_at)
+            VALUES (:user_id, :category_id, :weight, CURRENT_TIMESTAMP)
+        ");
+
+        $stmt->execute([
+            ':user_id' => $userId,
+            ':category_id' => $categoryId,
+            ':weight' => $weight
+        ]);
+
+        return;
+    }
+
+    $newWeight = $row['weight'] + $delta;
+    $newWeight = max(0, min(10, $newWeight));
+
+    $stmt = $db->prepare("
+        UPDATE user_categories
+        SET weight = :weight,
+            last_interacted_at = CURRENT_TIMESTAMP
+        WHERE user_id = :user_id AND category_id = :category_id
+    ");
+
+    $stmt->execute([
+        ':weight' => $newWeight,
+        ':user_id' => $userId,
+        ':category_id' => $categoryId
+    ]);
+}
+
 $token = $_SERVER['HTTP_AUTHORIZATION'] ?? '';
 $token = str_replace('Bearer ', '', $token);
 
@@ -36,6 +133,9 @@ if (!$videoId) {
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
+    $tags = $body['tags'] ?? [];
+    $categoryId = isset($body['categoryId']) ? (int)$body['categoryId'] : null;
+
     $stmt = $db->prepare("
         INSERT OR IGNORE INTO user_likes (user_id, video_id)
         VALUES (:user_id, :video_id)
@@ -56,6 +156,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         ':video_json' => json_encode($body)
     ]);
 
+    foreach ($tags as $tag) {
+        updateTag($db, $userId, $tag, 1.0);
+    }
+
+    if ($categoryId !== null) {
+        updateCategory($db, $userId, $categoryId, 1.0);
+    }
+
     echo json_encode([
         "success" => true,
         "liked" => true
@@ -64,6 +172,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'DELETE') {
+
+    $tags = $body['tags'] ?? [];
+    $categoryId = isset($body['categoryId']) ? (int)$body['categoryId'] : null;
 
     $stmt = $db->prepare("
         DELETE FROM user_likes
@@ -74,6 +185,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'DELETE') {
         ':user_id' => $userId,
         ':video_id' => $videoId
     ]);
+
+    foreach ($tags as $tag) {
+        updateTag($db, $userId, $tag, -0.5);
+    }
+
+    if ($categoryId !== null) {
+        updateCategory($db, $userId, $categoryId, -0.5);
+    }
 
     echo json_encode([
         "success" => true,
