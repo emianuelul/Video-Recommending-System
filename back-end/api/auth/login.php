@@ -27,6 +27,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             ':token' => $token
         ]);
 
+        try {
+            decayUserWeights($user['id']);
+        } catch (Throwable $e) {
+            error_log('[decay] user=' . $user['id'] . 'err=' . $e->getMessage());
+        }
+
         http_response_code(200);
         header('Content-Type: application/json');
         echo json_encode(["status" => 200,

@@ -1,4 +1,7 @@
 <?php
+
+require_once __DIR__ . '/../../db/database.php';
+
 $categoriesList = [
     1 => "Film & Animation",
     2 => "Autos & Vehicles",
@@ -35,3 +38,27 @@ $categoriesList = [
 ];
 
 $AVAILABLE_HOURS = 24;
+$DECAY_HALF_LIFE_HOURS = 720;
+
+function decayUserWeights($userId) {
+    global $db;
+    $affected = 0;
+    $now = time();
+
+    $tables = ['user_tags', 'user_categories'];
+    foreach ($tables as $table) {
+        $select = $db->prepare("SELECT id, weight, last_interacted_at FROM {$table} WHERE user_id = :user_id");
+        $select->execute([':user_id' => $userId]);
+        $update = $db->prepare("UPDATE {$table} SET weight = :weight WHERE id = :id");
+
+        while ($row = $select->fetch(PDO::FETCH_ASSOC)) {
+            $elapsedH = ($now - strtotime($row['last_interacted_at'])) / 3600;
+            $newWeight = max(0, $row['weight'] - 1);
+            if ($newWeight === (int)$row['weight']) {
+                continue;
+            }
+            $update->execute([':weight' => $newWeight, ':id' => $row['id']]);
+            $affected += $update->rowCount();
+        }
+    }
+}

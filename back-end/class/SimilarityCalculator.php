@@ -105,7 +105,7 @@ class SimilarityCalculator {
 
         $transliterator = Transliterator::create('Any-Latin; Latin-ASCII');
         $title = $transliterator->transliterate($title);
-        
+
         $cleanTitle = preg_replace('/[^\w\s]/u', '', $title);
 
         $words = explode(' ', $cleanTitle);
@@ -138,5 +138,53 @@ class SimilarityCalculator {
         $score += $this->calculateEngagementRatio($video1, $video2) * $weights['engagement'];
 
         return round($score * $this->getCategoryMultiplier($video1, $video2), 2);
+    }
+
+    public function calculateWithProfile($video, $tagWeights, $categoryWeights, $preferredLanguage = null, $preferredDuration = null) {
+        $weights = [
+            'tags' => 1,
+            'categories' => 2,
+            'language' => 10,
+            'duration' => 15,
+        ];
+
+        $score = 0;
+
+        $videoTags = array_map(fn($tag) => strtolower($tag), $video->tags);
+        $videoTags = array_unique(array_merge($videoTags, $this->getKeywordsFromTitle($video->title)));
+
+        foreach ($videoTags as $tag) {
+            if (isset($tagWeights[$tag])) {
+                $score += $tagWeights[$tag] * $weights['tags'];
+            }
+        }
+
+        $catKey = $video->categoryId;
+        if ($catKey !== '' && isset($categoryWeights[$catKey])) {
+            $score += $categoryWeights[$catKey] * $weights['categories'];
+        }
+
+        if ($preferredLanguage !== null && $video->audioLanguage !== '') {
+            $videoLang = substr($video->audioLanguage, 0, 2);
+            $prefLang = substr($preferredLanguage, 0, 2);
+            if ($videoLang === $prefLang) {
+                $score += $weights['language'];
+            }
+        }
+
+        if ($preferredDuration !== null && $video->durationSeconds > 0) {
+            $videoBucket = $this->getDurationBucket($video->durationSeconds);
+            if ($videoBucket === $preferredDuration) {
+                $score += $weights['duration'];
+            }
+        }
+
+        return $score;
+    }
+
+    private function getDurationBucket($seconds) {
+        if ($seconds < 240) return 'short';
+        if ($seconds < 1200) return 'medium';
+        return 'long';
     }
 }
