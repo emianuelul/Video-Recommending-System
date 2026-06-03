@@ -14,93 +14,106 @@ if (!TokenManager::checkTokenValidity($token)) {
     exit;
 }
 
-if (!isset($_GET['q']) || trim($_GET['q']) === '') {
-    echo json_encode([
-        'error' => 'Missing search query'
-    ]);
-    exit;
-}
-
 $q = "q=" . urlencode($_GET['q']);
 $videoDuration = isset($_GET['videoDuration']) ? "&videoDuration=" . $_GET['videoDuration'] : '';
 $publishedAfter = isset($_GET['publishedAfter']) ? "&publishedAfter=" . $_GET['publishedAfter'] : '';
 $publishedBefore = isset($_GET['publishedBefore']) ? "&publishedBefore=" . $_GET['publishedBefore'] : '';
 $relevanceLanguage = isset($_GET['relevanceLanguage']) ? "&relevanceLanguage=" . $_GET['relevanceLanguage'] : '';
 $order = isset($_GET['order']) ? "&order=" . $_GET['order'] : '';
-$resultNumber = "&maxResults=" . 20;
-$apiKey = "&key=" . YT_API_KEY;
+$resultNumber = "&maxResults=" . (int)MAX_SEARCH_RESULTS;
 
-$params = $q . $videoDuration . $publishedAfter . $publishedBefore . $relevanceLanguage . $order . $resultNumber;
+function search($q,
+                $videoDuration = null,
+                $publishedAfter = null,
+                $publishedBefore = null,
+                $relevanceLanguage = null,
+                $order = null,
+                $resultNumber = null) {
+    global $db;
+    global $token;
 
-$url = "https://www.googleapis.com/youtube/v3/search?part=snippet&type=video&" . $params . $apiKey;
+    if (!isset($_GET['q']) || trim($_GET['q']) === '') {
+        echo json_encode([
+            'error' => 'Missing search query'
+        ]);
+        exit;
+    }
 
-if (!isset($_GET['q']) || trim($_GET['q']) === '') {
-    echo json_encode([
-        'error' => 'Missing search query'
-    ]);
-    exit;
-}
+    $apiKey = "&key=" . YT_API_KEY;
 
-$req = @file_get_contents($url);
+    $params = $q .
+        $videoDuration .
+        $publishedAfter .
+        $publishedBefore .
+        $relevanceLanguage .
+        $order .
+        $resultNumber;
 
-if ($req === false) {
-    $error = error_get_last();
+    $url = "https://www.googleapis.com/youtube/v3/search?part=snippet&type=video&" . $params . $apiKey;
+    $urlNoApi = "https://www.googleapis.com/youtube/v3/search?part=snippet&type=video&" . $params;
 
-    echo json_encode([
-        'error' => 'Failed to fetch YouTube API response',
-        'details' => $error ? $error['message'] : 'Unknown error',
-        'url' => $url
-    ]);
-    exit;
-}
+    $req = file_get_contents($url);
 
-$data = json_decode($req, true);
+    if ($req === false) {
+        $error = error_get_last();
 
-if ($data === null) {
-    echo json_encode([
-        'error' => 'Invalid JSON returned by YouTube API',
-        'raw' => $req
-    ]);
-    exit;
-}
+        echo json_encode([
+            'error' => 'Failed to fetch YouTube API response',
+            'details' => $error ? $error['message'] : 'Unknown error',
+            'url' => $urlNoApi
+        ]);
+        exit;
+    }
 
-$idsArray = [];
-if (isset($data['items'])) {
-    foreach ($data['items'] as $item) {
-        if (isset($item['id']['videoId'])) {
-            $idsArray[] = $item['id']['videoId'];
+    $data = json_decode($req, true);
+
+    if ($data === null) {
+        echo json_encode([
+            'error' => 'Invalid JSON returned by YouTube API',
+            'raw' => $req
+        ]);
+        exit;
+    }
+
+    $idsArray = [];
+    if (isset($data['items'])) {
+        foreach ($data['items'] as $item) {
+            if (isset($item['id']['videoId'])) {
+                $idsArray[] = $item['id']['videoId'];
+            }
         }
     }
-}
 
-$videoIds = implode(',', $idsArray);
+    $videoIds = implode(',', $idsArray);
 
-if (!empty($videoIds)) {
-    $detailsUrl = "https://www.googleapis.com/youtube/v3/videos?part=snippet,contentDetails,statistics,topicDetails&id=" . $videoIds . $apiKey;
-    $detailsReq = file_get_contents($detailsUrl);
+    if (!empty($videoIds)) {
+        $detailsUrl = "https://www.googleapis.com/youtube/v3/videos?part=snippet,contentDetails,statistics,topicDetails&id=" . $videoIds . $apiKey;
+        $detailsReq = file_get_contents($detailsUrl);
 
-    $detailsData = json_decode($detailsReq, true);
-    $videoDTOArray = [];
-    if (isset($detailsData['items'])) {
-        $userId = TokenManager::getUserId($token);
+        $detailsData = json_decode($detailsReq, true);
+        $videoDTOArray = [];
+        if (isset($detailsData['items'])) {
+            $userId = TokenManager::getUserId($token);
 
-        foreach ($detailsData['items'] as $item) {
-            $videoDTO = new VideoDTO($item);
+            foreach ($detailsData['items'] as $item) {
+                $videoDTO = new VideoDTO($item);
 
-            $stmt = $db->prepare("
+                $stmt = $db->prepare("
             SELECT 1 FROM user_likes
             WHERE video_id = :video_id AND user_id = :user_id;
             ");
 
-            $stmt->execute([
-                ":video_id" => $videoDTO->getId(),
-                ":user_id" => $userId
-            ]);
+                $stmt->execute([
+                    ":video_id" => $videoDTO->getId(),
+                    ":user_id" => $userId
+                ]);
 
-            $videoDTO->setIsLikedByUser($stmt->fetch() != null);
-            $videoDTOArray[] = $videoDTO;
+                $videoDTO->setIsLikedByUser($stmt->fetch() != null);
+                $videoDTOArray[] = $videoDTO;
+            }
         }
     }
-
     echo json_encode($videoDTOArray);
 }
+
+search($q, $videoDuration, $publishedAfter, $publishedBefore, $relevanceLanguage, $order, $resultNumber);
