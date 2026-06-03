@@ -12,6 +12,9 @@ if ($_SERVER["REQUEST_METHOD"] === "OPTIONS") {
 
 require_once __DIR__ . '/../../../db/database.php';
 require_once __DIR__ . '/../../util/utilities.php';
+require_once __DIR__ . '/../../util/auth.php';
+
+auth();
 
 function respond($status, $message) {
     http_response_code($status);

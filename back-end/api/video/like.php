@@ -3,6 +3,9 @@
 require_once __DIR__ . '/../../../db/database.php';
 require_once __DIR__ . '/../../util/config.php';
 require_once __DIR__ . '/../../class/TokenManager.php';
+require_once __DIR__ . '/../../util/auth.php';
+
+auth();
 
 header("Content-Type: application/json");
 header("Access-Control-Allow-Methods: POST, DELETE");
@@ -123,7 +126,7 @@ if (!TokenManager::checkTokenValidity($token)) {
 $userId = TokenManager::getUserId($token);
 
 $body = getBody();
-$videoId = $body['videoId'] ?? null;
+$videoId = $body['id'] ?? null;
 
 if (!$videoId) {
     http_response_code(400);

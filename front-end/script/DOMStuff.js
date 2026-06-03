@@ -1,157 +1,139 @@
 import config from "./utils/config.js";
 
 export default class DOMStuff {
+  static createPasswordInput() {
+    const label = document.createElement("label");
+    label.textContent = "Password";
+    label.setAttribute("for", "password");
 
-    static createPasswordInput() {
-        const label = document.createElement('label');
-        label.textContent = "Password";
-        label.setAttribute("for", "password")
+    const img = document.createElement("img");
+    img.src = "../libs/images/auth/lock-icon.svg";
+    img.classList.add("passwordVis");
 
-        const img = document.createElement('img');
-        img.src = "../libs/images/auth/lock-icon.svg";
-        img.classList.add('passwordVis');
+    const input = document.createElement("input");
+    input.type = "password";
+    input.id = "password";
+    input.name = "password";
+    input.placeholder = "Password";
+    input.required = true;
 
-        const input = document.createElement('input');
-        input.type = 'password';
-        input.id = 'password';
-        input.name = 'password';
-        input.placeholder = "Password";
-        input.required = true;
+    return [label, img, input];
+  }
 
-        return [label, img, input];
-    }
-    
-    static createUsernameInput() {
-        const label = document.createElement('label');
-        label.textContent = "Username";
-        label.setAttribute("for", "username")
+  static createUsernameInput() {
+    const label = document.createElement("label");
+    label.textContent = "Username";
+    label.setAttribute("for", "username");
 
-        const img = document.createElement('img');
-        img.src = "../libs/images/auth/user-icon.svg";
+    const img = document.createElement("img");
+    img.src = "../libs/images/auth/user-icon.svg";
 
-        const input = document.createElement('input');
-        input.type = 'text';
-        input.id = 'username';
-        input.name = 'username';
-        input.placeholder = "Username";
-        input.maxLength = 30;
-        input.required = true;
+    const input = document.createElement("input");
+    input.type = "text";
+    input.id = "username";
+    input.name = "username";
+    input.placeholder = "Username";
+    input.maxLength = 30;
+    input.required = true;
 
-        return [label, img, input];
-    }
+    return [label, img, input];
+  }
 
-    static createVideoCard(video) {
-        const {
-            thumbnail,
-            title,
-            description,
-            videoId,
-            isLikedByUser
-        } = video;
+  static createVideoCard(video) {
+    const videoId = video.id;
+    const title = video.title;
+    const description = video.description;
+    const thumbnail = video.thumbnails.medium.url;
+    const isLikedByUser = video.isLikedByUser;
 
-        const card = document.createElement('div');
-        card.classList.add('video-card');
+    const card = document.createElement("div");
+    card.classList.add("video-card");
 
-        const thumb = document.createElement('img');
-        thumb.src = thumbnail;
-        thumb.alt = title;
-        thumb.classList.add('video-thumbnail');
+    const thumb = document.createElement("img");
+    thumb.src = thumbnail;
+    thumb.alt = title;
+    thumb.classList.add("video-thumbnail");
 
-        const titleEl = document.createElement('h3');
-        titleEl.textContent = title;
-        titleEl.classList.add('video-title');
+    const titleEl = document.createElement("h3");
+    titleEl.textContent = title;
+    titleEl.classList.add("video-title");
 
-        const desc = document.createElement('p');
-        desc.classList.add('video-description');
+    const desc = document.createElement("p");
+    desc.classList.add("video-description");
 
-        const maxChars = 45;
-        let expanded = false;
+    const maxChars = 45;
+    let expanded = false;
 
-        const shortText =
-            description.length > maxChars
-                ? description.slice(0, maxChars) + "..."
-                : description;
+    const shortText =
+      description.length > maxChars
+        ? description.slice(0, maxChars) + "..."
+        : description;
 
-        desc.textContent = shortText;
+    desc.textContent = shortText;
 
-        desc.addEventListener('click', () => {
-            expanded = !expanded;
+    desc.addEventListener("click", () => {
+      expanded = !expanded;
 
-            desc.textContent = expanded
-                ? description
-                : shortText;
+      desc.textContent = expanded ? description : shortText;
 
-            desc.classList.toggle('expanded', expanded);
-        });
+      desc.classList.toggle("expanded", expanded);
+    });
 
-        const likeBtn = document.createElement('button');
-        likeBtn.classList.add('like-button');
-        likeBtn.textContent = isLikedByUser ? '♥': '♡';
-        
-        let liked = isLikedByUser;
+    const likeBtn = document.createElement("button");
+    likeBtn.classList.add("like-button");
+    likeBtn.textContent = isLikedByUser ? "♥" : "♡";
 
-        likeBtn.addEventListener('click', async () => {
-            try {
-                if (!liked) {
-                    const response = await fetch(config.url_api + '/video/like.php', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'Authorization': `Bearer ${localStorage.getItem("token")}`
-                        },
-                        body: JSON.stringify({ videoId })
-                    });
+    let liked = isLikedByUser;
 
-                    if (!response.ok) {
-                        throw new Error('Failed to like video');
-                    }
+    likeBtn.addEventListener("click", async () => {
+      try {
+        if (!liked) {
+          const response = await fetch(config.url_api + "/video/like.php", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${localStorage.getItem("token")}`,
+            },
+            body: JSON.stringify(video),
+          });
 
-                    liked = true;
+          if (!response.ok) {
+            throw new Error("Failed to like video");
+          }
 
-                } else {
+          liked = true;
+        } else {
+          const response = await fetch(config.url_api + "/video/like.php", {
+            method: "DELETE",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${localStorage.getItem("token")}`,
+            },
+            body: JSON.stringify(video),
+          });
 
-                    const response = await fetch(config.url_api + '/video/like.php', {
-                        method: 'DELETE',
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'Authorization': `Bearer ${localStorage.getItem("token")}`
-                        },
-                        body: JSON.stringify({
-                            videoId,
-                            tags: video.tags || [],
-                            categoryId: video.categoryId
-                        })
-                    });
+          if (!response.ok) {
+            throw new Error("Failed to remove like");
+          }
 
-                    if (!response.ok) {
-                        throw new Error('Failed to remove like');
-                    }
+          liked = false;
+        }
 
-                    liked = false;
-                }
+        likeBtn.textContent = liked ? "♥" : "♡";
+        likeBtn.classList.toggle("liked", liked);
+      } catch (err) {
+        console.error(err);
+      }
+    });
 
-                likeBtn.textContent = liked ? '♥': '♡';
-                likeBtn.classList.toggle('liked', liked);
+    const link = document.createElement("a");
+    link.href = `https://www.youtube.com/watch?v=${videoId}`;
+    link.target = "_blank";
+    link.textContent = "Watch Video";
+    link.classList.add("video-link");
 
-            } catch (err) {
-                console.error(err);
-            }
-        });
+    card.append(thumb, titleEl, desc, likeBtn, link);
 
-        const link = document.createElement('a');
-        link.href = `https://www.youtube.com/watch?v=${videoId}`;
-        link.target = '_blank';
-        link.textContent = 'Watch Video';
-        link.classList.add('video-link');
-
-        card.append(
-            thumb,
-            titleEl,
-            desc,
-            likeBtn,
-            link
-        );
-
-        return card;
-    }
+    return card;
+  }
 }

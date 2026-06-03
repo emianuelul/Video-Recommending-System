@@ -7,7 +7,9 @@ class TokenManager {
         global $db;
         global $AVAILABLE_HOURS;
 
-        $stmt = $db->prepare("DELETE FROM user_tokens WHERE created_at + :availableHours > date('now')");
+        $stmt = $db->prepare("DELETE FROM user_tokens 
+            WHERE datetime(created_at, '+' || :availableHours || ' hours') < datetime('now')"
+        );
         $stmt->execute([':availableHours' => $AVAILABLE_HOURS]);
     }
 
@@ -31,15 +33,22 @@ class TokenManager {
 
     public static function getUserId($token) {
         global $db;
+
         $stmt = $db->prepare("
-                SELECT user_id FROM user_tokens
-                WHERE token = :token;
-            ");
+        SELECT user_id FROM user_tokens
+        WHERE token = :token;
+    ");
 
         $stmt->execute([
             ":token" => $token
         ]);
 
-        return $stmt->fetch()[0];
+        $result = $stmt->fetch();
+
+        if ($result === false) {
+            return null;
+        }
+
+        return $result[0];
     }
 }

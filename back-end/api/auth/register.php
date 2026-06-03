@@ -28,12 +28,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         foreach ($categories as $category) {
             $stmt = $db->prepare(
-                "INSERT INTO user_categories (user_id, category_id, category_title, weight, last_interacted_at)
-                    VALUES (:userId, :categoryId, :categoryTitle, :weight, :lastInteractedAt)");
+                "INSERT INTO user_categories (user_id, category_id, weight, last_interacted_at)
+                    VALUES (:userId, :categoryId, :weight, :lastInteractedAt)");
             $stmt->execute([
                 ':userId' => $userId,
                 ':categoryId' => $category,
-                ':categoryTitle' => $categoriesList[$category],
                 ':weight' => 5,
                 ':lastInteractedAt' => date('Y-m-d H:i:s')
             ]);

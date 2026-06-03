@@ -1,5 +1,5 @@
 <?php
-require_once '../../db/database.php';
+require_once __DIR__ . '/../../db/database.php';
 //header('Content-Type: application/json');
 //phpinfo();
 header('Content-Type: text/plain');

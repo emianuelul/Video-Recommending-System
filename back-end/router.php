@@ -5,7 +5,7 @@ header('Access-Control-Allow-Credentials: true');
 
 $allowed_origins = ["http://127.0.0.1:8001", "http://localhost:8001"];
 
-if (in_array($_SERVER['HTTP_ORIGIN'], $allowed_origins, true)) {
+if (in_array($_SERVER['HTTP_ORIGIN'] ?? '', $allowed_origins, true)) {
     header('Access-Control-Allow-Origin: ' . $_SERVER['HTTP_ORIGIN']);
 }
 

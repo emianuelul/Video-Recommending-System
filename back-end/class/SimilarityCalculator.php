@@ -140,7 +140,11 @@ class SimilarityCalculator {
         return round($score * $this->getCategoryMultiplier($video1, $video2), 2);
     }
 
-    public function calculateWithProfile($video, $tagWeights, $categoryWeights, $preferredLanguage = null, $preferredDuration = null) {
+    public function calculateWithProfile($video,
+                                         $tagWeights,
+                                         $categoryWeights,
+                                         $preferredLanguages = null,
+                                         $preferredDurations = null) {
         $weights = [
             'tags' => 1,
             'categories' => 2,
@@ -150,8 +154,8 @@ class SimilarityCalculator {
 
         $score = 0;
 
-        $videoTags = array_map(fn($tag) => strtolower($tag), $video->tags);
-        $videoTags = array_unique(array_merge($videoTags, $this->getKeywordsFromTitle($video->title)));
+        $videoTags = array_map(fn($tag) => strtolower($tag), $video->getTags());
+        $videoTags = array_unique(array_merge($videoTags, $this->getKeywordsFromTitle($video->getTitle())));
 
         foreach ($videoTags as $tag) {
             if (isset($tagWeights[$tag])) {
@@ -159,22 +163,21 @@ class SimilarityCalculator {
             }
         }
 
-        $catKey = $video->categoryId;
+        $catKey = $video->getCategoryId();
         if ($catKey !== '' && isset($categoryWeights[$catKey])) {
             $score += $categoryWeights[$catKey] * $weights['categories'];
         }
 
-        if ($preferredLanguage !== null && $video->audioLanguage !== '') {
-            $videoLang = substr($video->audioLanguage, 0, 2);
-            $prefLang = substr($preferredLanguage, 0, 2);
-            if ($videoLang === $prefLang) {
+        if ($preferredLanguages !== null && $video->getAudioLanguage() !== '') {
+            $videoLang = substr($video->getAudioLanguage(), 0, 2);
+            if (in_array($videoLang, $preferredLanguages)) {
                 $score += $weights['language'];
             }
         }
 
-        if ($preferredDuration !== null && $video->durationSeconds > 0) {
-            $videoBucket = $this->getDurationBucket($video->durationSeconds);
-            if ($videoBucket === $preferredDuration) {
+        if ($preferredDurations !== null && $video->getDurationSeconds() > 0) {
+            $videoBucket = $this->getDurationBucket($video->getDurationSeconds());
+            if (in_array($videoBucket, $preferredDurations)) {
                 $score += $weights['duration'];
             }
         }
