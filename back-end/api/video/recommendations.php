@@ -76,5 +76,32 @@ function getRecommendations() {
     return $recs;
 }
 
-header("Content-Type: application/json");
-echo json_encode(getRecommendations());
+$recs = getRecommendations();
+
+if (isset($_GET['format']) && $_GET['format'] === 'rss') {
+    header('Content-Type: application/rss+xml; charset=utf-8');
+    $watchUrl = 'https://www.youtube.com/watch?v=';
+    echo '<?xml version="1.0" encoding="UTF-8"?>';
+    echo '<rss version="2.0"><channel>';
+    echo '<title>Personalized Video Recommendations</title>';
+    echo '<link>' . $watchUrl . '</link>';
+    echo '<description>Recommended videos based on your profile</description>';
+    foreach ($recs as $video) {
+        echo '<item>';
+        echo '<title>' . htmlspecialchars($video->getTitle(), ENT_QUOTES, 'UTF-8') . '</title>';
+        echo '<link>' . $watchUrl . htmlspecialchars($video->getId(), ENT_QUOTES, 'UTF-8') . '</link>';
+        echo '<description>' . htmlspecialchars($video->getDescription(), ENT_QUOTES, 'UTF-8') . '</description>';
+        $thumb = $video->getThumbnails();
+        if (!empty($thumb['medium']['url'])) {
+            echo '<enclosure url="' . htmlspecialchars($thumb['medium']['url'], ENT_QUOTES, 'UTF-8') . '" type="image/jpeg" />';
+        }
+        echo '<guid isPermaLink="false">' . htmlspecialchars($video->getId(), ENT_QUOTES, 'UTF-8') . '</guid>';
+        echo '<pubDate>' . gmdate('r') . '</pubDate>';
+        echo '</item>';
+    }
+    echo '</channel></rss>';
+    exit;
+}
+
+header('Content-Type: application/json');
+echo json_encode($recs);
