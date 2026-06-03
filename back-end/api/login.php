@@ -1,9 +1,34 @@
 <?php
-require_once '../../db/database.php';
-require_once '../utilities.php';
+$allowed_origins = ["http://127.0.0.1:8001", "http://localhost:8001"];
+$origin = $_SERVER['HTTP_ORIGIN'] ?? '';
 
-header('Access-Control-Allow-Origin: *');
-header('Access-Control-Allow-Headers: Content-Type');
+if (in_array($origin, $allowed_origins, true)) {
+    header('Access-Control-Allow-Origin: ' . $origin);
+} else {
+    header('Access-Control-Allow-Origin: http://localhost:8001');
+}
+
+header('Access-Control-Allow-Methods: POST, OPTIONS');
+header('Access-Control-Allow-Headers: Content-Type, Authorization');
+header('Access-Control-Allow-Credentials: true');
+header('Content-Type: application/json');
+
+if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
+    http_response_code(204);
+    exit;
+}
+
+require_once __DIR__ . '/../../db/database.php';
+require_once __DIR__ . '/../utilities.php';
+
+function respond($status, $message, $data = []) {
+    http_response_code($status);
+    echo json_encode(array_merge([
+        "status" => $status,
+        "message" => $message
+    ], $data));
+    exit;
+}
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $data = json_decode(file_get_contents('php://input'), true);
@@ -11,7 +36,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $password = trim($data["password"] ?? ' ');
 
     if ($username === '' || $password === '') {
-        die('Username and password are required.');
+        respond(400, 'Username and password are required.');
     }
 
     $stmt = $db->prepare("SELECT id, username, password_hash FROM users WHERE username = :username");
@@ -28,7 +53,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         ]);
 
         http_response_code(200);
-        header('Content-Type: application/json');
         echo json_encode(["status" => 200,
             "message" => "Logged In Successfully",
             "token" => $token,
@@ -37,7 +61,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             "availableHours" => $AVAILABLE_HOURS
         ]);
     } else {
-        http_response_code(500);
-        echo json_encode(["status" => 500, "message" => "Failed to log in"]);
+        respond(500, "Failed to log in");
     }
 }

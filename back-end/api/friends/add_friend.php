@@ -1,32 +1,15 @@
 <?php
-header("Access-Control-Allow-Origin: http://localhost:8001");
-header("Access-Control-Allow-Credentials: true");
-header("Access-Control-Allow-Methods: POST, OPTIONS");
-header("Access-Control-Allow-Headers: Content-Tye, Authorization");
-header("Content-Type: application/json");
+require_once __DIR__ . '/../../../db/database.php';
+require_once __DIR__ . '/friend_helpers.php';
 
-if ($_SERVER["REQUEST_METHOD"] === "OPTIONS") {
-    http_response_code(204);
-    exit;
-}
-
-require_once '../../../db/database.php';
-require_once '../../utilities.php';
-
-function respond($status, $message) {
-    http_response_code($status);
-    echo json_encode([
-        "status" => $status,
-        "message" => $message
-    ]);
-    exit;
-}
+setFriendApiHeaders("POST, OPTIONS");
+handleOptionsRequest();
 
 if ($_SERVER["REQUEST_METHOD"] !== "POST") {
     respond(405, "Method not allowed");
 }
 
-$data = json_decode(file_get_contents("php://input"), true);
+$data = readJsonBody();
 
 $friend1_id = $data["friend1_id"] ?? null;
 $friend2_id = $data["friend2_id"] ?? null;
@@ -36,7 +19,7 @@ if (!$friend1_id || !$friend2_id) {
 }
 
 if ($friend1_id == $friend2_id) {
-    respond(400, "You cannot add yourself as a friends");
+    respond(400, "You cannot add yourself as a friend");
 }
 
 $check = $db->prepare("

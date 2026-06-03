@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Add Friend</title>
+    <title>Friend Requests</title>
     <link rel="stylesheet" href="../styles/cssReset.css">
     <link rel="stylesheet" href="../styles/friendsModule.css">
-    <script src="../script/friend-script.js" defer></script>
+    <script src="../script/friend-requests-script.js" defer></script>
     <script src="../script/auth.js" defer></script>
 </head>
 <body class="friends-body">
@@ -14,7 +14,7 @@
     <header class="friends-header">
         <div>
             <p class="friends-kicker">Friends</p>
-            <h1>Add Friend</h1>
+            <h1>Friend Requests</h1>
         </div>
         <p class="friends-user-chip">
             <span>Current user ID</span>
@@ -23,29 +23,35 @@
     </header>
 
     <nav class="friends-nav" aria-label="Friends pages">
-        <a href="friend.html" class="active">Add</a>
-        <a href="friend_requests.html">Requests</a>
+        <a href="friend.html">Add</a>
+        <a href="friend_requests.html" class="active">Requests</a>
         <a href="friends.html">Friends</a>
     </nav>
 
     <section class="friends-grid">
         <div class="friends-panel">
             <div class="friends-panel-header">
-                <h2>Send Request</h2>
+                <h2>Requests</h2>
             </div>
 
-            <form method="POST" class="friends-form">
+            <form id="load-requests-form" class="friends-form">
                 <div class="friends-field">
-                    <label for="friend2">Friend user ID</label>
-                    <input type="text" name="friend2_id" id="friend2" placeholder="Paste user id" required>
+                    <label for="request-type">Type</label>
+                    <select id="request-type" name="type">
+                        <option value="incoming">Incoming</option>
+                        <option value="outgoing">Outgoing</option>
+                        <option value="all">All</option>
+                    </select>
                 </div>
 
                 <div class="friends-actions">
-                    <button type="submit" id="submit" class="btn primary">Add Friend</button>
+                    <button type="submit" class="btn primary">Load Requests</button>
                 </div>
 
                 <p id="status" class="status-line"></p>
             </form>
+
+            <ul id="requests-list" class="friends-list"></ul>
         </div>
     </section>
 </main>
