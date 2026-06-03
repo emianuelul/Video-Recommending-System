@@ -1,9 +1,23 @@
 <?php
-require_once __DIR__ . '/../../../db/database.php';
-require_once __DIR__ . '/../../util/utilities.php';
+require_once __DIR__ . '/../../db/database.php';
+require_once __DIR__ . '/../utilities.php';
 
-header('Access-Control-Allow-Origin: *');
-header('Access-Control-Allow-Headers: Content-Type');
+$allowed_origins = ["http://127.0.0.1:8001", "http://localhost:8001"];
+$origin = $_SERVER['HTTP_ORIGIN'] ?? '';
+
+if (in_array($origin, $allowed_origins, true)) {
+    header('Access-Control-Allow-Origin: ' . $origin);
+}
+
+header('Access-Control-Allow-Methods: POST, OPTIONS');
+header('Access-Control-Allow-Headers: Content-Type, Authorization');
+header('Access-Control-Allow-Credentials: true');
+header('Content-Type: application/json');
+
+if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
+    http_response_code(204);
+    exit;
+}
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $data = json_decode(file_get_contents('php://input'), true);
@@ -51,7 +65,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $response = json_encode(["status" => 200, "message" => "Account created successfully!"]);
 
         http_response_code(200);
-        header("Content-Type: application/json");
 
         echo $response;
     } catch (PDOException $e) {

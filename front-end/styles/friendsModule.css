@@ -1,0 +1,329 @@
+body.friends-body {
+    min-height: 100vh;
+    background:
+        linear-gradient(135deg, rgba(108, 99, 255, .09), transparent 32%),
+        linear-gradient(315deg, rgba(63, 61, 86, .08), transparent 30%),
+        rgb(247, 248, 252);
+    color: #252437;
+    font-family: "Baloo Bhai 2", Arial, sans-serif;
+}
+
+.friends-shell {
+    width: min(92vw, 980px);
+    margin: 0 auto;
+    padding: clamp(22px, 5vw, 54px) 0;
+}
+
+.friends-header {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 24px;
+    align-items: end;
+    margin-bottom: 22px;
+}
+
+.friends-kicker {
+    color: #6C63FF;
+    font-family: "Doppio One", sans-serif;
+    font-size: .85rem;
+    letter-spacing: 0;
+    text-transform: uppercase;
+}
+
+.friends-header h1 {
+    margin-top: 4px;
+    font-family: "Doppio One", sans-serif;
+    font-size: clamp(2rem, 6vw, 3.2rem);
+    line-height: 1.05;
+}
+
+.friends-user-chip {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    max-width: 280px;
+    padding: 10px 12px;
+    border: 1px solid rgb(226, 226, 238);
+    border-radius: 6px;
+    background: rgb(255, 255, 255);
+    color: #3F3D56;
+    box-shadow: 0 12px 30px rgba(63, 61, 86, .06);
+}
+
+.friends-user-chip span:first-child {
+    color: rgb(118, 118, 138);
+    font-size: .8rem;
+}
+
+.friends-user-chip span:last-child {
+    overflow: hidden;
+    font-family: Consolas, monospace;
+    font-size: .82rem;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.friends-nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 22px;
+}
+
+.friends-nav a {
+    padding: .58rem .82rem;
+    border: 1px solid rgb(223, 223, 236);
+    border-radius: 5px;
+    background: rgb(255, 255, 255);
+    color: #3F3D56;
+    font-family: "Doppio One", sans-serif;
+    font-size: .9rem;
+    text-decoration: none;
+    transition: border-color .2s ease, color .2s ease, transform .2s ease;
+}
+
+.friends-nav a:hover,
+.friends-nav a.active {
+    border-color: #6C63FF;
+    color: #6C63FF;
+    transform: translateY(-1px);
+}
+
+.friends-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 18px;
+}
+
+.friends-grid.two-columns {
+    grid-template-columns: minmax(0, 1.1fr) minmax(280px, .9fr);
+}
+
+.friends-panel {
+    border: 2px solid rgb(240, 240, 240);
+    border-radius: 6px;
+    background: rgb(255, 255, 255);
+    box-shadow: 0 18px 45px rgba(63, 61, 86, .08);
+}
+
+.friends-panel-header {
+    padding: 22px 24px 0;
+}
+
+.friends-panel-header h2 {
+    font-family: "Doppio One", sans-serif;
+    font-size: clamp(1.35rem, 4vw, 2rem);
+}
+
+.friends-form {
+    display: grid;
+    gap: 16px;
+    padding: 22px 24px 24px;
+}
+
+.friends-field {
+    display: grid;
+    gap: 6px;
+}
+
+.friends-field label {
+    color: #3F3D56;
+    font-size: .95rem;
+}
+
+.friends-field input,
+.friends-field select {
+    width: 100%;
+    min-height: 44px;
+    border: 0;
+    border-bottom: 2px solid rgb(200, 200, 210);
+    border-radius: 3px 3px 0 0;
+    background: rgb(245, 245, 247);
+    color: #252437;
+    padding: .55rem .7rem;
+    transition: all .2s ease;
+}
+
+.friends-field input:focus,
+.friends-field select:focus {
+    border-color: #6C63FF;
+    background: rgb(250, 250, 255);
+    outline: none;
+}
+
+.friends-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    align-items: center;
+}
+
+.btn {
+    min-height: 42px;
+    padding: .55rem .9rem;
+    border: 1px solid #6C63FF;
+    border-radius: 5px;
+    background: rgb(255, 255, 255);
+    color: #6C63FF;
+    cursor: pointer;
+    font-family: "Baloo Bhai 2", Arial, sans-serif;
+    transition: all .2s ease;
+}
+
+.btn:hover {
+    background: #6C63FF;
+    color: rgb(255, 255, 255);
+    transform: translateY(-1px);
+}
+
+.btn.primary {
+    background: #6C63FF;
+    color: rgb(255, 255, 255);
+}
+
+.btn.primary:hover {
+    background: #5750db;
+    border-color: #5750db;
+}
+
+.btn.success {
+    border-color: #20835c;
+    color: #20835c;
+}
+
+.btn.success:hover {
+    background: #20835c;
+    color: rgb(255, 255, 255);
+}
+
+.btn.danger {
+    border-color: #c94b57;
+    color: #c94b57;
+}
+
+.btn.danger:hover {
+    background: #c94b57;
+    color: rgb(255, 255, 255);
+}
+
+.status-line {
+    min-height: 24px;
+    margin-top: 4px;
+    color: #3F3D56;
+    font-size: .95rem;
+}
+
+.friends-list {
+    display: grid;
+    gap: 12px;
+    padding: 22px 24px 24px;
+    list-style: none;
+}
+
+.friend-list-item {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 14px;
+    align-items: center;
+    padding: 14px;
+    border: 1px solid rgb(232, 232, 242);
+    border-radius: 6px;
+    background: rgb(250, 250, 253);
+}
+
+.friend-list-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    justify-content: flex-end;
+}
+
+.friend-info {
+    display: grid;
+    gap: 3px;
+    min-width: 0;
+}
+
+.friend-title {
+    color: #252437;
+    font-family: "Doppio One", sans-serif;
+    font-size: 1rem;
+}
+
+.friend-meta {
+    overflow: hidden;
+    color: rgb(101, 101, 122);
+    font-family: Consolas, monospace;
+    font-size: .82rem;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.status-pill {
+    justify-self: end;
+    padding: .35rem .62rem;
+    border-radius: 999px;
+    background: rgba(108, 99, 255, .12);
+    color: #5750db;
+    font-size: .85rem;
+}
+
+.empty-state {
+    display: block;
+    color: rgb(101, 101, 122);
+}
+
+.logout-row {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 18px;
+}
+
+@media screen and (max-width: 760px) {
+    .friends-header,
+    .friends-grid.two-columns,
+    .friend-list-item {
+        grid-template-columns: 1fr;
+    }
+
+    .friends-header {
+        align-items: start;
+    }
+
+    .friends-user-chip {
+        max-width: none;
+        width: 100%;
+    }
+
+    .friend-list-actions {
+        justify-content: flex-start;
+    }
+
+    .status-pill {
+        justify-self: start;
+    }
+}
+
+@media screen and (max-width: 460px) {
+    .friends-shell {
+        width: min(94vw, 980px);
+        padding-top: 20px;
+    }
+
+    .friends-panel-header,
+    .friends-form,
+    .friends-list {
+        padding-left: 16px;
+        padding-right: 16px;
+    }
+
+    .friends-actions,
+    .friend-list-actions,
+    .btn {
+        width: 100%;
+    }
+
+    .btn {
+        justify-content: center;
+    }
+}

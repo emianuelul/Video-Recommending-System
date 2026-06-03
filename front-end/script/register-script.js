@@ -61,6 +61,9 @@ submitBtn.addEventListener('click', (e) => {
                 break;
             }
         }
+    }).catch(err => {
+        console.error(err);
+        alert("Request failed. Check if the backend server is running correctly.");
     })
 })
 

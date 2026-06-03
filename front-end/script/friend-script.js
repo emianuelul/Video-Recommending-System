@@ -1,11 +1,23 @@
 const submitBtn = document.getElementById("submit");
-const friend1Input = document.getElementById("friend1");
 const friend2Input = document.getElementById("friend2");
+const currentUserIdText = document.getElementById("current-user-id");
+const statusText = document.getElementById("status");
+
+currentUserIdText.textContent = localStorage.getItem("userId") || "Not logged in";
+
+function setStatus(message) {
+    statusText.textContent = message;
+}
 
 submitBtn.addEventListener('click', (e) => {
     e.preventDefault();
-    // const id1 = friend1Input.value.trim();
     const id2 = friend2Input.value.trim();
+    const currentUserId = localStorage.getItem("userId");
+
+    if (!currentUserId) {
+        setStatus("Missing logged in user ID");
+        return;
+    }
 
     const url = `http://localhost:8081/api/friends/add_friend.php`;
 
@@ -15,7 +27,7 @@ submitBtn.addEventListener('click', (e) => {
             "Content-Type": "application/json"
         },
         body: JSON.stringify({
-            friend1_id: localStorage.getItem("userId"),
+            friend1_id: currentUserId.trim(),
             friend2_id: id2
         }),
         credentials: "include",
@@ -25,18 +37,19 @@ submitBtn.addEventListener('click', (e) => {
 
             switch (resp.status) {
                 case 200:
-                    console.log(resp.message);
+                    friend2Input.value = "";
+                    setStatus(resp.message);
                     break;
                 case 409:
-                    alert(resp.message);
+                    setStatus(resp.message);
                     break;
                 default:
-                    alert("Unexpected error: " + resp.message);
+                    setStatus("Unexpected error: " + resp.message);
                     break;
             }
         })
         .catch(err => {
             console.error(err);
-            alert("Request failed");
+            setStatus("Request failed");
         });
 })

@@ -54,9 +54,6 @@ inputForm.addEventListener('submit', (e) => {
                 localStorage.setItem("createdAt", resp.createdAt);
                 localStorage.setItem("availableHours", resp.availableHours);
 
-                // console.log(localStorage);
-                // maybe go to home page or smth
-
                 break;
             }
             case 409: {
@@ -68,5 +65,8 @@ inputForm.addEventListener('submit', (e) => {
                 break;
             }
         }
+    }).catch(err => {
+        console.error(err);
+        alert("Request failed. Check if the backend server is running correctly.");
     })
 })

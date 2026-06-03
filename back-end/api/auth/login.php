@@ -2,8 +2,17 @@
 require_once __DIR__ . '/../../../db/database.php';
 require_once __DIR__ . '/../../util/utilities.php';
 
-header('Access-Control-Allow-Origin: *');
-header('Access-Control-Allow-Headers: Content-Type');
+require_once __DIR__ . '/../../db/database.php';
+require_once __DIR__ . '/../utilities.php';
+
+function respond($status, $message, $data = []) {
+    http_response_code($status);
+    echo json_encode(array_merge([
+        "status" => $status,
+        "message" => $message
+    ], $data));
+    exit;
+}
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $data = json_decode(file_get_contents('php://input'), true);
@@ -11,7 +20,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $password = trim($data["password"] ?? ' ');
 
     if ($username === '' || $password === '') {
-        die('Username and password are required.');
+        respond(400, 'Username and password are required.');
     }
 
     $stmt = $db->prepare("SELECT id, username, password_hash FROM users WHERE username = :username");
@@ -43,7 +52,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             "availableHours" => $AVAILABLE_HOURS
         ]);
     } else {
-        http_response_code(500);
-        echo json_encode(["status" => 500, "message" => "Failed to log in"]);
+        respond(500, "Failed to log in");
     }
 }

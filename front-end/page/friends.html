@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Friends</title>
+    <link rel="stylesheet" href="../styles/cssReset.css">
+    <link rel="stylesheet" href="../styles/friendsModule.css">
+    <script src="../script/friends-script.js" defer></script>
+    <script src="../script/auth.js" defer></script>
+</head>
+<body class="friends-body">
+<main class="friends-shell">
+    <header class="friends-header">
+        <div>
+            <p class="friends-kicker">Friends</p>
+            <h1>Your Friends</h1>
+        </div>
+        <p class="friends-user-chip">
+            <span>Current user ID</span>
+            <span id="current-user-id"></span>
+        </p>
+    </header>
+
+    <nav class="friends-nav" aria-label="Friends pages">
+        <a href="friend.html">Add</a>
+        <a href="friend_requests.html">Requests</a>
+        <a href="friends.html" class="active">Friends</a>
+    </nav>
+
+    <section class="friends-grid two-columns">
+        <div class="friends-panel">
+            <div class="friends-panel-header">
+                <h2>Friends List</h2>
+            </div>
+
+            <form id="load-friends-form" class="friends-form">
+                <div class="friends-actions">
+                    <button type="submit" class="btn primary">Load Friends</button>
+                </div>
+                <p id="status" class="status-line"></p>
+            </form>
+
+            <ul id="friends-list" class="friends-list"></ul>
+        </div>
+
+        <aside class="friends-panel">
+            <div class="friends-panel-header">
+                <h2>Remove Manually</h2>
+            </div>
+
+            <form id="remove-friend-form" class="friends-form">
+                <div class="friends-field">
+                    <label for="friend-id">Friend ID</label>
+                    <input type="text" id="friend-id" name="friend_id" placeholder="Paste friend id" required>
+                </div>
+
+                <div class="friends-actions">
+                    <button type="submit" class="btn danger">Remove Friend</button>
+                </div>
+            </form>
+        </aside>
+    </section>
+
+    <div class="logout-row">
+        <button id="logout" class="btn">Logout</button>
+    </div>
+</main>
+</body>
+</html>
