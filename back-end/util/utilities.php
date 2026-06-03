@@ -61,7 +61,8 @@ function decayUserWeights($userId) {
     }
 }
 
-function search($q,
+function search($token,
+                $q,
                 $videoDuration = null,
                 $publishedAfter = null,
                 $publishedBefore = null,
@@ -69,7 +70,6 @@ function search($q,
                 $order = null,
                 $resultNumber = null) {
     global $db;
-    global $token;
     $apiKey = "&key=" . YT_API_KEY;
 
     $params = $q .

@@ -12,7 +12,7 @@ $userId = TokenManager::getUserId($token);
 //$userId = "2cb2ab06b4cfa99816d2c277eed74b03";
 
 function getRecommendations() {
-    global $db, $userId;
+    global $db, $userId, $token;
 
     $calc = new SimilarityCalculator();
 
@@ -54,7 +54,9 @@ function getRecommendations() {
 
     $query = urlencode(implode(' ', array_slice($tagsArray, 0, 10)));
 
-    $vids = search("q=" . $query,
+    $vids = search(
+        $token,
+        "q=" . $query,
         null,
         null,
         null,

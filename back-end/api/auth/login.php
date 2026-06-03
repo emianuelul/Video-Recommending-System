@@ -2,8 +2,7 @@
 require_once __DIR__ . '/../../../db/database.php';
 require_once __DIR__ . '/../../util/utilities.php';
 
-require_once __DIR__ . '/../../db/database.php';
-require_once __DIR__ . '/../utilities.php';
+global $db, $AVAILABLE_HOURS;
 
 function respond($status, $message, $data = []) {
     http_response_code($status);

@@ -1,6 +1,6 @@
 <?php
-require_once __DIR__ . '/../../db/database.php';
-require_once __DIR__ . '/../utilities.php';
+require_once __DIR__ . '/../../../db/database.php';
+require_once __DIR__ . '/../../util/utilities.php';
 
 $allowed_origins = ["http://127.0.0.1:8001", "http://localhost:8001"];
 $origin = $_SERVER['HTTP_ORIGIN'] ?? '';
@@ -12,7 +12,6 @@ if (in_array($origin, $allowed_origins, true)) {
 header('Access-Control-Allow-Methods: POST, OPTIONS');
 header('Access-Control-Allow-Headers: Content-Type, Authorization');
 header('Access-Control-Allow-Credentials: true');
-header('Content-Type: application/json');
 
 if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
     http_response_code(204);

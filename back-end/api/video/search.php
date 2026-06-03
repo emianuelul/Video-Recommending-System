@@ -5,7 +5,7 @@ require_once __DIR__ . '/../../util/config.php';
 require_once __DIR__ . '/../../class/VideoDTO.php';
 require_once __DIR__ . '/../../util/auth.php';
 
-auth();
+$token = auth();
 
 $q = "q=" . urlencode($_GET['q']);
 $videoDuration = isset($_GET['videoDuration']) ? "&videoDuration=" . $_GET['videoDuration'] : '';
@@ -23,4 +23,4 @@ if (!isset($_GET['q']) || trim($_GET['q']) === '') {
 }
 
 
-echo json_encode(search($q, $videoDuration, $publishedAfter, $publishedBefore, $relevanceLanguage, $order, $resultNumber));
+echo json_encode(search($token, $q, $videoDuration, $publishedAfter, $publishedBefore, $relevanceLanguage, $order, $resultNumber));
