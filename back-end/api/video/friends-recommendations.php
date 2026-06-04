@@ -5,10 +5,14 @@ require_once __DIR__ . '/../../util/auth.php';
 require_once __DIR__ . '/../../../db/database.php';
 require_once __DIR__ . '/../../util/utilities.php';
 
+if ($_SERVER["REQUEST_METHOD"] !== "GET") {
+    http_response_code(405);
+    header('Content-Type: application/json');
+    echo json_encode(["error" => "Method not allowed"]);
+    exit;
+}
+
 //$token = auth();
-
-//$userId = TokenManager::getUserId($token);
-
 $userId = "2cb2ab06b4cfa99816d2c277eed74b03";
 
 function getFriendsRecommendations() {

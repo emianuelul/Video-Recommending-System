@@ -5,6 +5,13 @@ require_once __DIR__ . '/../../util/auth.php';
 require_once __DIR__ . '/../../../db/database.php';
 require_once __DIR__ . '/../../util/utilities.php';
 
+if ($_SERVER["REQUEST_METHOD"] !== "GET") {
+    http_response_code(405);
+    header('Content-Type: application/json');
+    echo json_encode(["error" => "Method not allowed"]);
+    exit;
+}
+
 $token = auth();
 
 $userId = TokenManager::getUserId($token);
