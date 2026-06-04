@@ -146,3 +146,58 @@ function search($token,
     }
     return $videoDTOArray;
 }
+
+function countryTrending($token, $regionCode, $resultNumber = 24) {
+    global $db;
+    $apiKey = "&key=" . YT_API_KEY;
+
+    $url = "https://www.googleapis.com/youtube/v3/videos?part=snippet,contentDetails,statistics,topicDetails&chart=mostPopular&regionCode=" . urlencode($regionCode) . "&maxResults=" . (int)$resultNumber . $apiKey;
+    $urlNoApi = "https://www.googleapis.com/youtube/v3/videos?part=snippet,contentDetails,statistics,topicDetails&chart=mostPopular&regionCode=" . urlencode($regionCode) . "&maxResults=" . (int)$resultNumber;
+
+    $req = file_get_contents($url);
+
+    if ($req === false) {
+        $error = error_get_last();
+
+        echo json_encode([
+            'error' => 'Failed to fetch YouTube API response',
+            'details' => $error ? $error['message'] : 'Unknown error',
+            'url' => $urlNoApi
+        ]);
+        exit;
+    }
+
+    $data = json_decode($req, true);
+
+    if ($data === null) {
+        echo json_encode([
+            'error' => 'Invalid JSON returned by YouTube API',
+            'raw' => $req
+        ]);
+        exit;
+    }
+
+    $videoDTOArray = [];
+    if (isset($data['items'])) {
+        $userId = TokenManager::getUserId($token);
+
+        foreach ($data['items'] as $item) {
+            $videoDTO = new VideoDTO($item);
+
+            $stmt = $db->prepare("
+                SELECT 1 FROM user_likes
+                WHERE video_id = :video_id AND user_id = :user_id;
+            ");
+
+            $stmt->execute([
+                ":video_id" => $videoDTO->getId(),
+                ":user_id" => $userId
+            ]);
+
+            $videoDTO->setIsLikedByUser($stmt->fetch() != null);
+            $videoDTOArray[] = $videoDTO;
+        }
+    }
+
+    return $videoDTOArray;
+}

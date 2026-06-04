@@ -14,6 +14,10 @@ class VideoDTO implements JsonSerializable {
     private $viewCount;
     private $likeCount;
     private $commCount;
+    private $topicCategories;
+    private $audioLanguage;
+    private $thumbnails;
+    private $isLikedByUser;
 
     /**
      * @return mixed|string
@@ -207,16 +211,10 @@ class VideoDTO implements JsonSerializable {
         $this->isLikedByUser = $isLikedByUser;
     }
 
-    private $topicCategories;
-    private $audioLanguage;
-    private $thumbnails;
-
-	private $isLikedByUser;
-
-	/**
-	 * @throws Exception
-	 */
-	private function convertToSeconds($duration) {
+    /**
+     * @throws Exception
+     */
+    private function convertToSeconds($duration) {
         try {
             $interval = new DateInterval($duration);
 
@@ -267,7 +265,7 @@ class VideoDTO implements JsonSerializable {
             'topicCategories' => $this->topicCategories,
             'audioLanguage' => $this->audioLanguage,
             'thumbnails' => $this->thumbnails,
-		'isLikedByUser' => $this->isLikedByUser,
-	];
+            'isLikedByUser' => $this->isLikedByUser,
+        ];
     }
 }

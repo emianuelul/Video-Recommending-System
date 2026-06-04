@@ -30,7 +30,7 @@ function getFriendsRecommendations() {
         WHERE ul.video_id NOT IN (SELECT video_id FROM user_likes WHERE user_id = :uid)
         GROUP BY ul.video_id
         ORDER BY freq DESC
-        LIMIT 15"
+        LIMIT 24"
     );
 
     $friendsLikesSelect->execute([":uid" => $userId]);
