@@ -12,8 +12,8 @@ if ($_SERVER["REQUEST_METHOD"] !== "GET") {
     exit;
 }
 
-//$token = auth();
-$userId = "2cb2ab06b4cfa99816d2c277eed74b03";
+$token = auth();
+//$userId = "2cb2ab06b4cfa99816d2c277eed74b03";
 
 function getFriendsRecommendations() {
     global $db, $userId;

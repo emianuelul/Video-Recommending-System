@@ -12,11 +12,11 @@ if ($_SERVER["REQUEST_METHOD"] !== "GET") {
     exit;
 }
 
-//$token = auth();
-//
-//$userId = TokenManager::getUserId($token);
+$token = auth();
 
-$userId = "2cb2ab06b4cfa99816d2c277eed74b03";
+$userId = TokenManager::getUserId($token);
+
+//$userId = "2cb2ab06b4cfa99816d2c277eed74b03";
 
 function getCountryRecommendations() {
     global $db, $userId, $token;
