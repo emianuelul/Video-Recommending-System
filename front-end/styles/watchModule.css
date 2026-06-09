@@ -1,0 +1,400 @@
+
+
+@import url('https://fonts.googleapis.com/css2?family=Baloo+Bhai+2:wght@400;500;600&family=Doppio+One&display=swap');
+
+
+body.watch-page {
+    min-height: 100vh;
+    background:
+        linear-gradient(135deg, rgba(108, 99, 255, .09), transparent 34%),
+        linear-gradient(315deg, rgba(63, 61, 86, .08), transparent 30%),
+        rgb(247, 248, 252);
+    color: #252437;
+    font-family: "Baloo Bhai 2", Arial, sans-serif;
+}
+
+
+.watch-shell {
+    width: 94vw;
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 36px 0 60px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+
+.watch-topbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+}
+
+.watch-back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    color: #6C63FF;
+    font-family: "Doppio One", sans-serif;
+    font-size: .9rem;
+    text-decoration: none;
+    transition: opacity .2s ease;
+}
+
+.watch-back-link:hover { opacity: .7; }
+
+.watch-back-link svg {
+    width: 16px;
+    height: 16px;
+    stroke: currentColor;
+    fill: none;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    flex-shrink: 0;
+}
+
+.watch-nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.watch-nav a {
+    padding: .5rem .8rem;
+    border: 1px solid rgb(223, 223, 236);
+    border-radius: 5px;
+    background: white;
+    color: #3F3D56;
+    font-family: "Doppio One", sans-serif;
+    font-size: .9rem;
+    text-decoration: none;
+    transition: all .2s ease;
+}
+
+.watch-nav a:hover {
+    border-color: #6C63FF;
+    color: #6C63FF;
+    transform: translateY(-1px);
+}
+
+
+.watch-layout {
+    display: grid;
+    grid-template-columns: 1fr 340px;
+    gap: 22px;
+    align-items: start;
+}
+
+
+.watch-main {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+
+.watch-embed-card {
+    border: 2px solid rgb(240, 240, 240);
+    border-radius: 6px;
+    background: white;
+    box-shadow: 0 18px 45px rgba(63, 61, 86, .08);
+    overflow: hidden;
+}
+
+.watch-embed-ratio {
+    position: relative;
+    width: 100%;
+    padding-top: 56.25%; 
+}
+
+.watch-embed-ratio iframe {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    border: 0;
+    display: block;
+}
+
+
+.watch-meta-card {
+    border: 2px solid rgb(240, 240, 240);
+    border-radius: 6px;
+    background: white;
+    box-shadow: 0 6px 20px rgba(63, 61, 86, .05);
+    padding: 22px 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.watch-meta-title {
+    font-family: "Doppio One", sans-serif;
+    font-size: 1.35rem;
+    line-height: 1.25;
+    color: #3F3D56;
+}
+
+.watch-meta-desc {
+    font-size: .95rem;
+    color: #6a6885;
+    line-height: 1.6;
+}
+
+.watch-meta-desc.collapsed {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.watch-meta-expand {
+    align-self: flex-start;
+    background: none;
+    border: none;
+    color: #6C63FF;
+    font-family: "Doppio One", sans-serif;
+    font-size: .85rem;
+    cursor: pointer;
+    padding: 0;
+    transition: opacity .2s ease;
+}
+
+.watch-meta-expand:hover { opacity: .7; }
+
+.watch-meta-actions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding-top: 4px;
+    border-top: 1px solid rgb(240, 240, 242);
+}
+
+.watch-like-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    min-height: 38px;
+    padding: .45rem .85rem;
+    border: 1px solid #6C63FF;
+    border-radius: 5px;
+    background: white;
+    color: #6C63FF;
+    font-family: "Baloo Bhai 2", Arial, sans-serif;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all .2s ease;
+}
+
+.watch-like-btn:hover,
+.watch-like-btn.liked {
+    background: #6C63FF;
+    color: white;
+}
+
+.watch-yt-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: .45rem .85rem;
+    border: 1px solid rgb(223, 223, 236);
+    border-radius: 5px;
+    color: #3F3D56;
+    font-family: "Doppio One", sans-serif;
+    font-size: .88rem;
+    text-decoration: none;
+    transition: all .2s ease;
+}
+
+.watch-yt-link:hover {
+    border-color: #6C63FF;
+    color: #6C63FF;
+    transform: translateY(-1px);
+}
+
+
+.watch-sidebar {
+    border: 2px solid rgb(240, 240, 240);
+    border-radius: 6px;
+    background: white;
+    box-shadow: 0 18px 45px rgba(63, 61, 86, .08);
+    display: flex;
+    flex-direction: column;
+    max-height: calc(100vh - 120px);
+    position: sticky;
+    top: 24px;
+}
+
+.watch-sidebar-header {
+    padding: 18px 18px 14px;
+    border-bottom: 1px solid rgb(240, 240, 242);
+    flex-shrink: 0;
+}
+
+.watch-sidebar-kicker {
+    color: #6C63FF;
+    font-family: "Doppio One", sans-serif;
+    font-size: .75rem;
+    text-transform: uppercase;
+    letter-spacing: .08em;
+}
+
+.watch-sidebar-header h2 {
+    font-family: "Doppio One", sans-serif;
+    font-size: 1.1rem;
+    color: #3F3D56;
+    margin-top: 2px;
+}
+
+.watch-sidebar-list {
+    overflow-y: auto;
+    flex: 1;
+    padding: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    scrollbar-width: thin;
+    scrollbar-color: rgb(220, 220, 232) transparent;
+}
+
+.watch-sidebar-list::-webkit-scrollbar {
+    width: 5px;
+}
+
+.watch-sidebar-list::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.watch-sidebar-list::-webkit-scrollbar-thumb {
+    background: rgb(220, 220, 232);
+    border-radius: 3px;
+}
+
+
+.watch-sidebar-card {
+    display: grid;
+    grid-template-columns: 100px 1fr;
+    gap: 10px;
+    padding: 10px;
+    border: 1px solid rgb(232, 232, 242);
+    border-radius: 6px;
+    background: rgb(250, 250, 253);
+    cursor: pointer;
+    transition: all .2s ease;
+    text-decoration: none;
+    color: inherit;
+}
+
+.watch-sidebar-card:hover {
+    border-color: #6C63FF;
+    background: rgb(246, 246, 255);
+    transform: translateX(2px);
+}
+
+.watch-sidebar-thumb {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
+    border-radius: 4px;
+    display: block;
+}
+
+.watch-sidebar-info {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    min-width: 0;
+}
+
+.watch-sidebar-title {
+    font-family: "Doppio One", sans-serif;
+    font-size: .88rem;
+    line-height: 1.3;
+    color: #3F3D56;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.watch-sidebar-meta {
+    font-size: .78rem;
+    color: #9896ad;
+}
+
+
+.watch-sidebar-status {
+    padding: 20px 18px;
+    color: #9896ad;
+    font-size: .9rem;
+    text-align: center;
+}
+
+.watch-sidebar-status.error {
+    color: #c0392b;
+}
+
+
+@keyframes shimmer {
+    0% { background-position: -400px 0; }
+    100% { background-position: 400px 0; }
+}
+
+.skeleton {
+    background: linear-gradient(90deg, rgb(240,240,245) 25%, rgb(250,250,255) 50%, rgb(240,240,245) 75%);
+    background-size: 800px 100%;
+    animation: shimmer 1.4s infinite linear;
+    border-radius: 4px;
+}
+
+.skeleton-card {
+    display: grid;
+    grid-template-columns: 100px 1fr;
+    gap: 10px;
+    padding: 10px;
+    border: 1px solid rgb(232, 232, 242);
+    border-radius: 6px;
+}
+
+.skeleton-thumb {
+    aspect-ratio: 16/9;
+}
+
+.skeleton-lines {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    padding-top: 2px;
+}
+
+.skeleton-line { height: 12px; }
+.skeleton-line.short { width: 60%; }
+
+
+@media screen and (max-width: 960px) {
+    .watch-layout {
+        grid-template-columns: 1fr;
+    }
+
+    .watch-sidebar {
+        position: static;
+        max-height: 460px;
+    }
+}
+
+@media screen and (max-width: 560px) {
+    .watch-shell {
+        padding: 20px 0 40px;
+    }
+
+    .watch-meta-card {
+        padding: 16px;
+    }
+
+    .watch-meta-title {
+        font-size: 1.1rem;
+    }
+}

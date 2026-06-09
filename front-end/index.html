@@ -2,15 +2,115 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8"/>
-    <meta
-            name="viewport"
-            content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"
-    />
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"/>
     <meta http-equiv="X-UA-Compatible" content="ie=edge"/>
-    <title>Document</title>
+    <meta name="description" content="Discover videos tailored to you — powered by similarity scoring, friend activity, and your personal watch history."/>
+    <title>SIV — Similar Video Recommender</title>
+    <link rel="stylesheet" href="styles/cssReset.css"/>
+    <link rel="stylesheet" href="styles/landingModule.css"/>
+    <link rel="preconnect" href="https://fonts.googleapis.com"/>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+    <link href="https://fonts.googleapis.com/css2?family=Baloo+Bhai+2:wght@400;500;600&family=Doppio+One&display=swap" rel="stylesheet"/>
 </head>
 <body>
-<a href="/page/login.html">login</a>
-<a href="/page/register.html">register</a>
+
+
+<nav class="landing-nav" role="navigation" aria-label="Main navigation">
+    <a href="/" class="landing-nav-logo" id="landing-logo">SIV<span>.</span></a>
+    <div class="landing-nav-links">
+        <a href="/page/login.html" class="btn btn-outline" id="nav-login-btn">Log in</a>
+        <a href="/page/register.html" class="btn btn-primary" id="nav-register-btn">Sign up</a>
+    </div>
+</nav>
+
+
+<main>
+    <div class="landing-wrapper">
+
+        
+        <section class="landing-hero" aria-labelledby="hero-title">
+            <div class="landing-hero-text">
+                <p class="landing-hero-eyebrow">Video Recommender</p>
+                <h1 class="landing-hero-title" id="hero-title">
+                    Videos you'll actually<br/>
+                    want to <span>watch</span>
+                </h1>
+                <p class="landing-hero-desc">
+                    SIV recommends YouTube videos based on what you've watched and liked,
+                    what your friends are into, and where you're from — not just what's trending.
+                </p>
+                <div class="landing-hero-actions">
+                    <a href="/page/register.html" class="btn btn-primary" id="hero-register-btn">Get started</a>
+                    <a href="/page/login.html" class="btn btn-outline" id="hero-login-btn">Log in</a>
+                </div>
+            </div>
+
+            <div class="landing-hero-image" aria-hidden="true">
+                <img
+                    src="https://res.cloudinary.com/multimediarog/image/upload/v1653590588/HACKATHON-FIICODE/undraw_access_account_re_8spm_aesgpc.svg"
+                    alt="Person browsing a personalised video feed"
+                    width="380"
+                    height="380"
+                />
+            </div>
+        </section>
+
+        
+        <section aria-label="Features" class="landing-features">
+
+            <article class="landing-feature-card" id="feature-recommendations">
+                <div class="landing-feature-icon" aria-hidden="true">
+                    
+                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                        <path d="M12 2l2.09 6.26L21 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                    </svg>
+                </div>
+                <h3>Personalised picks</h3>
+                <p>Scores every video against your watch history, liked tags, and categories using a weighted similarity algorithm.</p>
+            </article>
+
+            <article class="landing-feature-card" id="feature-friends">
+                <div class="landing-feature-icon" aria-hidden="true">
+                    
+                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                        <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+                        <circle cx="9" cy="7" r="4"/>
+                        <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
+                        <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+                    </svg>
+                </div>
+                <h3>Friend activity</h3>
+                <p>See what people you follow are watching and get recommendations based on your social circle's taste.</p>
+            </article>
+
+            <article class="landing-feature-card" id="feature-search">
+                <div class="landing-feature-icon" aria-hidden="true">
+                    
+                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                        <circle cx="11" cy="11" r="8"/>
+                        <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+                    </svg>
+                </div>
+                <h3>Multi-criteria search</h3>
+                <p>Filter by language, duration, country, and category. Export your feed as RSS to watch in any podcast app.</p>
+            </article>
+
+        </section>
+
+    </div>
+</main>
+
+
+<footer>
+    <div class="landing-footer">
+        <span>© 2026 SIV — Similar Video Recommender</span>
+        <div>
+            <a href="/page/login.html" id="footer-login-link">Log in</a>
+            &nbsp;·&nbsp;
+            <a href="/page/register.html" id="footer-register-link">Register</a>
+        </div>
+    </div>
+</footer>
+
 </body>
 </html>

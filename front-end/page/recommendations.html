@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"/>
+    <meta http-equiv="X-UA-Compatible" content="ie=edge"/>
+    <title>Recommendations</title>
+    <link rel="stylesheet" href="/styles/cssReset.css"/>
+    <link rel="stylesheet" href="/styles/searchModule.css"/>
+    <link rel="stylesheet" href="/styles/recommendationsModule.css"/>
+    <link rel="stylesheet" href="/styles/videoCard.css"/>
+    <link href="https://fonts.googleapis.com/css2?family=Baloo+Bhai+2:wght@400;500;600&family=Doppio+One&display=swap" rel="stylesheet"/>
+    <script src="../script/utils/LogoutButton.js" defer></script>
+    <script src="../script/auth.js" defer></script>
+    <script src="../script/recommendations-script.js" type="module" defer></script>
+</head>
+<body class="recommendations-page">
+<div class="search-shell">
+    <div class="search-header">
+        <div>
+            <p class="search-kicker">Video discovery</p>
+            <h1>Recommendations</h1>
+        </div>
+        <div class="search-nav">
+            <a href="recommendations.html" class="active">Recommendations</a>
+            <a href="search.html">Search</a>
+            <a href="rss_export.html">RSS</a>
+            <a href="friend.html">Friends</a>
+            <a href="#" id="logout" class="btn">Logout</a>
+        </div>
+    </div>
+
+    <div class="recommendations-container">
+        
+        <section class="rec-section">
+            <div class="rec-header">
+                <h2>For You</h2>
+                <p>Based on your watch history and preferences</p>
+            </div>
+            <div class="horizontal-scroll" id="recs-for-you">
+                
+            </div>
+        </section>
+
+        
+        <section class="rec-section">
+            <div class="rec-header">
+                <h2>Popular in Your Country</h2>
+                <p>Trending near you</p>
+            </div>
+            <div class="horizontal-scroll" id="recs-country">
+                
+            </div>
+        </section>
+
+        
+        <section class="rec-section">
+            <div class="rec-header">
+                <h2>Popular Amongst Friends</h2>
+                <p>What your social circle is watching</p>
+            </div>
+            <div class="horizontal-scroll" id="recs-friends">
+                
+            </div>
+        </section>
+    </div>
+</div>
+</body>
+</html>

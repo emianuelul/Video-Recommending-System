@@ -249,6 +249,42 @@ class VideoDTO implements JsonSerializable {
         $this->audioLanguage = $data['snippet']['defaultAudioLanguage'] ?? '';
     }
 
+    /**
+     * Reconstruct a VideoDTO from the flat shape produced by jsonSerialize()
+     * (i.e. what the frontend sends back after storing the card data).
+     */
+    public static function fromSerialized(array $data): self {
+        $dto = new self([
+            'id' => $data['id'] ?? '',
+            'snippet' => [
+                'title'                => $data['title'] ?? '',
+                'description'          => $data['description'] ?? '',
+                'channelId'            => $data['channelId'] ?? '',
+                'channelTitle'         => $data['channelTitle'] ?? '',
+                'tags'                 => $data['tags'] ?? [],
+                'categoryId'           => $data['categoryId'] ?? '',
+                'thumbnails'           => $data['thumbnails'] ?? [],
+                'defaultAudioLanguage' => $data['audioLanguage'] ?? '',
+            ],
+            // durationSeconds is already an int — skip ISO-8601 parsing
+            'contentDetails' => ['duration' => 'PT0S'],
+            'statistics' => [
+                'viewCount'    => $data['viewCount'] ?? 0,
+                'likeCount'    => $data['likeCount'] ?? 0,
+                'commentCount' => $data['commCount'] ?? 0,
+            ],
+            'topicDetails' => [
+                'topicCategories' => $data['topicCategories'] ?? [],
+            ],
+        ]);
+
+        // Overwrite durationSeconds directly — the constructor parsed 'PT0S' above
+        $dto->durationSeconds = (int)($data['durationSeconds'] ?? 0);
+        $dto->isLikedByUser   = $data['isLikedByUser'] ?? false;
+
+        return $dto;
+    }
+
     public function jsonSerialize(): mixed {
         return [
             'id' => $this->id,

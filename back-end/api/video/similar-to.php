@@ -21,7 +21,7 @@ if (empty($body['video'])) {
     exit;
 }
 
-$sourceDto = new VideoDTO($body['video']);
+$sourceDto = VideoDTO::fromSerialized($body['video']);
 
 $tagSelect = $db->prepare("SELECT tag, weight FROM user_tags WHERE user_id = :user_id ORDER BY weight DESC LIMIT 10");
 $catSelect = $db->prepare("SELECT category_id, weight FROM user_categories WHERE user_id = :user_id ORDER BY weight DESC LIMIT 5");
@@ -46,15 +46,24 @@ $exclVidArray = array_column($excludedVids, 'video_id');
 $userLanguagesArray = json_decode($prefs['languages'] ?? '[]', true) ?: [];
 $userDurationArray = json_decode($prefs['duration'] ?? '[]', true) ?: [];
 
-$queryTags = array_slice(array_unique(array_map(fn($t) => strtolower($t), $sourceDto->tags)), 0, 8);
-$query = urlencode(implode(' ', array_filter(array_merge($queryTags, [$sourceDto->categoryId]))));
+// Build a short, safe query from the source video's tags + category.
+// Cap individual tags at 30 chars and the full query at 100 chars so the
+// YouTube API URL stays well under its 2 KB limit.
+$rawTags     = array_filter($sourceDto->getTags() ?? [], fn($t) => strlen($t) <= 30);
+$queryTags   = array_slice(array_unique(array_map(fn($t) => strtolower($t), $rawTags)), 0, 5);
+$queryParts  = array_filter(array_merge($queryTags, [$sourceDto->getCategoryId()]));
+$queryString = implode(' ', $queryParts);
+if (strlen($queryString) > 100) {
+    $queryString = substr($queryString, 0, 100);
+}
+$query = urlencode($queryString);
 
-$durationSecs = $sourceDto->durationSeconds;
+$durationSecs = $sourceDto->getDurationSeconds();
 $videoDuration = null;
 if ($durationSecs > 0) {
-    if ($durationSecs < 240) $videoDuration = "&videoDuration=short";
+    if ($durationSecs < 240)       $videoDuration = "&videoDuration=short";
     elseif ($durationSecs <= 1200) $videoDuration = "&videoDuration=medium";
-    else $videoDuration = "&videoDuration=long";
+    else                           $videoDuration = "&videoDuration=long";
 }
 
 $candidates = search($token, "q=" . $query, $videoDuration, null, null, null, 'relevance', "&maxResults=" . 24);

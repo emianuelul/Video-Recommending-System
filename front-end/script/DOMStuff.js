@@ -62,22 +62,12 @@ export default class DOMStuff {
     desc.classList.add("video-description");
 
     const maxChars = 45;
-    let expanded = false;
-
     const shortText =
       description.length > maxChars
         ? description.slice(0, maxChars) + "..."
         : description;
 
     desc.textContent = shortText;
-
-    desc.addEventListener("click", () => {
-      expanded = !expanded;
-
-      desc.textContent = expanded ? description : shortText;
-
-      desc.classList.toggle("expanded", expanded);
-    });
 
     const likeBtn = document.createElement("button");
     likeBtn.classList.add("like-button");
@@ -126,11 +116,29 @@ export default class DOMStuff {
       }
     });
 
+    const watchUrl = `/page/watch.html?v=${videoId}`;
+
+    thumb.style.cursor = "pointer";
+    thumb.addEventListener("click", () => {
+      sessionStorage.setItem("watchVideo", JSON.stringify(video));
+      window.location.href = watchUrl;
+    });
+
+    titleEl.style.cursor = "pointer";
+    titleEl.addEventListener("click", () => {
+      sessionStorage.setItem("watchVideo", JSON.stringify(video));
+      window.location.href = watchUrl;
+    });
+
     const link = document.createElement("a");
-    link.href = `https://www.youtube.com/watch?v=${videoId}`;
-    link.target = "_blank";
-    link.textContent = "Watch Video";
+    link.href = watchUrl;
+    link.textContent = "Watch";
     link.classList.add("video-link");
+    link.addEventListener("click", (e) => {
+      e.preventDefault();
+      sessionStorage.setItem("watchVideo", JSON.stringify(video));
+      window.location.href = watchUrl;
+    });
 
     card.append(thumb, titleEl, desc, likeBtn, link);
 

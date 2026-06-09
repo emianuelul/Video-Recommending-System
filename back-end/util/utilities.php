@@ -1,7 +1,7 @@
 <?php
 
 require_once __DIR__ . '/../../db/database.php';
-require_once __DIR__ . '/../config.php';
+require_once __DIR__ . '/config.php';
 
 $categoriesList = [
     1 => "Film & Animation",
@@ -72,15 +72,23 @@ function search($token,
     global $db;
     $apiKey = "&key=" . YT_API_KEY;
 
-    $params = $q .
-        $videoDuration .
-        $publishedAfter .
-        $publishedBefore .
-        $relevanceLanguage .
-        $order .
-        $resultNumber;
+    // Each optional segment must already carry its own &key=value prefix,
+    // OR be passed as a plain value here and prefixed below.
+    // We normalise $order here so callers can pass either "&order=relevance"
+    // or just "relevance" without causing concatenation bugs.
+    if ($order !== null && !str_starts_with($order, '&')) {
+        $order = "&order=" . urlencode($order);
+    }
 
-    $url = "https://www.googleapis.com/youtube/v3/search?part=snippet&type=video&" . $params . $apiKey;
+    $params = $q .
+        ($videoDuration ?? '') .
+        ($publishedAfter ?? '') .
+        ($publishedBefore ?? '') .
+        ($relevanceLanguage ?? '') .
+        ($order ?? '') .
+        ($resultNumber ?? '');
+
+    $url      = "https://www.googleapis.com/youtube/v3/search?part=snippet&type=video&" . $params . $apiKey;
     $urlNoApi = "https://www.googleapis.com/youtube/v3/search?part=snippet&type=video&" . $params;
 
     $req = file_get_contents($url);

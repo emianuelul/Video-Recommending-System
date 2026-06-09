@@ -30,12 +30,7 @@
 
 .video-description {
     color: rgb(101, 101, 122);
-    cursor: pointer;
     font-size: .92rem;
-}
-
-.video-description.expanded {
-    color: #3F3D56;
 }
 
 .like-button {

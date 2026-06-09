@@ -1,0 +1,292 @@
+
+
+@import url('https://fonts.googleapis.com/css2?family=Baloo+Bhai+2:wght@400;500;600&family=Doppio+One&display=swap');
+
+
+body {
+    min-height: 100vh;
+    background:
+        linear-gradient(135deg, rgba(108, 99, 255, .09), transparent 34%),
+        linear-gradient(315deg, rgba(63, 61, 86, .08), transparent 30%),
+        rgb(247, 248, 252);
+    color: #252437;
+    font-family: "Baloo Bhai 2", Arial, sans-serif;
+    display: flex;
+    flex-direction: column;
+}
+
+
+.landing-nav {
+    width: 94vw;
+    max-width: 1120px;
+    margin: 0 auto;
+    padding: 22px 0 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.landing-nav-logo {
+    font-family: "Doppio One", sans-serif;
+    font-size: 1.35rem;
+    color: #3F3D56;
+    letter-spacing: .02em;
+    text-decoration: none;
+}
+
+.landing-nav-logo span {
+    color: #6C63FF;
+}
+
+.landing-nav-links {
+    display: flex;
+    gap: 12px;
+}
+
+
+.landing-wrapper {
+    width: 94vw;
+    max-width: 1120px;
+    margin: 0 auto;
+    padding: 40px 0 60px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+}
+
+
+.landing-hero {
+    display: grid;
+    grid-template-columns: 1.1fr .9fr;
+    gap: 35px;
+    align-items: center;
+    border: 2px solid rgb(240, 240, 240);
+    border-radius: 6px;
+    background-color: white;
+    box-shadow: 0 20px 45px rgba(63, 61, 86, .08);
+    padding: 48px 40px;
+}
+
+.landing-hero-text {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.landing-hero-eyebrow {
+    font-size: .85rem;
+    font-weight: 600;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    color: #6C63FF;
+}
+
+.landing-hero-title {
+    font-family: "Doppio One", sans-serif;
+    font-size: 2.6rem;
+    line-height: 1.1;
+    color: #3F3D56;
+}
+
+.landing-hero-title span {
+    color: #6C63FF;
+}
+
+.landing-hero-desc {
+    font-size: 1.05rem;
+    color: #4a4862;
+    line-height: 1.6;
+    max-width: 420px;
+}
+
+.landing-hero-actions {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-top: 8px;
+}
+
+
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 130px;
+    min-height: 44px;
+    padding: .6rem 1.3rem;
+    border-radius: 5px;
+    font-family: "Baloo Bhai 2", Arial, sans-serif;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    text-decoration: none;
+    transition: all .2s ease;
+}
+
+.btn-primary {
+    border: 1px solid #6C63FF;
+    background-color: #6C63FF;
+    color: white;
+}
+
+.btn-primary:hover {
+    background-color: #5a52e0;
+    border-color: #5a52e0;
+    transform: translateY(-1px);
+    box-shadow: 0 6px 20px rgba(108, 99, 255, .28);
+}
+
+.btn-outline {
+    border: 1px solid #6C63FF;
+    background-color: white;
+    color: #6C63FF;
+}
+
+.btn-outline:hover {
+    background-color: #6C63FF;
+    color: white;
+    transform: translateY(-1px);
+}
+
+
+.landing-hero-image {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-left: 24px;
+    border-left: 2px solid #3F3D56;
+    min-width: 0;
+}
+
+.landing-hero-image img {
+    width: 100%;
+    max-width: 380px;
+    height: auto;
+}
+
+
+.landing-features {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+}
+
+.landing-feature-card {
+    border: 1px solid rgb(232, 232, 242);
+    border-radius: 6px;
+    background: white;
+    box-shadow: 0 6px 20px rgba(63, 61, 86, .05);
+    padding: 24px 22px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    transition: box-shadow .2s ease, transform .2s ease;
+}
+
+.landing-feature-card:hover {
+    box-shadow: 0 12px 32px rgba(63, 61, 86, .10);
+    transform: translateY(-2px);
+}
+
+.landing-feature-icon {
+    width: 38px;
+    height: 38px;
+    border-radius: 8px;
+    background: rgba(108, 99, 255, .1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.landing-feature-icon svg {
+    width: 20px;
+    height: 20px;
+    stroke: #6C63FF;
+    fill: none;
+    stroke-width: 1.8;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+.landing-feature-card h3 {
+    font-family: "Doppio One", sans-serif;
+    font-size: 1rem;
+    color: #3F3D56;
+}
+
+.landing-feature-card p {
+    font-size: .9rem;
+    color: #6a6885;
+    line-height: 1.55;
+}
+
+
+.landing-footer {
+    width: 94vw;
+    max-width: 1120px;
+    margin: 0 auto;
+    padding: 18px 0 28px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-top: 1px solid rgb(232, 232, 242);
+    font-size: .85rem;
+    color: #9896ad;
+}
+
+.landing-footer a {
+    color: #6C63FF;
+    text-decoration: none;
+    transition: opacity .2s ease;
+}
+
+.landing-footer a:hover {
+    opacity: .7;
+}
+
+
+@media screen and (max-width: 900px) {
+    .landing-hero {
+        grid-template-columns: 1fr;
+        padding: 32px 28px;
+    }
+
+    .landing-hero-image {
+        display: none;
+    }
+
+    .landing-features {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+@media screen and (max-width: 580px) {
+    .landing-wrapper {
+        padding: 24px 0 40px;
+        gap: 20px;
+    }
+
+    .landing-hero {
+        padding: 24px 18px;
+    }
+
+    .landing-hero-title {
+        font-size: 2rem;
+    }
+
+    .landing-features {
+        grid-template-columns: 1fr;
+    }
+
+    .landing-nav {
+        padding-top: 16px;
+    }
+
+    .landing-footer {
+        flex-direction: column;
+        gap: 6px;
+        text-align: center;
+    }
+}

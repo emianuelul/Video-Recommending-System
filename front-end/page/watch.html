@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"/>
+    <meta http-equiv="X-UA-Compatible" content="ie=edge"/>
+    <meta name="description" content="Watch a video and discover similar recommendations personalised for you."/>
+    <title>Watch — SIV</title>
+    <link rel="stylesheet" href="/styles/cssReset.css"/>
+    <link rel="stylesheet" href="/styles/watchModule.css"/>
+    <link rel="preconnect" href="https://fonts.googleapis.com"/>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+    <link href="https://fonts.googleapis.com/css2?family=Baloo+Bhai+2:wght@400;500;600&family=Doppio+One&display=swap" rel="stylesheet"/>
+    <script src="/script/utils/LogoutButton.js" defer></script>
+    <script src="/script/auth.js" defer></script>
+    <script src="/script/watch-script.js" type="module" defer></script>
+</head>
+<body class="watch-page">
+
+<div class="watch-shell">
+
+    
+    <div class="watch-topbar">
+        <a href="javascript:history.back()" class="watch-back-link" id="watch-back">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+                <polyline points="15 18 9 12 15 6"/>
+            </svg>
+            Back
+        </a>
+
+        <nav class="watch-nav" aria-label="Page navigation">
+            <a href="/page/recommendations.html">Recommendations</a>
+            <a href="/page/search.html">Search</a>
+            <a href="/page/rss_export.html">RSS</a>
+            <a href="/page/friend.html">Friends</a>
+            <a href="#" id="logout" class="btn">Logout</a>
+        </nav>
+    </div>
+
+    
+    <div class="watch-layout">
+
+        
+        <main class="watch-main">
+
+            
+            <div class="watch-embed-card">
+                <div class="watch-embed-ratio" id="watch-embed-ratio" aria-label="Video player">
+                    
+                </div>
+            </div>
+
+            
+            <div class="watch-meta-card">
+                <h1 class="watch-meta-title" id="watch-meta-title">Loading…</h1>
+                <p class="watch-meta-desc collapsed" id="watch-meta-desc"></p>
+                <button class="watch-meta-expand" id="watch-meta-expand" hidden>Show more</button>
+
+                <div class="watch-meta-actions">
+                    <button class="watch-like-btn" id="watch-like-btn" aria-label="Like this video">
+                        ♡ Like
+                    </button>
+                    <a
+                        href="#"
+                        class="watch-yt-link"
+                        id="watch-yt-link"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        aria-label="Open on YouTube"
+                    >
+                        ↗ Open on YouTube
+                    </a>
+                </div>
+            </div>
+
+        </main>
+
+        
+        <aside class="watch-sidebar" aria-label="Similar videos">
+            <div class="watch-sidebar-header">
+                <p class="watch-sidebar-kicker">Recommended</p>
+                <h2>Similar Videos</h2>
+            </div>
+            <div class="watch-sidebar-list" id="watch-sidebar-list" role="list">
+                
+            </div>
+            <p class="watch-sidebar-status" id="watch-sidebar-status" hidden></p>
+        </aside>
+
+    </div>
+
+</div>
+
+</body>
+</html>
