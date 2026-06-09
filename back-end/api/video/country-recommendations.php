@@ -15,11 +15,12 @@ if ($_SERVER["REQUEST_METHOD"] !== "GET") {
 $token = auth();
 
 $userId = TokenManager::getUserId($token);
+$regionCode = '';
 
 //$userId = "2cb2ab06b4cfa99816d2c277eed74b03";
 
 function getCountryRecommendations() {
-    global $db, $userId, $token;
+    global $db, $userId, $token, $regionCode;
 
     $calc = new SimilarityCalculator();
 

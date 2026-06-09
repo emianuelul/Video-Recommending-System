@@ -6,12 +6,13 @@
     <title>Friend Requests</title>
     <link rel="stylesheet" href="../styles/cssReset.css">
     <link rel="stylesheet" href="../styles/friendsModule.css">
+    <script src="../script/utils/LogoutButton.js" defer></script>
     <script src="../script/friend-requests-script.js" defer></script>
     <script src="../script/auth.js" defer></script>
 </head>
 <body class="friends-body">
-<main class="friends-shell">
-    <header class="friends-header">
+<div class="friends-shell">
+    <div class="friends-header">
         <div>
             <p class="friends-kicker">Friends</p>
             <h1>Friend Requests</h1>
@@ -20,15 +21,15 @@
             <span>Current user ID</span>
             <span id="current-user-id"></span>
         </p>
-    </header>
+    </div>
 
-    <nav class="friends-nav" aria-label="Friends pages">
+    <div class="friends-nav">
         <a href="friend.html">Add</a>
         <a href="friend_requests.html" class="active">Requests</a>
         <a href="friends.html">Friends</a>
-    </nav>
+    </div>
 
-    <section class="friends-grid">
+    <div class="friends-grid">
         <div class="friends-panel">
             <div class="friends-panel-header">
                 <h2>Requests</h2>
@@ -53,7 +54,12 @@
 
             <ul id="requests-list" class="friends-list"></ul>
         </div>
-    </section>
-</main>
+    </div>
+    <div class="logout-row">
+        <button id="logout" class="btn">Logout</button>
+        <a href="search.html" class="btn">Search</a>
+        <a href="rss_export.html" class="btn">RSS</a>
+    </div>
+</div>
 </body>
 </html>

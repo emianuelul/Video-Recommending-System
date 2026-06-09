@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RSS Export</title>
+    <link rel="stylesheet" href="../styles/cssReset.css">
+    <link rel="stylesheet" href="../styles/rssModule.css">
+    <script src="../script/utils/LogoutButton.js" defer></script>
+    <script src="../script/auth.js" defer></script>
+    <script src="../script/rss-export-script.js" type="module" defer></script>
+</head>
+<body class="rss-body">
+<div class="rss-shell">
+    <div class="rss-header">
+        <div>
+            <p class="rss-kicker">Export</p>
+            <h1>RSS Feed</h1>
+        </div>
+        <div class="rss-nav">
+            <a href="search.html">Search</a>
+            <a href="rss_export.html" class="active">RSS</a>
+            <a href="friend.html">Friends</a>
+            <a href="#" id="logout" class="btn">Logout</a>
+        </div>
+    </div>
+
+    <div class="rss-panel">
+        <div class="rss-panel-header">
+            <h2>Choose a feed</h2>
+        </div>
+
+        <div class="rss-feed-list">
+            <article class="rss-feed-card">
+                <div>
+                    <h3>Personal recommendations</h3>
+                    <p>Videos recommended from your profile, tags and categories.</p>
+                </div>
+                <div class="rss-actions">
+                    <button class="btn primary" data-feed="personal" type="button">Open</button>
+                    <button class="btn" data-copy="personal" type="button">Copy link</button>
+                </div>
+            </article>
+
+            <article class="rss-feed-card">
+                <div>
+                    <h3>Country recommendations</h3>
+                    <p>Trending videos from the country selected in your preferences.</p>
+                </div>
+                <div class="rss-actions">
+                    <button class="btn primary" data-feed="country" type="button">Open</button>
+                    <button class="btn" data-copy="country" type="button">Copy link</button>
+                </div>
+            </article>
+
+            <article class="rss-feed-card">
+                <div>
+                    <h3>Friends recommendations</h3>
+                    <p>Videos liked by your friends, exported as an RSS feed.</p>
+                </div>
+                <div class="rss-actions">
+                    <button class="btn primary" data-feed="friends" type="button">Open</button>
+                    <button class="btn" data-copy="friends" type="button">Copy link</button>
+                </div>
+            </article>
+        </div>
+
+        <p id="rss-status" class="rss-status"></p>
+    </div>
+
+    <div class="rss-panel">
+        <div class="rss-panel-header">
+            <h2>Generated links</h2>
+        </div>
+        <div class="rss-links" id="rss-links"></div>
+    </div>
+</div>
+</body>
+</html>

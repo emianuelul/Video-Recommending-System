@@ -4,7 +4,7 @@ const loadFriendsForm = document.getElementById("load-friends-form");
 const removeFriendForm = document.getElementById("remove-friend-form");
 const userIdInput = localStorage.getItem("userId") || "";
 const currentUserIdText = document.getElementById("current-user-id");
-const friendIdInput = document.getElementById("friend-id");
+const friendUsernameInput = document.getElementById("friend-username");
 const friendsList = document.getElementById("friends-list");
 const statusText = document.getElementById("status");
 
@@ -73,12 +73,12 @@ function renderFriends(friends) {
         actions.className = "friend-list-actions";
 
         title.textContent = friend.friend_username;
-        meta.textContent = `#${friend.friendship_id} ${friend.friend_id}`;
+        meta.textContent = `Friends since ${friend.created_at}`;
 
         removeButton.type = "button";
         removeButton.textContent = "Remove";
         removeButton.className = "btn danger";
-        removeButton.addEventListener("click", () => removeFriendByFriendshipId(friend.friendship_id));
+        removeButton.addEventListener("click", () => removeFriendByUsername(friend.friend_username));
 
         info.appendChild(title);
         info.appendChild(meta);
@@ -89,25 +89,12 @@ function renderFriends(friends) {
     });
 }
 
-async function removeFriendByFriendshipId(friendshipId) {
-    const data = await fetchJson(`${API_BASE}/remove_friend.php`, {
-        method: "POST",
-        body: JSON.stringify({ friendship_id: friendshipId })
-    });
-
-    setStatus(data.message || "Friend removed");
-
-    if (data.status === 200) {
-        loadFriends();
-    }
-}
-
-async function removeFriendByUserIds() {
+async function removeFriendByUsername(username) {
     const userId = userIdInput.trim();
-    const friendId = friendIdInput.value.trim();
+    const friendUsername = username.trim();
 
-    if (!userId || !friendId) {
-        setStatus("Missing friends IDs");
+    if (!userId || !friendUsername) {
+        setStatus("Missing friend username");
         return;
     }
 
@@ -115,14 +102,14 @@ async function removeFriendByUserIds() {
         method: "POST",
         body: JSON.stringify({
             user_id: userId,
-            friend_id: friendId
+            friend_username: friendUsername
         })
     });
 
     setStatus(data.message || "Friend removed");
 
     if (data.status === 200) {
-        friendIdInput.value = "";
+        friendUsernameInput.value = "";
         loadFriends();
     }
 }
@@ -134,21 +121,11 @@ loadFriendsForm.addEventListener("submit", event => {
 
 removeFriendForm.addEventListener("submit", event => {
     event.preventDefault();
-    removeFriendByUserIds();
+    removeFriendByUsername(friendUsernameInput.value);
 });
 
 if (userIdInput) {
     loadFriends();
 }
 
-
-const logoutButton = document.getElementById("logout");
-
-logoutButton.addEventListener("click", event => {
-    event.preventDefault();
-
-    localStorage.removeItem("userId");
-    localStorage.removeItem("token");
-    localStorage.removeItem("createdAt");
-    localStorage.removeItem("availableHours");
-})
+new LogoutButton("logout");

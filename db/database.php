@@ -17,6 +17,21 @@ $db->exec("CREATE TABLE IF NOT EXISTS user_tokens (
     FOREIGN KEY (user_id) REFERENCES users(id)
 )");
 
+$db->exec("CREATE TABLE IF NOT EXISTS admins (
+    id TEXT PRIMARY KEY,
+    username TEXT NOT NULL UNIQUE,
+    password_hash TEXT NOT NULL,
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+)");
+
+$db->exec("CREATE TABLE IF NOT EXISTS admin_tokens (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    admin_id TEXT NOT NULL,
+    token VARCHAR NOT NULL UNIQUE,
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (admin_id) REFERENCES admins(id)
+)");
+
 $db->exec("CREATE TABLE IF NOT EXISTS user_preferences (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     user_id TEXT NOT NULL,

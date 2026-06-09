@@ -72,7 +72,7 @@ function renderRequests(requests) {
         title.textContent = request.type === "incoming"
             ? `${request.requester_username} sent a request`
             : `Request sent to ${request.receiver_username}`;
-        meta.textContent = `#${request.request_id} ${request.requester_id} -> ${request.receiver_id}`;
+        meta.textContent = `Created ${request.created_at}`;
 
         info.appendChild(title);
         info.appendChild(meta);
@@ -117,15 +117,15 @@ async function updateRequest(endpoint, request) {
         return;
     }
 
-    const friend2Id = request.requester_id === currentUserId
-        ? request.receiver_id
-        : request.requester_id;
+    const friendUsername = request.requester_id === currentUserId
+        ? request.receiver_username
+        : request.requester_username;
 
     const data = await fetchJson(`${API_BASE}/${endpoint}`, {
         method: "POST",
         body: JSON.stringify({
             friend1_id: currentUserId,
-            friend2_id: friend2Id
+            friend_username: friendUsername
         })
     });
 
@@ -144,3 +144,5 @@ loadRequestsForm.addEventListener("submit", event => {
 if (userIdInput) {
     loadRequests();
 }
+
+new LogoutButton("logout");

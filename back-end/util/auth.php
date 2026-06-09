@@ -6,9 +6,11 @@ function auth() {
     $token = $_SERVER['HTTP_AUTHORIZATION'] ?? '';
     $token = str_replace('Bearer ', '', $token);
 
+    if ($token === '') {
+        $token = $_GET['token'] ?? '';
+    }
+
     if (!TokenManager::checkTokenValidity($token)) {
-        http_response_code(401);
-        echo json_encode(['error' => 'Unauthorized']);
         exit;
     }
 

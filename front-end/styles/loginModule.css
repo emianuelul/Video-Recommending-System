@@ -1,54 +1,130 @@
 body {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-content: center;
     min-height: 100vh;
+    background:
+        linear-gradient(135deg, rgba(108, 99, 255, .09), transparent 34%),
+        linear-gradient(315deg, rgba(63, 61, 86, .08), transparent 30%),
+        rgb(247, 248, 252);
+    color: #252437;
+    font-family: "Baloo Bhai 2", Arial, sans-serif;
+}
+
+.login-page-wrapper {
+    width: 94vw;
+    max-width: 1120px;
+    margin: 0 auto;
+    padding: 40px 0;
 }
 
 .login-grid-container {
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    width: min(80vw, 1000px);
-    height: 75vh;
-    max-height: 600px;
-    margin: 12.5vh max(10vw, calc(50vw - 500px)) 12.5vh max(10vw, calc(50vw - 500px));
-    border: 2px solid rgb(240, 240, 240);
-    border-radius: 3px;
-    background-color: rgb(255, 255, 255);
+    grid-template-columns: 1.1fr .9fr;
+    gap: 35px;
     align-items: center;
+    min-height: 620px;
+    border: 2px solid rgb(240, 240, 240);
+    border-radius: 6px;
+    background-color: white;
+    box-shadow: 0 20px 45px rgba(63, 61, 86, .08);
+    padding: 35px;
+}
+
+.login-container h2 {
+    margin-bottom: 20px;
+    font-family: "Doppio One", sans-serif;
+    font-size: 2.5rem;
+    line-height: 1.05;
+    text-align: center;
 }
 
 .login-fields-container {
-    display: flex;
-    flex-flow: column wrap;
-    gap: 1.2em;
-    margin-top: 20px;
-    max-width: 450px;
+    display: grid;
+    gap: 18px;
+    width: 100%;
+    max-width: 520px;
     margin-inline: auto;
+}
+
+.login-form-section {
+    display: grid;
+    gap: 14px;
+    padding: 18px;
+    border: 1px solid rgb(232, 232, 242);
+    border-radius: 6px;
+    background: rgb(250, 250, 253);
+}
+
+.login-form-section h3 {
+    color: #3F3D56;
+    font-family: "Doppio One", sans-serif;
+    font-size: 1.05rem;
+}
+
+.login-input {
+    position: relative;
+    display: grid;
+    gap: 6px;
+    min-width: 0;
+}
+
+.login-input label {
+    color: #3F3D56;
+    font-size: .95rem;
+}
+
+.login-input img {
+    position: absolute;
+    bottom: 13px;
+    left: 10px;
+    width: 30px;
+    height: 15px;
+    object-fit: contain;
+}
+
+.login-input input {
+    width: 100%;
+    min-height: 44px;
+    border: 0;
+    border-bottom: 2px solid rgb(200, 200, 210);
+    border-radius: 3px 3px 0 0;
+    background: rgb(245, 245, 247);
+    color: #252437;
+    font-family: Arial, sans-serif;
+    font-size: .95rem;
+    padding: .6rem;
+    padding-left: 2.6rem;
+    transition: all .2s ease;
+}
+
+.login-input input:focus {
+    border-color: #6C63FF;
+    background: rgb(250, 250, 255);
+    outline: none;
 }
 
 .login-button {
     display: flex;
     justify-content: center;
-    margin-top: 20px;
+    margin-top: 2px;
 }
 
 .login-button button {
-    font-family: 'Baloo Bhai 2';
-    font-size: 1.1rem;
-    padding: .6em 1em;
-    color: #6C63FF;
+    min-width: 150px;
+    min-height: 44px;
+    padding: .62rem 1.1rem;
     border: 1px solid #6C63FF;
+    border-radius: 5px;
     background-color: white;
-    border-radius: 3px;
+    color: #6C63FF;
     cursor: pointer;
-    transition: all .25s ease-in;
+    font-family: "Baloo Bhai 2", Arial, sans-serif;
+    font-size: 1.05rem;
+    transition: all .2s ease;
 }
 
 .login-button button:hover {
-    color: white;
     background-color: #6C63FF;
+    color: white;
+    transform: translateY(-1px);
 }
 
 .login-button button:focus {
@@ -57,122 +133,66 @@ body {
 
 .links {
     display: flex;
-    justify-content: space-around;
-    gap: 3em;
-    margin-top: 90px;
-    font-size: clamp(.8rem, 2.5vw, 1rem);
-    font-family: 'Doppio One', sans-serif;
-
-
-    a {
-        text-decoration: none;
-        color: #6C63FF;
-        opacity: 1;
-        transition: opacity .3s;
-    }
-
-    a:hover {
-        opacity: .7;
-    }
+    justify-content: center;
+    gap: 18px;
+    margin-top: 14px;
+    font-family: "Doppio One", sans-serif;
+    font-size: .95rem;
 }
 
-
-.login-container {
-    padding-top: 20px;
-    position: relative;
-    /*box-shadow: 2px 0px 15px -2px rgba(215, 215, 215, 0.33);*/
-
-    h2 {
-        display: flex;
-        justify-content: center;
-        margin-inline: 0;
-        font-family: 'Doppio One', sans-serif;
-        letter-spacing: 2px;
-        font-size: 2.5rem;
-    }
-
-    &::after {
-        content: "";
-        position: absolute;
-        top: 0;
-        right: 0;
-        background: #3F3D56;
-        color: white;
-        height: 100%;
-        width: 2px;
-        border-radius: 5px;
-    }
+.links a {
+    color: #6C63FF;
+    opacity: 1;
+    text-decoration: none;
+    transition: all .2s ease;
 }
 
+.links a:hover {
+    opacity: .72;
+}
 
 .login-container-image {
     display: flex;
     justify-content: center;
+    align-items: center;
+    min-width: 0;
+    padding-left: 20px;
+    border-left: 2px solid #3F3D56;
 }
 
-
-.login-input {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    justify-items: flex-start;
-    gap: .1em;
-    width: 80%;
-    margin-left: 10%;
-
-    label {
-        font-family: 'Baloo Bhai 2';
-    }
-
-    img {
-        position: absolute;
-        bottom: 10px;
-        width: 30px;
-        height: 15px;
-    }
-
-    input {
-        border: 0;
-        border-bottom: 2px solid rgb(200, 200, 200);
-        padding: .5em .2em .5em 2em;
-        border-radius: 2px 2px 0 0;
-        font-size: .9rem;
-        font-family: sans-serif;
-        background-color: rgb(245, 245, 245);
-
-        &:focus {
-            outline: none;
-        }
-
-        &:focus-visible {
-            outline: none;
-        }
-    }
+.login-container-image img {
+    width: 100%;
+    max-width: 400px;
+    height: auto;
 }
 
-
-@media screen and (min-width: 0px) and (max-width: 830px) {
+@media screen and (max-width: 920px) {
     .login-grid-container {
         grid-template-columns: 1fr;
-        max-width: 450px;
-        margin-inline: auto;
-        height: auto;
-        padding-bottom: 20px;
-        margin-block: calc(5vh + clamp(.4rem, 2.5vw, .6rem));
+        min-height: auto;
     }
 
-    .login-fields-container {
-        margin-top: 10px;
-    }
-}
-
-
-@media screen and  (max-width: 830px) {
     .login-container-image {
         display: none;
     }
+}
 
-    .login-container::after {
-        content: none;
+@media screen and (max-width: 640px) {
+    .login-page-wrapper {
+        width: 94vw;
+        max-width: 680px;
+        padding: 18px 0;
+    }
+
+    .login-grid-container {
+        padding: 16px;
+    }
+
+    .login-form-section {
+        padding: 14px;
+    }
+
+    .login-button button {
+        width: 100%;
     }
 }

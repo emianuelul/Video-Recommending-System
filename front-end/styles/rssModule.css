@@ -1,0 +1,183 @@
+body.rss-body {
+    min-height: 100vh;
+    background:
+        linear-gradient(135deg, rgba(108, 99, 255, .09), transparent 34%),
+        linear-gradient(315deg, rgba(63, 61, 86, .08), transparent 30%),
+        rgb(247, 248, 252);
+    color: #252437;
+    font-family: "Baloo Bhai 2", Arial, sans-serif;
+}
+
+.rss-shell {
+    width: 94vw;
+    max-width: 980px;
+    margin: 0 auto;
+    padding: 40px 0;
+}
+
+.rss-header {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 22px;
+    align-items: end;
+    margin-bottom: 22px;
+}
+
+.rss-kicker {
+    color: #6C63FF;
+    font-family: "Doppio One", sans-serif;
+    font-size: .85rem;
+    text-transform: uppercase;
+}
+
+.rss-header h1 {
+    margin-top: 4px;
+    font-family: "Doppio One", sans-serif;
+    font-size: 3rem;
+    line-height: 1.05;
+}
+
+.rss-nav,
+.rss-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.rss-nav a,
+.btn {
+    padding: .6rem .8rem;
+    border: 1px solid rgb(223, 223, 236);
+    border-radius: 5px;
+    background: white;
+    color: #3F3D56;
+    cursor: pointer;
+    font-family: "Doppio One", sans-serif;
+    font-size: .9rem;
+    text-decoration: none;
+    transition: all .2s ease;
+}
+
+.rss-nav a:hover,
+.rss-nav a.active,
+.btn:hover {
+    border-color: #6C63FF;
+    color: #6C63FF;
+    transform: translateY(-1px);
+}
+
+.btn.primary {
+    border-color: #6C63FF;
+    background: #6C63FF;
+    color: white;
+}
+
+.btn.primary:hover {
+    background: #5750db;
+    border-color: #5750db;
+    color: white;
+}
+
+.rss-panel {
+    margin-bottom: 18px;
+    border: 2px solid rgb(240, 240, 240);
+    border-radius: 6px;
+    background: white;
+    box-shadow: 0 18px 45px rgba(63, 61, 86, .08);
+}
+
+.rss-panel-header {
+    padding: 22px 24px 0;
+}
+
+.rss-panel-header h2 {
+    font-family: "Doppio One", sans-serif;
+    font-size: 2rem;
+}
+
+.rss-feed-list,
+.rss-links {
+    display: grid;
+    gap: 12px;
+    padding: 24px;
+}
+
+.rss-feed-card {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 16px;
+    align-items: center;
+    padding: 16px;
+    border: 1px solid rgb(232, 232, 242);
+    border-radius: 6px;
+    background: rgb(250, 250, 253);
+}
+
+.rss-feed-card h3 {
+    font-family: "Doppio One", sans-serif;
+    font-size: 1rem;
+}
+
+.rss-feed-card p,
+.rss-status {
+    color: rgb(101, 101, 122);
+    font-size: .95rem;
+}
+
+.rss-status {
+    min-height: 24px;
+    padding: 0 24px 24px;
+}
+
+.rss-link-row {
+    display: grid;
+    gap: 6px;
+}
+
+.rss-link-row span {
+    color: #3F3D56;
+    font-size: .95rem;
+}
+
+.rss-link-row input {
+    width: 100%;
+    min-height: 42px;
+    border: 0;
+    border-bottom: 2px solid rgb(200, 200, 210);
+    border-radius: 3px 3px 0 0;
+    background: rgb(245, 245, 247);
+    color: #252437;
+    font-family: Consolas, monospace;
+    font-size: .85rem;
+    padding: .6rem;
+}
+
+@media screen and (max-width: 760px) {
+    .rss-header,
+    .rss-feed-card {
+        grid-template-columns: 1fr;
+    }
+
+    .rss-actions {
+        justify-content: flex-start;
+    }
+}
+
+@media screen and (max-width: 460px) {
+    .rss-shell {
+        width: 94vw;
+        padding-top: 20px;
+    }
+
+    .rss-panel-header,
+    .rss-feed-list,
+    .rss-links {
+        padding-left: 16px;
+        padding-right: 16px;
+    }
+
+    .rss-actions,
+    .btn {
+        width: 100%;
+    }
+}

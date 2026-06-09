@@ -49,3 +49,17 @@ function getRequiredValue($source, $keys) {
     return null;
 }
 
+function getUserIdByUsername($username) {
+    global $db;
+
+    $stmt = $db->prepare("
+        SELECT id FROM users
+        WHERE username = :username
+        LIMIT 1
+    ");
+
+    $stmt->execute([":username" => trim($username)]);
+    $user = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    return $user ? $user["id"] : null;
+}

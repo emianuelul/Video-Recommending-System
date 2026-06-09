@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Users</title>
+    <link rel="stylesheet" href="../../styles/cssReset.css">
+    <link rel="stylesheet" href="../../styles/adminModule.css">
+    <script src="../../script/admin-users-script.js" defer></script>
+</head>
+<body class="admin-body">
+<main class="admin-shell">
+    <header class="admin-header">
+        <div>
+            <p class="admin-kicker">Admin</p>
+            <h1>User Accounts</h1>
+        </div>
+        <button id="admin-logout" class="admin-btn">Logout</button>
+    </header>
+
+    <section class="admin-panel">
+        <div class="admin-panel-header">
+            <h2>Users</h2>
+        </div>
+
+        <div class="admin-toolbar">
+            <button id="load-users" class="admin-btn primary">Load users</button>
+            <p id="admin-status" class="admin-status"></p>
+        </div>
+
+        <ul id="admin-users-list" class="admin-users-list"></ul>
+    </section>
+</main>
+</body>
+</html>

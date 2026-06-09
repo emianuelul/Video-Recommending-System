@@ -11,11 +11,16 @@ function setStatus(message) {
 
 submitBtn.addEventListener('click', (e) => {
     e.preventDefault();
-    const id2 = friend2Input.value.trim();
+    const friendUsername = friend2Input.value.trim();
     const currentUserId = localStorage.getItem("userId");
 
     if (!currentUserId) {
         setStatus("Missing logged in user ID");
+        return;
+    }
+
+    if (!friendUsername) {
+        setStatus("Type a username first");
         return;
     }
 
@@ -28,7 +33,7 @@ submitBtn.addEventListener('click', (e) => {
         },
         body: JSON.stringify({
             friend1_id: currentUserId.trim(),
-            friend2_id: id2
+            friend_username: friendUsername
         }),
         credentials: "include",
     })
@@ -53,3 +58,5 @@ submitBtn.addEventListener('click', (e) => {
             setStatus("Request failed");
         });
 })
+
+new LogoutButton("logout");

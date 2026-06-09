@@ -1,11 +1,19 @@
 <?php
 
 require_once __DIR__ . '/../../../db/database.php';
-require_once __DIR__ . '/../../util/config.php';
 require_once __DIR__ . '/../../class/VideoDTO.php';
 require_once __DIR__ . '/../../util/auth.php';
+require_once __DIR__ . '/../../util/utilities.php';
 
 $token = auth();
+
+if (!isset($_GET['q']) || trim($_GET['q']) === '') {
+    header('Content-Type: application/json');
+    echo json_encode([
+        'error' => 'Missing search query'
+    ]);
+    exit;
+}
 
 $q = "q=" . urlencode($_GET['q']);
 $videoDuration = isset($_GET['videoDuration']) ? "&videoDuration=" . $_GET['videoDuration'] : '';
@@ -15,12 +23,5 @@ $relevanceLanguage = isset($_GET['relevanceLanguage']) ? "&relevanceLanguage=" .
 $order = isset($_GET['order']) ? "&order=" . $_GET['order'] : '';
 $resultNumber = "&maxResults=" . (int)MAX_SEARCH_RESULTS;
 
-if (!isset($_GET['q']) || trim($_GET['q']) === '') {
-    echo json_encode([
-        'error' => 'Missing search query'
-    ]);
-    exit;
-}
-
-
+header('Content-Type: application/json');
 echo json_encode(search($token, $q, $videoDuration, $publishedAfter, $publishedBefore, $relevanceLanguage, $order, $resultNumber));

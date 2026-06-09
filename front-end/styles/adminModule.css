@@ -1,0 +1,199 @@
+body.admin-body {
+    min-height: 100vh;
+    background:
+        linear-gradient(135deg, rgba(108, 99, 255, .09), transparent 34%),
+        linear-gradient(315deg, rgba(63, 61, 86, .08), transparent 30%),
+        rgb(247, 248, 252);
+    color: #252437;
+    font-family: "Baloo Bhai 2", Arial, sans-serif;
+}
+
+.admin-shell {
+    width: 94vw;
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 40px 0;
+}
+
+.admin-shell.compact {
+    max-width: 520px;
+}
+
+.admin-header {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 20px;
+    align-items: end;
+    margin-bottom: 22px;
+}
+
+.admin-kicker {
+    color: #6C63FF;
+    font-family: "Doppio One", sans-serif;
+    font-size: .85rem;
+    text-transform: uppercase;
+}
+
+.admin-header h1,
+.admin-panel-header h1 {
+    font-family: "Doppio One", sans-serif;
+    font-size: 3rem;
+    line-height: 1.05;
+}
+
+.admin-panel {
+    border: 2px solid rgb(240, 240, 240);
+    border-radius: 6px;
+    background: white;
+    box-shadow: 0 18px 45px rgba(63, 61, 86, .08);
+}
+
+.admin-panel-header {
+    padding: 22px 24px 0;
+}
+
+.admin-panel-header h2 {
+    font-family: "Doppio One", sans-serif;
+    font-size: 2rem;
+}
+
+.admin-form,
+.admin-toolbar,
+.admin-users-list {
+    display: grid;
+    gap: 14px;
+    padding: 24px;
+}
+
+.admin-field {
+    display: grid;
+    gap: 6px;
+}
+
+.admin-field label {
+    color: #3F3D56;
+    font-size: .95rem;
+}
+
+.admin-field input,
+.admin-user-actions input {
+    width: 100%;
+    min-height: 44px;
+    border: 0;
+    border-bottom: 2px solid rgb(200, 200, 210);
+    border-radius: 3px 3px 0 0;
+    background: rgb(245, 245, 247);
+    color: #252437;
+    font-family: Arial, sans-serif;
+    font-size: .95rem;
+    padding: .6rem;
+    transition: all .2s ease;
+}
+
+.admin-field input:focus,
+.admin-user-actions input:focus {
+    border-color: #6C63FF;
+    background: rgb(250, 250, 255);
+    outline: none;
+}
+
+.admin-btn {
+    min-height: 42px;
+    padding: .6rem .9rem;
+    border: 1px solid #6C63FF;
+    border-radius: 5px;
+    background: white;
+    color: #6C63FF;
+    cursor: pointer;
+    font-family: "Baloo Bhai 2", Arial, sans-serif;
+    transition: all .2s ease;
+}
+
+.admin-btn:hover {
+    background: #6C63FF;
+    color: white;
+    transform: translateY(-1px);
+}
+
+.admin-btn.primary {
+    background: #6C63FF;
+    color: white;
+}
+
+.admin-btn.danger {
+    border-color: #c94b57;
+    color: #c94b57;
+}
+
+.admin-btn.danger:hover {
+    background: #c94b57;
+    color: white;
+}
+
+.admin-status {
+    min-height: 24px;
+    color: rgb(101, 101, 122);
+}
+
+.admin-users-list {
+    list-style: none;
+}
+
+.admin-user-card {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 16px;
+    align-items: center;
+    padding: 16px;
+    border: 1px solid rgb(232, 232, 242);
+    border-radius: 6px;
+    background: rgb(250, 250, 253);
+}
+
+.admin-user-card.empty {
+    display: block;
+    color: rgb(101, 101, 122);
+}
+
+.admin-user-info h3 {
+    font-family: "Doppio One", sans-serif;
+    font-size: 1rem;
+}
+
+.admin-user-info p {
+    color: rgb(101, 101, 122);
+    font-family: Consolas, monospace;
+    font-size: .82rem;
+}
+
+.admin-user-actions {
+    display: grid;
+    grid-template-columns: 180px auto auto;
+    gap: 8px;
+    align-items: center;
+}
+
+@media screen and (max-width: 860px) {
+    .admin-header,
+    .admin-user-card,
+    .admin-user-actions {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media screen and (max-width: 520px) {
+    .admin-shell {
+        width: 94vw;
+        padding: 20px 0;
+    }
+
+    .admin-form,
+    .admin-toolbar,
+    .admin-users-list {
+        padding: 16px;
+    }
+
+    .admin-btn {
+        width: 100%;
+    }
+}

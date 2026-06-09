@@ -6,12 +6,13 @@
     <title>Add Friend</title>
     <link rel="stylesheet" href="../styles/cssReset.css">
     <link rel="stylesheet" href="../styles/friendsModule.css">
+    <script src="../script/utils/LogoutButton.js" defer></script>
     <script src="../script/friend-script.js" defer></script>
     <script src="../script/auth.js" defer></script>
 </head>
 <body class="friends-body">
-<main class="friends-shell">
-    <header class="friends-header">
+<div class="friends-shell">
+    <div class="friends-header">
         <div>
             <p class="friends-kicker">Friends</p>
             <h1>Add Friend</h1>
@@ -20,15 +21,15 @@
             <span>Current user ID</span>
             <span id="current-user-id"></span>
         </p>
-    </header>
+    </div>
 
-    <nav class="friends-nav" aria-label="Friends pages">
+    <div class="friends-nav">
         <a href="friend.html" class="active">Add</a>
         <a href="friend_requests.html">Requests</a>
         <a href="friends.html">Friends</a>
-    </nav>
+    </div>
 
-    <section class="friends-grid">
+    <div class="friends-grid">
         <div class="friends-panel">
             <div class="friends-panel-header">
                 <h2>Send Request</h2>
@@ -36,8 +37,8 @@
 
             <form method="POST" class="friends-form">
                 <div class="friends-field">
-                    <label for="friend2">Friend user ID</label>
-                    <input type="text" name="friend2_id" id="friend2" placeholder="Paste user id" required>
+                    <label for="friend2">Friend username</label>
+                    <input type="text" name="friend_username" id="friend2" placeholder="Type username" required>
                 </div>
 
                 <div class="friends-actions">
@@ -47,7 +48,12 @@
                 <p id="status" class="status-line"></p>
             </form>
         </div>
-    </section>
-</main>
+    </div>
+    <div class="logout-row">
+        <button id="logout" class="btn">Logout</button>
+        <a href="search.html" class="btn">Search</a>
+        <a href="rss_export.html" class="btn">RSS</a>
+    </div>
+</div>
 </body>
 </html>

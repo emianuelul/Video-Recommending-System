@@ -13,6 +13,7 @@ if ($_SERVER["REQUEST_METHOD"] !== "GET") {
 }
 
 $token = auth();
+$userId = TokenManager::getUserId($token);
 //$userId = "2cb2ab06b4cfa99816d2c277eed74b03";
 
 function getFriendsRecommendations() {
@@ -38,7 +39,7 @@ function getFriendsRecommendations() {
     $likedIds = array_column($friendsLikes, 'video_id');
 
     if (empty($likedIds)) {
-        return ["friends" => []];
+        return [];
     }
 
     $placeholders = implode(',', array_fill(0, count($likedIds), '?'));
@@ -79,8 +80,8 @@ if (isset($_GET['format']) && $_GET['format'] === 'rss') {
         echo '<title>' . htmlspecialchars($video['title'], ENT_QUOTES, 'UTF-8') . '</title>';
         echo '<link>' . $watchUrl . htmlspecialchars($video['id'], ENT_QUOTES, 'UTF-8') . '</link>';
         echo '<description>' . htmlspecialchars($video['title'], ENT_QUOTES, 'UTF-8') . '</description>';
-        if (!empty($video['thumbnail'])) {
-            echo '<enclosure url="' . htmlspecialchars($video['thumbnail'], ENT_QUOTES, 'UTF-8') . '" type="image/jpeg" />';
+        if (!empty($video['thumbnails']['medium']['url'])) {
+            echo '<enclosure url="' . htmlspecialchars($video['thumbnails']['medium']['url'], ENT_QUOTES, 'UTF-8') . '" type="image/jpeg" />';
         }
         echo '<guid isPermaLink="false">' . htmlspecialchars($video['id'], ENT_QUOTES, 'UTF-8') . '</guid>';
         echo '<pubDate>' . gmdate('r') . '</pubDate>';

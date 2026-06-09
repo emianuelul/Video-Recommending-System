@@ -13,10 +13,15 @@ $data = readJsonBody();
 
 $friendship_id = $data["friendship_id"] ?? null;
 $user_id = getRequiredValue($data, ["user_id", "friend1_id"]);
-$friend_id = getRequiredValue($data, ["friend_id", "friend2_id"]);
+$friend_username = trim(getRequiredValue($data, ["friend_username", "username"]) ?? "");
+$friend_id = $friend_username !== "" ? getUserIdByUsername($friend_username) : getRequiredValue($data, ["friend_id", "friend2_id"]);
 
-if (!$friendship_id && (!$user_id || !$friend_id)) {
-    respond(400, "Missing friends IDs");
+if (!$friendship_id && (!$user_id || ($friend_username === "" && !$friend_id))) {
+    respond(400, "Missing friend username");
+}
+
+if (!$friendship_id && $friend_username !== "" && !$friend_id) {
+    respond(404, "User not found");
 }
 
 if (!$friendship_id && $user_id == $friend_id) {

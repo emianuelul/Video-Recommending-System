@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Login</title>
+    <link rel="stylesheet" href="../../styles/cssReset.css">
+    <link rel="stylesheet" href="../../styles/adminModule.css">
+    <script src="../../script/admin-login-script.js" defer></script>
+</head>
+<body class="admin-body">
+<main class="admin-shell compact">
+    <section class="admin-panel">
+        <div class="admin-panel-header">
+            <p class="admin-kicker">Admin</p>
+            <h1>Login</h1>
+        </div>
+
+        <form id="admin-login-form" class="admin-form">
+            <div class="admin-field">
+                <label for="admin-username">Username</label>
+                <input type="text" id="admin-username" placeholder="Admin username" required>
+            </div>
+
+            <div class="admin-field">
+                <label for="admin-password">Password</label>
+                <input type="password" id="admin-password" placeholder="Admin password" required>
+            </div>
+
+            <button type="submit" class="admin-btn primary">Login</button>
+            <p id="admin-status" class="admin-status"></p>
+        </form>
+    </section>
+</main>
+</body>
+</html>
