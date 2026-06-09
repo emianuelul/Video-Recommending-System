@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Account</title>
+    <link rel="stylesheet" href="../styles/cssReset.css">
+    <link rel="stylesheet" href="../styles/accountModule.css">
+    <script src="../script/utils/LogoutButton.js" defer></script>
+    <script src="../script/auth.js" defer></script>
+    <script src="../script/account-script.js" defer></script>
+</head>
+<body class="account-body">
+<div class="account-shell">
+    <div class="account-header">
+        <div>
+            <p class="account-kicker">Account</p>
+            <h1>Your Profile</h1>
+        </div>
+        <div class="account-nav">
+            <a href="search.html">Search</a>
+            <a href="friend.html">Friends</a>
+            <a href="rss_export.html">RSS</a>
+            <button id="logout" class="account-btn">Logout</button>
+        </div>
+    </div>
+
+    <div class="account-grid">
+        <div class="account-panel">
+            <div class="account-panel-header">
+                <h2>Details</h2>
+            </div>
+
+            <dl class="account-details">
+                <div>
+                    <dt>Username</dt>
+                    <dd id="account-username">-</dd>
+                </div>
+                <div>
+                    <dt>User ID</dt>
+                    <dd id="account-user-id">-</dd>
+                </div>
+                <div>
+                    <dt>Created at</dt>
+                    <dd id="account-created-at">-</dd>
+                </div>
+                <div>
+                    <dt>Country</dt>
+                    <dd id="account-country">-</dd>
+                </div>
+                <div>
+                    <dt>Languages</dt>
+                    <dd id="account-languages">-</dd>
+                </div>
+                <div>
+                    <dt>Durations</dt>
+                    <dd id="account-durations">-</dd>
+                </div>
+                <div>
+                    <dt>Categories</dt>
+                    <dd id="account-categories">-</dd>
+                </div>
+            </dl>
+        </div>
+
+        <div class="account-panel">
+            <div class="account-panel-header">
+                <h2>Change Password</h2>
+            </div>
+
+            <form id="change-password-form" class="account-form">
+                <div class="account-field">
+                    <label for="current-password">Current password</label>
+                    <input type="password" id="current-password" required>
+                </div>
+
+                <div class="account-field">
+                    <label for="new-password">New password</label>
+                    <input type="password" id="new-password" required>
+                </div>
+
+                <button type="submit" class="account-btn primary">Change password</button>
+            </form>
+            <p id="account-status" class="account-status"></p>
+        </div>
+
+        <div class="account-panel danger-zone">
+            <div class="account-panel-header">
+                <h2>Delete Account</h2>
+            </div>
+
+            <form id="delete-account-form" class="account-form">
+                <div class="account-field">
+                    <label for="delete-password">Current password</label>
+                    <input type="password" id="delete-password" required>
+                </div>
+
+                <button type="submit" class="account-btn danger">Delete account</button>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+</html>
