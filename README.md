@@ -146,15 +146,15 @@ Pornire cu script:
 Pornire manuala:
 
 ```bash
-php -S localhost:8081 -t back-end back-end/router.php
-php -S localhost:8001 -t front-end
+php -S 127.0.0.1:8081 -t back-end back-end/router.php
+php -S 127.0.0.1:8001 -t front-end
 ```
 
 Aplicatia va fi disponibila la:
 
 ```text
-Frontend: http://localhost:8001
-Backend:  http://localhost:8081
+Frontend: http://127.0.0.1:8001
+Backend:  http://127.0.0.1:8081
 ```
 
 ### Configuration
@@ -174,7 +174,7 @@ MAX_SEARCH_RESULTS
 
 ## Usage
 
-1. Deschide `http://localhost:8001`.
+1. Deschide `http://127.0.0.1:8001`.
 2. Creeaza un cont din pagina Register.
 3. Alege preferinte initiale precum categorii, limbi, durata si tara.
 4. Foloseste pagina Search pentru cautare video.

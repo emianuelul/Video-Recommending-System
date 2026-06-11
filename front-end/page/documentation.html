@@ -142,8 +142,8 @@
       <section id="mediu-operare">
         <h3>2.4 Mediu de operare</h3>
         <ul>
-          <li>Frontend: server local pe <code>http://localhost:8001</code>.</li>
-          <li>Backend: server PHP pe <code>http://localhost:8081</code>.</li>
+          <li>Frontend: server local pe <code>http://127.0.0.1:8001</code>.</li>
+          <li>Backend: server PHP pe <code>http://127.0.0.1:8081</code>.</li>
           <li>Baza de date: SQLite, fisierul <code>database.sqlite</code>.</li>
           <li>Browser modern cu suport pentru JavaScript si Fetch API.</li>
         </ul>
@@ -716,16 +716,16 @@
         <p>Aplicatia poate fi pornita cu scriptul:</p>
         <pre><code>./start.sh</code></pre>
         <p>Sau manual:</p>
-        <pre><code>php -S localhost:8081 -t back-end back-end/router.php
-php -S localhost:8001 -t front-end</code></pre>
+        <pre><code>php -S 127.0.0.1:8081 -t back-end back-end/router.php
+php -S 127.0.0.1:8001 -t front-end</code></pre>
       </section>
 
       <section id="url-uri">
         <h3>10.3 URL-uri locale</h3>
         <ul>
-          <li>Frontend: <code>http://localhost:8001</code></li>
-          <li>Backend: <code>http://localhost:8081</code></li>
-          <li>Login admin: <code>http://localhost:8001/page/admin/login.html</code></li>
+          <li>Frontend: <code>http://127.0.0.1:8001</code></li>
+          <li>Backend: <code>http://127.0.0.1:8081</code></li>
+          <li>Login admin: <code>http://127.0.0.1:8001/page/admin/login.html</code></li>
         </ul>
       </section>
     </section>
