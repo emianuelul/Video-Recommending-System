@@ -4,17 +4,17 @@
 BACKEND_PORT=8081
 FRONTEND_PORT=8001
 
-echo "Starting Backend API on localhost:$BACKEND_PORT..."
+echo "Starting Backend API on 127.0.0.1:$BACKEND_PORT..."
 # Start backend from within its directory
 cd back-end
-php -S localhost:$BACKEND_PORT router.php >/dev/null 2>&1 &
+php -S 127.0.0.1:$BACKEND_PORT router.php >/dev/null 2>&1 &
 BACKEND_PID=$!
 cd ..
 
-echo "Starting Frontend on localhost:$FRONTEND_PORT..."
+echo "Starting Frontend on 127.0.0.1:$FRONTEND_PORT..."
 # Start frontend from within its directory
 cd front-end
-php -S localhost:$FRONTEND_PORT >/dev/null 2>&1 &
+php -S 127.0.0.1:$FRONTEND_PORT >/dev/null 2>&1 &
 FRONTEND_PID=$!
 cd ..
 
@@ -22,8 +22,8 @@ echo ""
 echo "================================================="
 echo "  Video Recommending System is running!"
 echo "================================================="
-echo "  Frontend available at: http://localhost:$FRONTEND_PORT"
-echo "  Backend API running at: http://localhost:$BACKEND_PORT"
+echo "  Frontend available at: http://127.0.0.1:$FRONTEND_PORT"
+echo "  Backend API running at: http://127.0.0.1:$BACKEND_PORT"
 echo "================================================="
 echo "Press Ctrl+C to stop both servers."
 

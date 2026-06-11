@@ -3,7 +3,7 @@ const passwordInput = document.querySelector('#password');
 const confirmPasswordInput = document.querySelector('#confirm-password');
 const submitBtn = document.querySelector('#register-submit');
 
-const url = "http://localhost:8081/api/auth/register.php";
+const url = "http://127.0.0.1:8081/api/auth/register.php";
 
 window.AuthSession.redirectIfLoggedIn();
 

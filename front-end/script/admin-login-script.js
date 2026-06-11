@@ -1,4 +1,4 @@
-const ADMIN_LOGIN_URL = "http://localhost:8081/api/admin/login.php";
+const ADMIN_LOGIN_URL = "http://127.0.0.1:8081/api/admin/login.php";
 const ADMIN_USERS_PAGE = "/page/admin/users.html";
 
 const form = document.getElementById("admin-login-form");

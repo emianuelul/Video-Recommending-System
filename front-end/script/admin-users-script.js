@@ -1,4 +1,4 @@
-const ADMIN_USERS_URL = "http://localhost:8081/api/admin/users.php";
+const ADMIN_USERS_URL = "http://127.0.0.1:8081/api/admin/users.php";
 const ADMIN_LOGIN_PAGE = "/page/admin/login.html";
 
 const loadUsersButton = document.getElementById("load-users");
