@@ -83,7 +83,7 @@ async function loadAccount() {
     languagesText.textContent = languages.length ? languages.join(", ") : "-";
     durationsText.textContent = durations.length ? durations.join(", ") : "-";
     categoriesText.textContent = categories.length
-        ? categories.map(category => category.category_id).join(", ")
+        ? categories.map(category => category.category_name).join(", ")
         : "-";
 }
 

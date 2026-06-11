@@ -1,7 +1,8 @@
 import DOMStuff from "./DOMStuff.js";
+import config from "./utils/config.js";
 
 const inputForm = document.querySelector('.login-fields-container')
-const url = "http://127.0.0.1:8081/api/auth/login.php";
+const url = `${config.url_api}/auth/login.php`;
 
 window.AuthSession.redirectIfLoggedIn();
 

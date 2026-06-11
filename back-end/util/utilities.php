@@ -1,7 +1,7 @@
 <?php
 
 require_once __DIR__ . '/../../db/database.php';
-require_once __DIR__ . '/../config.php';
+require_once __DIR__ . '/config.php';
 
 $categoriesList = [
     1 => "Film & Animation",
@@ -52,6 +52,9 @@ function decayUserWeights($userId) {
         $update = $db->prepare("UPDATE {$table} SET weight = :weight WHERE id = :id");
 
         while ($row = $select->fetch(PDO::FETCH_ASSOC)) {
+            if (empty($row['last_interacted_at'])) {
+                continue;
+            }
             $elapsedHours = ($now - strtotime($row['last_interacted_at'])) / 3600;
             if ($elapsedHours >= $DECAY_HALF_LIFE_HOURS) {
                 $newWeight = max(0, $row['weight'] - 1);
@@ -91,7 +94,7 @@ function search($token,
     $url      = "https://www.googleapis.com/youtube/v3/search?part=snippet&type=video&" . $params . $apiKey;
     $urlNoApi = "https://www.googleapis.com/youtube/v3/search?part=snippet&type=video&" . $params;
 
-    $req = file_get_contents($url);
+    $req = @file_get_contents($url);
 
     if ($req === false) {
         $error = error_get_last();
@@ -125,12 +128,12 @@ function search($token,
 
     $videoIds = implode(',', $idsArray);
 
+    $videoDTOArray = [];
     if (!empty($videoIds)) {
         $detailsUrl = "https://www.googleapis.com/youtube/v3/videos?part=snippet,contentDetails,statistics,topicDetails&id=" . $videoIds . $apiKey;
-        $detailsReq = file_get_contents($detailsUrl);
+        $detailsReq = @file_get_contents($detailsUrl);
 
         $detailsData = json_decode($detailsReq, true);
-        $videoDTOArray = [];
         if (isset($detailsData['items'])) {
             $userId = TokenManager::getUserId($token);
 
@@ -162,7 +165,7 @@ function countryTrending($token, $regionCode, $resultNumber = 24) {
     $url = "https://www.googleapis.com/youtube/v3/videos?part=snippet,contentDetails,statistics,topicDetails&chart=mostPopular&regionCode=" . urlencode($regionCode) . "&maxResults=" . (int)$resultNumber . $apiKey;
     $urlNoApi = "https://www.googleapis.com/youtube/v3/videos?part=snippet,contentDetails,statistics,topicDetails&chart=mostPopular&regionCode=" . urlencode($regionCode) . "&maxResults=" . (int)$resultNumber;
 
-    $req = file_get_contents($url);
+    $req = @file_get_contents($url);
 
     if ($req === false) {
         $error = error_get_last();

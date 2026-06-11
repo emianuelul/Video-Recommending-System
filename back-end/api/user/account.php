@@ -1,6 +1,7 @@
 <?php
 require_once __DIR__ . '/../../../db/database.php';
 require_once __DIR__ . '/../../util/auth.php';
+require_once __DIR__ . '/../../util/utilities.php';
 
 global $db;
 
@@ -107,13 +108,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
         ORDER BY weight DESC
     ");
     $categoriesStmt->execute([':userId' => $userId]);
+    $categories = $categoriesStmt->fetchAll(PDO::FETCH_ASSOC);
+
+    global $categoriesList;
+    foreach ($categories as &$cat) {
+        $catId = $cat['category_id'];
+        $cat['category_name'] = $categoriesList[$catId] ?? $catId;
+    }
+    unset($cat);
 
     http_response_code(200);
     echo json_encode([
         "status" => 200,
         "user" => $user,
         "preferences" => $preferences ?: null,
-        "categories" => $categoriesStmt->fetchAll(PDO::FETCH_ASSOC)
+        "categories" => $categories
     ]);
     exit;
 }
