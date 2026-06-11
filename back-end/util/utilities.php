@@ -70,6 +70,7 @@ function search($token,
                 $order = null,
                 $resultNumber = null) {
     global $db;
+    $videoDTOArray = [];
     $apiKey = "&key=" . YT_API_KEY;
 
     // Each optional segment must already carry its own &key=value prefix,
@@ -130,7 +131,6 @@ function search($token,
         $detailsReq = file_get_contents($detailsUrl);
 
         $detailsData = json_decode($detailsReq, true);
-        $videoDTOArray = [];
         if (isset($detailsData['items'])) {
             $userId = TokenManager::getUserId($token);
 
