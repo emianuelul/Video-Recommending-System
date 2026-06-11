@@ -61,32 +61,72 @@ function getRecommendations() {
 
     $query = urlencode(implode(' ', array_slice($tagsArray, 0, 10)));
 
-    $qParam = "q=" . $query;
-    if (empty($query) && !empty($categoriesArray)) {
-        $topCategory = $categoriesArray[0];
-        $qParam .= "&videoCategoryId=" . urlencode($topCategory);
+    $apiDuration = null;
+    if (!empty($userDurationArray) && count($userDurationArray) === 1) {
+        $apiDuration = "&videoDuration=" . urlencode($userDurationArray[0]);
     }
 
-    if (empty($query) && empty($categoriesArray)) {
+    $apiLang = null;
+    if (!empty($userLanguagesArray)) {
+        $apiLang = "&relevanceLanguage=" . urlencode(substr($userLanguagesArray[0], 0, 2));
+    }
+
+    if (empty($query) && !empty($categoriesArray)) {
+        global $categoriesList;
+        $categoryNames = [];
+        foreach ($categoriesArray as $catId) {
+            if (isset($categoriesList[$catId])) {
+                $categoryNames[] = $categoriesList[$catId];
+            }
+        }
+        $combinedCategories = implode(' ', $categoryNames);
+        $qParam = "q=" . urlencode($combinedCategories);
+
+        $vids = search(
+            $token,
+            $qParam,
+            $apiDuration,
+            null,
+            null,
+            $apiLang,
+            'relevance',
+            "&maxResults=" . 24
+        );
+    } else if (empty($query) && empty($categoriesArray)) {
         $country = 'US';
         if (!empty($userPrefs) && !empty($userPrefs[0]['country'])) {
             $country = $userPrefs[0]['country'];
         }
         $vids = countryTrending($token, $country, 24);
     } else {
+        $qParam = "q=" . $query;
         $vids = search(
             $token,
             $qParam,
+            $apiDuration,
             null,
             null,
-            null,
-            null,
+            $apiLang,
             'relevance',
             "&maxResults=" . 24
         );
     }
 
-    $uniqueVids = array_filter($vids, fn($vidDTO) => !in_array($vidDTO->getId(), $exclVidArray));
+    $uniqueVids = array_filter($vids, function($vidDTO) use ($exclVidArray, $userDurationArray) {
+        if (in_array($vidDTO->getId(), $exclVidArray)) {
+            return false;
+        }
+        if (!empty($userDurationArray) && count($userDurationArray) === 1) {
+            $durPref = $userDurationArray[0];
+            $durSecs = $vidDTO->getDurationSeconds();
+            if ($durSecs > 0) {
+                if ($durPref === 'long' && $durSecs < 1200) return false;
+                if ($durPref === 'short' && $durSecs >= 240) return false;
+                if ($durPref === 'medium' && ($durSecs < 240 || $durSecs >= 1200)) return false;
+            }
+        }
+        return true;
+    });
 
     usort($uniqueVids, fn($vid1, $vid2) => $calc->calculateWithProfile($vid2, $tagWeights, $categoryWeights, $userLanguagesArray, $userDurationArray)
         <=>

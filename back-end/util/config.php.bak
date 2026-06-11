@@ -1,0 +1,3 @@
+<?php
+define('YT_API_KEY', 'AIzaSyDKedWFBPDpHTgSw69I3StPKyax8X8abp4');
+define('MAX_SEARCH_RESULTS', '25');
