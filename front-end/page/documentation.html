@@ -1,0 +1,754 @@
+<!doctype html>
+<html lang="ro">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Video Recommending System - Software Requirements Specification</title>
+  <link rel="stylesheet" href="../styles/cssReset.css">
+  <link rel="stylesheet" href="../styles/documentationModule.css">
+</head>
+<body>
+  <article typeof="schema:ScholarlyArticle">
+    <header>
+      <h1>Video Recommending System</h1>
+      <p><strong>Raport Scholarly HTML - Software Requirements Specification</strong></p>
+    </header>
+
+    <section id="cuprins">
+      <h2>Cuprins</h2>
+      <ol>
+        <li><a href="#introducere">Introducere</a></li>
+        <li><a href="#descriere-generala">Descriere generala</a></li>
+        <li><a href="#cerinte-functionale">Cerinte functionale</a></li>
+        <li><a href="#cerinte-non-functionale">Cerinte non-functionale</a></li>
+        <li><a href="#interfata-utilizator">Interfata cu utilizatorul</a></li>
+        <li><a href="#interfete-externe">Interfete externe</a></li>
+        <li><a href="#model-date">Modelul de date</a></li>
+        <li><a href="#api">API si rute principale</a></li>
+        <li><a href="#scenarii-utilizare">Scenarii de utilizare</a></li>
+        <li><a href="#instalare-rulare">Instalare si rulare</a></li>
+        <li><a href="#limitari">Limitari si directii viitoare</a></li>
+      </ol>
+    </section>
+
+    <section id="introducere">
+      <h2>1. Introducere</h2>
+
+      <section id="scop">
+        <h3>1.1 Scop</h3>
+        <p>
+          Scopul proiectului este dezvoltarea unei aplicatii web care permite
+          cautarea, vizionarea si recomandarea de videoclipuri YouTube in functie
+          de preferintele utilizatorului, istoricul interactiunilor, continutul
+          apreciat si activitatea prietenilor.
+        </p>
+        <p>
+          Documentul descrie functionalitatile principale, interactiunea cu
+          utilizatorul, constrangerile tehnice si cerintele pe care aplicatia
+          trebuie sa le indeplineasca.
+        </p>
+      </section>
+
+      <section id="audienta">
+        <h3>1.2 Public tinta</h3>
+        <p>
+          Aplicatia este destinata utilizatorilor care doresc sa descopere rapid
+          continut video relevant, fara sa se bazeze exclusiv pe recomandarile
+          generale oferite de platforme externe. De asemenea, proiectul include o
+          zona de administrare pentru gestionarea conturilor.
+        </p>
+      </section>
+
+      <section id="definitii">
+        <h3>1.3 Definitii si abrevieri</h3>
+        <dl>
+          <dt>SIV</dt>
+          <dd>Similar Video Recommender, numele interfetei publice a aplicatiei.</dd>
+          <dt>RSS</dt>
+          <dd>Format XML folosit pentru exportul fluxurilor de recomandari.</dd>
+          <dt>Token</dt>
+          <dd>Sir generat la autentificare si folosit pentru validarea sesiunii.</dd>
+          <dt>DTO</dt>
+          <dd>Data Transfer Object; in proiect este folosit pentru reprezentarea videoclipurilor.</dd>
+        </dl>
+      </section>
+    </section>
+
+    <section id="descriere-generala">
+      <h2>2. Descriere generala</h2>
+
+      <section id="perspectiva-produsului">
+        <h3>2.1 Perspectiva produsului</h3>
+        <p>
+          Video Recommending System este o aplicatie web impartita in doua zone:
+          frontend static, realizat cu HTML, CSS si JavaScript, si backend PHP,
+          care expune endpoint-uri HTTP pentru autentificare, cautare,
+          recomandari, prieteni, administrare si contul utilizatorului.
+        </p>
+        <p>
+          Datele persistente sunt stocate intr-o baza de date SQLite. Aplicatia
+          foloseste YouTube Data API pentru cautarea si preluarea detaliilor
+          despre videoclipuri.
+        </p>
+      </section>
+
+      <section id="functionalitati-generale">
+        <h3>2.2 Functionalitati generale</h3>
+        <ul>
+          <li>inregistrare si autentificare utilizatori;</li>
+          <li>cautare videoclipuri YouTube cu filtre;</li>
+          <li>vizionare videoclipuri si recomandari similare;</li>
+          <li>marcare videoclipuri ca apreciate;</li>
+          <li>generare recomandari personalizate;</li>
+          <li>recomandari bazate pe tara si preferinte;</li>
+          <li>recomandari bazate pe activitatea prietenilor;</li>
+          <li>gestionare cereri de prietenie;</li>
+          <li>export RSS pentru fluxuri de recomandari;</li>
+          <li>pagina de cont pentru utilizator;</li>
+          <li>panou de administrare pentru conturi de utilizator.</li>
+        </ul>
+      </section>
+
+      <section id="clase-utilizatori">
+        <h3>2.3 Clase de utilizatori</h3>
+        <table>
+          <thead>
+            <tr>
+              <th>Tip utilizator</th>
+              <th>Descriere</th>
+              <th>Drepturi principale</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Vizitator</td>
+              <td>Utilizator neautentificat.</td>
+              <td>Poate vedea pagina de prezentare si poate accesa login/register.</td>
+            </tr>
+            <tr>
+              <td>Utilizator autentificat</td>
+              <td>Cont normal din tabela <code>users</code>.</td>
+              <td>Poate cauta, viziona, aprecia videoclipuri, gestiona prieteni si contul propriu.</td>
+            </tr>
+            <tr>
+              <td>Administrator</td>
+              <td>Cont din tabela <code>admins</code>.</td>
+              <td>Poate schimba parolele utilizatorilor si poate sterge conturi.</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section id="mediu-operare">
+        <h3>2.4 Mediu de operare</h3>
+        <ul>
+          <li>Frontend: server local pe <code>http://localhost:8001</code>.</li>
+          <li>Backend: server PHP pe <code>http://localhost:8081</code>.</li>
+          <li>Baza de date: SQLite, fisierul <code>database.sqlite</code>.</li>
+          <li>Browser modern cu suport pentru JavaScript si Fetch API.</li>
+        </ul>
+      </section>
+    </section>
+
+    <section id="cerinte-functionale">
+      <h2>3. Cerinte functionale</h2>
+
+      <section id="auth">
+        <h3>3.1 Autentificare si inregistrare</h3>
+        <ul>
+          <li>
+            Sistemul trebuie sa permita crearea unui cont nou prin username,
+            parola, categorii preferate, limbi, durate si tara.
+          </li>
+          <li>
+            Sistemul trebuie sa respinga username-urile deja existente.
+          </li>
+          <li>
+            Sistemul trebuie sa salveze parolele sub forma de hash, nu in clar.
+          </li>
+          <li>
+            Sistemul trebuie sa autentifice utilizatorul si sa genereze un token
+            de sesiune.
+          </li>
+          <li>
+            Dupa inregistrare sau autentificare reusita, utilizatorul trebuie sa
+            fie directionat catre pagina de cautare.
+          </li>
+        </ul>
+      </section>
+
+      <section id="cautare">
+        <h3>3.2 Cautare videoclipuri</h3>
+        <ul>
+          <li>
+            Utilizatorul autentificat trebuie sa poata cauta videoclipuri dupa
+            termen text.
+          </li>
+          <li>
+            Sistemul trebuie sa permita filtrarea dupa durata, limba, perioada de
+            publicare si ordine.
+          </li>
+          <li>
+            Rezultatele trebuie afisate sub forma de carduri cu titlu,
+            descriere, thumbnail si actiuni.
+          </li>
+          <li>
+            Sistemul trebuie sa indice daca un videoclip este deja apreciat de
+            utilizator.
+          </li>
+        </ul>
+      </section>
+
+      <section id="vizionare">
+        <h3>3.3 Vizionare si recomandari similare</h3>
+        <ul>
+          <li>
+            Utilizatorul trebuie sa poata deschide o pagina dedicata unui
+            videoclip.
+          </li>
+          <li>
+            Pagina de vizionare trebuie sa afiseze playerul video, titlul,
+            descrierea si linkul catre YouTube.
+          </li>
+          <li>
+            Sistemul trebuie sa afiseze videoclipuri similare calculate pe baza
+            tagurilor, topicurilor, canalului, limbii, duratei si engagementului.
+          </li>
+        </ul>
+      </section>
+
+      <section id="like-recomandari">
+        <h3>3.4 Aprecieri si profil de recomandare</h3>
+        <ul>
+          <li>
+            Utilizatorul trebuie sa poata aprecia sau elimina aprecierea pentru
+            un videoclip.
+          </li>
+          <li>
+            Sistemul trebuie sa actualizeze greutatile pentru tagurile si
+            categoriile asociate videoclipului.
+          </li>
+          <li>
+            Recomandarile personalizate trebuie sa tina cont de taguri,
+            categorii, limbi si durate preferate.
+          </li>
+          <li>
+            Sistemul trebuie sa evite recomandarea videoclipurilor deja apreciate
+            de utilizator.
+          </li>
+        </ul>
+      </section>
+
+      <section id="prieteni">
+        <h3>3.5 Prieteni si cereri de prietenie</h3>
+        <ul>
+          <li>
+            Utilizatorul trebuie sa poata trimite o cerere de prietenie folosind
+            username-ul celuilalt utilizator.
+          </li>
+          <li>
+            Sistemul trebuie sa previna trimiterea de cereri catre propriul cont.
+          </li>
+          <li>
+            Sistemul trebuie sa diferentieze intre o cerere existenta si o
+            prietenie deja acceptata.
+          </li>
+          <li>
+            Destinatarul trebuie sa poata accepta sau refuza o cerere primita.
+          </li>
+          <li>
+            Utilizatorul trebuie sa poata vedea lista de prieteni si sa elimine
+            un prieten dupa username.
+          </li>
+          <li>
+            Utilizatorul trebuie sa poata primi recomandari bazate pe
+            videoclipurile apreciate de prieteni.
+          </li>
+        </ul>
+      </section>
+
+      <section id="rss">
+        <h3>3.6 Export RSS</h3>
+        <ul>
+          <li>
+            Sistemul trebuie sa permita exportul recomandarilor personalizate in
+            format RSS.
+          </li>
+          <li>
+            Sistemul trebuie sa permita exportul recomandarilor populare in tara
+            utilizatorului.
+          </li>
+          <li>
+            Sistemul trebuie sa permita exportul recomandarilor bazate pe
+            activitatea prietenilor.
+          </li>
+          <li>
+            Fluxul RSS trebuie sa includa titlu, link, descriere, guid si
+            thumbnail acolo unde este disponibil.
+          </li>
+        </ul>
+      </section>
+
+      <section id="cont-utilizator">
+        <h3>3.7 Contul utilizatorului</h3>
+        <ul>
+          <li>
+            Utilizatorul trebuie sa isi poata vedea datele principale:
+            username, id, data crearii, tara, limbi, durate si categorii.
+          </li>
+          <li>
+            Utilizatorul trebuie sa isi poata schimba parola prin introducerea
+            parolei curente.
+          </li>
+          <li>
+            Daca parola curenta este gresita, sistemul trebuie sa afiseze un
+            mesaj de eroare fara delogare.
+          </li>
+          <li>
+            Dupa schimbarea cu succes a parolei, utilizatorul trebuie sa ramana
+            autentificat.
+          </li>
+          <li>
+            Utilizatorul trebuie sa isi poata sterge contul, confirmand actiunea
+            prin parola curenta.
+          </li>
+        </ul>
+      </section>
+
+      <section id="admin">
+        <h3>3.8 Administrare</h3>
+        <ul>
+          <li>
+            Administratorul trebuie sa se autentifice separat, folosind tabela
+            <code>admins</code>.
+          </li>
+          <li>
+            Sistemul trebuie sa foloseasca token-uri separate pentru
+            administratori.
+          </li>
+          <li>
+            Administratorul trebuie sa poata vedea lista utilizatorilor.
+          </li>
+          <li>
+            Administratorul trebuie sa poata schimba parola unui utilizator.
+          </li>
+          <li>
+            Administratorul trebuie sa poata sterge conturi de utilizator si
+            datele asociate acestora.
+          </li>
+        </ul>
+      </section>
+    </section>
+
+    <section id="cerinte-non-functionale">
+      <h2>4. Cerinte non-functionale</h2>
+
+      <section id="securitate">
+        <h3>4.1 Securitate</h3>
+        <ul>
+          <li>Parolele trebuie stocate folosind <code>password_hash</code>.</li>
+          <li>Autentificarea trebuie validata prin token-uri transmise in headerul <code>Authorization</code>.</li>
+          <li>Token-urile expirate trebuie eliminate sau considerate invalide.</li>
+          <li>Operatiile sensibile, precum stergerea contului si schimbarea parolei, trebuie protejate prin parola curenta.</li>
+          <li>Endpoint-urile de admin trebuie sa accepte doar token-uri de administrator.</li>
+        </ul>
+      </section>
+
+      <section id="performanta">
+        <h3>4.2 Performanta</h3>
+        <ul>
+          <li>Numarul maxim de rezultate YouTube trebuie limitat prin configuratie.</li>
+          <li>Interogarile SQL trebuie sa foloseasca prepared statements.</li>
+          <li>Listele de recomandari trebuie limitate la un numar rezonabil de rezultate.</li>
+        </ul>
+      </section>
+
+      <section id="utilizabilitate">
+        <h3>4.3 Utilizabilitate</h3>
+        <ul>
+          <li>Interfata trebuie sa fie responsive pentru desktop, tableta si mobil.</li>
+          <li>Mesajele de eroare trebuie sa fie explicite si sa nu ascunda cauza reala a problemei.</li>
+          <li>Navigatia trebuie sa ofere acces catre cautare, recomandari, prieteni, RSS si cont.</li>
+        </ul>
+      </section>
+
+      <section id="mentenabilitate">
+        <h3>4.4 Mentenabilitate</h3>
+        <ul>
+          <li>Codul frontend este impartit pe pagini si fisiere JavaScript dedicate.</li>
+          <li>Functionalitatile reutilizabile sunt separate in fisiere utilitare.</li>
+          <li>Backend-ul este organizat pe domenii: auth, video, friends, admin si user.</li>
+        </ul>
+      </section>
+    </section>
+
+    <section id="interfata-utilizator">
+      <h2>5. Interfata cu utilizatorul</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Pagina</th>
+            <th>Fisier</th>
+            <th>Rol</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Landing page</td>
+            <td><code>front-end/index.html</code></td>
+            <td>Prezentarea aplicatiei si acces catre login/register.</td>
+          </tr>
+          <tr>
+            <td>Login</td>
+            <td><code>front-end/page/login.html</code></td>
+            <td>Autentificarea utilizatorilor.</td>
+          </tr>
+          <tr>
+            <td>Register</td>
+            <td><code>front-end/page/register.html</code></td>
+            <td>Crearea contului si setarea preferintelor initiale.</td>
+          </tr>
+          <tr>
+            <td>Search</td>
+            <td><code>front-end/page/search.html</code></td>
+            <td>Cautare videoclipuri cu filtre.</td>
+          </tr>
+          <tr>
+            <td>Recommendations</td>
+            <td><code>front-end/page/recommendations.html</code></td>
+            <td>Afisarea recomandarilor personalizate, locale si sociale.</td>
+          </tr>
+          <tr>
+            <td>Watch</td>
+            <td><code>front-end/page/watch.html</code></td>
+            <td>Vizionare video si recomandari similare.</td>
+          </tr>
+          <tr>
+            <td>Friends</td>
+            <td><code>front-end/page/friend.html</code>, <code>friends.html</code>, <code>friend_requests.html</code></td>
+            <td>Gestionarea prietenilor si a cererilor.</td>
+          </tr>
+          <tr>
+            <td>RSS Export</td>
+            <td><code>front-end/page/rss_export.html</code></td>
+            <td>Generare link-uri RSS pentru recomandari.</td>
+          </tr>
+          <tr>
+            <td>Account</td>
+            <td><code>front-end/page/account.html</code></td>
+            <td>Vizualizare date cont, schimbare parola, stergere cont.</td>
+          </tr>
+          <tr>
+            <td>Admin</td>
+            <td><code>front-end/page/admin/login.html</code>, <code>users.html</code></td>
+            <td>Autentificare admin si gestionare utilizatori.</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="interfete-externe">
+      <h2>6. Interfete externe</h2>
+
+      <section id="youtube-api">
+        <h3>6.1 YouTube Data API</h3>
+        <p>
+          Aplicatia foloseste YouTube Data API pentru cautarea videoclipurilor si
+          preluarea detaliilor despre acestea. Cheia API este definita in
+          <code>back-end/config.php</code>, iar numarul maxim de rezultate este
+          controlat prin <code>MAX_SEARCH_RESULTS</code>.
+        </p>
+      </section>
+
+      <section id="http-api">
+        <h3>6.2 Interfata HTTP</h3>
+        <p>
+          Frontend-ul comunica cu backend-ul folosind <code>fetch</code>.
+          Endpoint-urile raspund in general cu JSON, iar fluxurile RSS raspund cu
+          <code>application/rss+xml</code>.
+        </p>
+      </section>
+
+      <section id="sqlite">
+        <h3>6.3 SQLite</h3>
+        <p>
+          Persistenta este realizata prin SQLite. Tabelele sunt initializate in
+          <code>db/database.php</code>.
+        </p>
+      </section>
+    </section>
+
+    <section id="model-date">
+      <h2>7. Modelul de date</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Tabela</th>
+            <th>Rol</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>users</code></td>
+            <td>Conturile utilizatorilor normali.</td>
+          </tr>
+          <tr>
+            <td><code>user_tokens</code></td>
+            <td>Token-uri de sesiune pentru utilizatori.</td>
+          </tr>
+          <tr>
+            <td><code>admins</code></td>
+            <td>Conturile administratorilor.</td>
+          </tr>
+          <tr>
+            <td><code>admin_tokens</code></td>
+            <td>Token-uri de sesiune pentru administratori.</td>
+          </tr>
+          <tr>
+            <td><code>user_preferences</code></td>
+            <td>Preferinte initiale: limbi, durata si tara.</td>
+          </tr>
+          <tr>
+            <td><code>user_tags</code></td>
+            <td>Greutati pentru tagurile asociate interactiunilor utilizatorului.</td>
+          </tr>
+          <tr>
+            <td><code>user_categories</code></td>
+            <td>Greutati pentru categoriile video preferate.</td>
+          </tr>
+          <tr>
+            <td><code>friends</code></td>
+            <td>Cereri de prietenie si prietenii acceptate.</td>
+          </tr>
+          <tr>
+            <td><code>user_likes</code></td>
+            <td>Videoclipurile apreciate de utilizatori.</td>
+          </tr>
+          <tr>
+            <td><code>interacted_videos</code></td>
+            <td>Cache local pentru datele videoclipurilor cu care s-a interactionat.</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="api">
+      <h2>8. API si rute principale</h2>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Domeniu</th>
+            <th>Endpoint</th>
+            <th>Metoda</th>
+            <th>Descriere</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Auth</td>
+            <td><code>/api/auth/register.php</code></td>
+            <td>POST</td>
+            <td>Creare cont si sesiune.</td>
+          </tr>
+          <tr>
+            <td>Auth</td>
+            <td><code>/api/auth/login.php</code></td>
+            <td>POST</td>
+            <td>Autentificare utilizator.</td>
+          </tr>
+          <tr>
+            <td>Video</td>
+            <td><code>/api/video/search.php</code></td>
+            <td>GET</td>
+            <td>Cautare videoclipuri YouTube.</td>
+          </tr>
+          <tr>
+            <td>Video</td>
+            <td><code>/api/video/recommendations.php</code></td>
+            <td>GET</td>
+            <td>Recomandari personalizate sau RSS.</td>
+          </tr>
+          <tr>
+            <td>Video</td>
+            <td><code>/api/video/country-recommendations.php</code></td>
+            <td>GET</td>
+            <td>Recomandari populare in tara utilizatorului sau RSS.</td>
+          </tr>
+          <tr>
+            <td>Video</td>
+            <td><code>/api/video/friends-recommendations.php</code></td>
+            <td>GET</td>
+            <td>Recomandari bazate pe prieteni sau RSS.</td>
+          </tr>
+          <tr>
+            <td>Video</td>
+            <td><code>/api/video/similar-to.php</code></td>
+            <td>GET</td>
+            <td>Videoclipuri similare cu un videoclip ales.</td>
+          </tr>
+          <tr>
+            <td>Video</td>
+            <td><code>/api/video/like.php</code></td>
+            <td>POST/DELETE</td>
+            <td>Adaugare sau eliminare apreciere.</td>
+          </tr>
+          <tr>
+            <td>Friends</td>
+            <td><code>/api/friends/add_friend.php</code></td>
+            <td>POST</td>
+            <td>Trimitere cerere de prietenie dupa username.</td>
+          </tr>
+          <tr>
+            <td>Friends</td>
+            <td><code>/api/friends/get_friend_requests.php</code></td>
+            <td>GET</td>
+            <td>Listare cereri incoming/outgoing.</td>
+          </tr>
+          <tr>
+            <td>Friends</td>
+            <td><code>/api/friends/accept_friend.php</code></td>
+            <td>POST</td>
+            <td>Acceptare cerere de prietenie.</td>
+          </tr>
+          <tr>
+            <td>Friends</td>
+            <td><code>/api/friends/refuse_friend.php</code></td>
+            <td>POST</td>
+            <td>Refuzare cerere de prietenie.</td>
+          </tr>
+          <tr>
+            <td>Friends</td>
+            <td><code>/api/friends/get_friends.php</code></td>
+            <td>GET</td>
+            <td>Listare prieteni.</td>
+          </tr>
+          <tr>
+            <td>Friends</td>
+            <td><code>/api/friends/remove_friend.php</code></td>
+            <td>POST</td>
+            <td>Eliminare prieten dupa username.</td>
+          </tr>
+          <tr>
+            <td>User</td>
+            <td><code>/api/user/account.php</code></td>
+            <td>GET/POST</td>
+            <td>Date cont, schimbare parola, stergere cont.</td>
+          </tr>
+          <tr>
+            <td>Admin</td>
+            <td><code>/api/admin/login.php</code></td>
+            <td>POST</td>
+            <td>Autentificare administrator.</td>
+          </tr>
+          <tr>
+            <td>Admin</td>
+            <td><code>/api/admin/users.php</code></td>
+            <td>GET/POST</td>
+            <td>Listare utilizatori, schimbare parola, stergere conturi.</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="scenarii-utilizare">
+      <h2>9. Scenarii de utilizare</h2>
+
+      <section id="scenariu-register">
+        <h3>9.1 Crearea unui cont</h3>
+        <ol>
+          <li>Vizitatorul acceseaza pagina de register.</li>
+          <li>Completeaza username, parola si preferinte.</li>
+          <li>Aplicatia trimite datele catre backend.</li>
+          <li>Backend-ul creeaza utilizatorul, preferintele si token-ul.</li>
+          <li>Frontend-ul salveaza sesiunea si directioneaza utilizatorul catre Search.</li>
+        </ol>
+      </section>
+
+      <section id="scenariu-recomandari">
+        <h3>9.2 Obtinerea recomandarilor</h3>
+        <ol>
+          <li>Utilizatorul autentificat acceseaza pagina Recommendations.</li>
+          <li>Frontend-ul cere recomandarile de la backend.</li>
+          <li>Backend-ul citeste profilul utilizatorului si solicita rezultate YouTube.</li>
+          <li>Sistemul calculeaza scorurile de similaritate si preferinta.</li>
+          <li>Frontend-ul afiseaza rezultatele in sectiuni separate.</li>
+        </ol>
+      </section>
+
+      <section id="scenariu-prieteni">
+        <h3>9.3 Gestionarea prietenilor</h3>
+        <ol>
+          <li>Utilizatorul introduce username-ul altui utilizator.</li>
+          <li>Sistemul creeaza o cerere de prietenie cu status <code>pending</code>.</li>
+          <li>Destinatarul vede cererea in sectiunea Incoming.</li>
+          <li>Destinatarul poate accepta sau refuza cererea.</li>
+          <li>Dupa acceptare, cei doi utilizatori apar in listele de prieteni.</li>
+        </ol>
+      </section>
+
+      <section id="scenariu-cont">
+        <h3>9.4 Schimbarea parolei</h3>
+        <ol>
+          <li>Utilizatorul acceseaza pagina Account.</li>
+          <li>Introduce parola curenta si parola noua.</li>
+          <li>Daca parola curenta este gresita, sistemul afiseaza mesaj de eroare.</li>
+          <li>Daca parola curenta este corecta, parola este actualizata.</li>
+          <li>Utilizatorul ramane autentificat pe pagina.</li>
+        </ol>
+      </section>
+    </section>
+
+    <section id="instalare-rulare">
+      <h2>10. Instalare si rulare</h2>
+      <section id="cerinte-rulare">
+        <h3>10.1 Cerinte</h3>
+        <ul>
+          <li>PHP instalat local.</li>
+          <li>Extensie SQLite activa in PHP.</li>
+          <li>Conexiune la internet pentru YouTube Data API.</li>
+          <li>Cheie YouTube API configurata in <code>back-end/config.php</code>.</li>
+        </ul>
+      </section>
+
+      <section id="rulare">
+        <h3>10.2 Pornire locala</h3>
+        <p>Aplicatia poate fi pornita cu scriptul:</p>
+        <pre><code>./start.sh</code></pre>
+        <p>Sau manual:</p>
+        <pre><code>php -S localhost:8081 -t back-end back-end/router.php
+php -S localhost:8001 -t front-end</code></pre>
+      </section>
+
+      <section id="url-uri">
+        <h3>10.3 URL-uri locale</h3>
+        <ul>
+          <li>Frontend: <code>http://localhost:8001</code></li>
+          <li>Backend: <code>http://localhost:8081</code></li>
+          <li>Login admin: <code>http://localhost:8001/page/admin/login.html</code></li>
+        </ul>
+      </section>
+    </section>
+
+    <section id="limitari">
+      <h2>11. Limitari si directii viitoare</h2>
+      <ul>
+        <li>Aplicatia foloseste SQLite local, potrivit pentru dezvoltare si demo, nu pentru incarcare mare.</li>
+        <li>Cheia YouTube API este configurata local in fisier PHP si ar trebui mutata intr-un mecanism de configurare securizat pentru productie.</li>
+        <li>Nu exista un sistem complet de roluri in afara separarii dintre users si admins.</li>
+        <li>Nu exista teste automate complete pentru toate endpoint-urile.</li>
+        <li>O directie viitoare este adaugarea de paginare, cautare avansata in admin si editarea preferintelor din pagina Account.</li>
+      </ul>
+    </section>
+
+    <section id="referinte">
+      <h2>Referinte</h2>
+      <ol>
+        <li>IEEE Computer Society, Software Requirements Specification Template.</li>
+        <li>YouTube Data API documentation.</li>
+        <li>Scholarly HTML documentation and conventions for academic web reports.</li>
+      </ol>
+    </section>
+  </article>
+</body>
+</html>

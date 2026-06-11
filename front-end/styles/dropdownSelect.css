@@ -27,7 +27,6 @@
     white-space: nowrap;
 
     scrollbar-width: none;
-    -ms-overflow-style: none;
 }
 
 .dropdown-btn:hover,
@@ -35,10 +34,6 @@
     border-color: #6C63FF;
     background: rgb(250, 250, 255);
     outline: none;
-}
-
-.dropdown-btn::-webkit-scrollbar {
-    display: none;
 }
 
 .custom-scrollbar-select {

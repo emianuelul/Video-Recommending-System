@@ -134,7 +134,7 @@ body.search-page {
 
 .search-btn:hover {
     background: #5750db;
-    border-color: #5750db;
+    border-color: #5750dc;
     transform: translateY(-1px);
 }
 

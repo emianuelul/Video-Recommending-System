@@ -1,8 +1,3 @@
-
-
-@import url('https://fonts.googleapis.com/css2?family=Baloo+Bhai+2:wght@400;500;600&family=Doppio+One&display=swap');
-
-
 body {
     min-height: 100vh;
     background:
@@ -132,7 +127,7 @@ body {
 
 .btn-primary:hover {
     background-color: #5a52e0;
-    border-color: #5a52e0;
+    border-color: #5a52e1;
     transform: translateY(-1px);
     box-shadow: 0 6px 20px rgba(108, 99, 255, .28);
 }

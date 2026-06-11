@@ -1,8 +1,3 @@
-
-
-@import url('https://fonts.googleapis.com/css2?family=Baloo+Bhai+2:wght@400;500;600&family=Doppio+One&display=swap');
-
-
 body.watch-page {
     min-height: 100vh;
     background:
@@ -107,7 +102,7 @@ body.watch-page {
 .watch-embed-ratio {
     position: relative;
     width: 100%;
-    padding-top: 56.25%; 
+    padding-top: 56.25%;
 }
 
 .watch-embed-ratio iframe {
@@ -145,9 +140,9 @@ body.watch-page {
 }
 
 .watch-meta-desc.collapsed {
-    display: -webkit-box;
-    -webkit-line-clamp: 3;
-    -webkit-box-orient: vertical;
+    /*display: -webkit-box;*/
+    /*-webkit-line-clamp: 3;*/
+    /*-webkit-box-orient: vertical;*/
     overflow: hidden;
 }
 
@@ -260,18 +255,18 @@ body.watch-page {
     scrollbar-color: rgb(220, 220, 232) transparent;
 }
 
-.watch-sidebar-list::-webkit-scrollbar {
-    width: 5px;
-}
+/*.watch-sidebar-list::-webkit-scrollbar {*/
+/*    width: 5px;*/
+/*}*/
 
-.watch-sidebar-list::-webkit-scrollbar-track {
-    background: transparent;
-}
+/*.watch-sidebar-list::-webkit-scrollbar-track {*/
+/*    background: transparent;*/
+/*}*/
 
-.watch-sidebar-list::-webkit-scrollbar-thumb {
-    background: rgb(220, 220, 232);
-    border-radius: 3px;
-}
+/*.watch-sidebar-list::-webkit-scrollbar-thumb {*/
+/*    background: rgb(220, 220, 232);*/
+/*    border-radius: 3px;*/
+/*}*/
 
 
 .watch-sidebar-card {
@@ -314,9 +309,9 @@ body.watch-page {
     font-size: .88rem;
     line-height: 1.3;
     color: #3F3D56;
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
+    /*display: -webkit-box;*/
+    /*-webkit-line-clamp: 2;*/
+    /*-webkit-box-orient: vertical;*/
     overflow: hidden;
 }
 
