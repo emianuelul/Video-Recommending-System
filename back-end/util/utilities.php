@@ -73,6 +73,7 @@ function search($token,
                 $order = null,
                 $resultNumber = null) {
     global $db;
+    $videoDTOArray = [];
     $apiKey = "&key=" . YT_API_KEY;
 
     // Each optional segment must already carry its own &key=value prefix,

@@ -1,9 +1,6 @@
 <?php
 require_once __DIR__ . '/../../../db/database.php';
-require_once __DIR__ . '/friend_helpers.php';
-
-setFriendApiHeaders("POST, OPTIONS");
-handleOptionsRequest();
+require_once __DIR__ . '/../../util/api_helpers.php';
 
 if ($_SERVER["REQUEST_METHOD"] !== "POST") {
     respond(405, "Method not allowed");
