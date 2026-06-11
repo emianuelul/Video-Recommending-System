@@ -41,9 +41,9 @@ export default class DOMStuff {
 
   static createVideoCard(video) {
     const videoId = video.id;
-    const title = video.title;
-    const description = video.description;
-    const thumbnail = video.thumbnails.medium.url;
+    const title = video.title || "";
+    const description = video.description || "";
+    const thumbnail = video.thumbnails?.medium?.url || video.thumbnails?.default?.url || "";
     const isLikedByUser = video.isLikedByUser;
 
     const card = document.createElement("div");
@@ -111,6 +111,7 @@ export default class DOMStuff {
 
         likeBtn.textContent = liked ? "♥" : "♡";
         likeBtn.classList.toggle("liked", liked);
+        video.isLikedByUser = liked;
       } catch (err) {
         console.error(err);
       }

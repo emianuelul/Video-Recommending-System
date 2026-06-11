@@ -137,7 +137,7 @@ if (!$videoId) {
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     $tags = $body['tags'] ?? [];
-    $categoryId = isset($body['categoryId']) ? (int)$body['categoryId'] : null;
+    $categoryId = !empty($body['categoryId']) ? (int)$body['categoryId'] : null;
 
     $stmt = $db->prepare("
         INSERT OR IGNORE INTO user_likes (user_id, video_id)
@@ -177,7 +177,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 if ($_SERVER['REQUEST_METHOD'] === 'DELETE') {
 
     $tags = $body['tags'] ?? [];
-    $categoryId = isset($body['categoryId']) ? (int)$body['categoryId'] : null;
+    $categoryId = !empty($body['categoryId']) ? (int)$body['categoryId'] : null;
 
     $stmt = $db->prepare("
         DELETE FROM user_likes

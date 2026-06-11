@@ -16,8 +16,9 @@ body.search-page {
 }
 
 .search-header {
-    display: grid;
-    grid-template-columns: 1fr auto;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
     gap: 22px;
     align-items: end;
     margin-bottom: 22px;
@@ -168,7 +169,6 @@ body.search-page {
 }
 
 @media screen and (max-width: 820px) {
-    .search-header,
     .search-input-row {
         grid-template-columns: 1fr;
     }

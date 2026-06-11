@@ -1,3 +1,6 @@
+import DOMStuff from "./DOMStuff.js";
+import config from "./utils/config.js";
+
 const ACCOUNT_URL = "http://127.0.0.1:8081/api/user/account.php";
 
 const usernameText = document.getElementById("account-username");
@@ -147,5 +150,40 @@ async function deleteAccount(event) {
 changePasswordForm.addEventListener("submit", changePassword);
 deleteAccountForm.addEventListener("submit", deleteAccount);
 
+async function loadHistory() {
+    const historyResults = document.getElementById("history-results");
+    
+    try {
+        const response = await fetch(config.url_api + "/video/history.php", {
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${getToken()}`
+            }
+        });
+        
+        if (!response.ok) {
+            historyResults.textContent = "Failed to load history.";
+            return;
+        }
+        
+        const videos = await response.json();
+        
+        if (videos.length === 0) {
+            historyResults.textContent = "No liked videos yet.";
+            return;
+        }
+        
+        videos.forEach(video => {
+            video.isLikedByUser = true;
+            const card = DOMStuff.createVideoCard(video);
+            historyResults.appendChild(card);
+        });
+    } catch (err) {
+        historyResults.textContent = "Error loading history.";
+        console.error(err);
+    }
+}
+
 new LogoutButton("logout");
 loadAccount();
+loadHistory();

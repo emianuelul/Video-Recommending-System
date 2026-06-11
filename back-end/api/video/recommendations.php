@@ -26,7 +26,7 @@ function getRecommendations() {
     $tagSelect = $db->prepare("SELECT tag, weight FROM user_tags WHERE user_id = :user_id ORDER BY weight DESC LIMIT 10");
     $catSelect = $db->prepare("SELECT category_id, weight FROM user_categories WHERE user_id = :user_id ORDER BY weight DESC LIMIT 5");
     $exclSelect = $db->prepare("SELECT video_id FROM user_likes WHERE user_id = :user_id");
-    $userPrefsSelect = $db->prepare("SELECT languages, duration FROM user_preferences WHERE user_id = :user_id");
+    $userPrefsSelect = $db->prepare("SELECT languages, duration, country FROM user_preferences WHERE user_id = :user_id");
 
     $tagSelect->execute([
         ":user_id" => $userId
@@ -56,25 +56,40 @@ function getRecommendations() {
 
     $userLanguagesArrayJson = array_column($userPrefs, 'languages');
     $userDurationArrayJson = array_column($userPrefs, 'duration');
-    $userLanguagesArray = json_decode($userLanguagesArrayJson[0], true);
-    $userDurationArray = json_decode($userDurationArrayJson[0], true);
+    $userLanguagesArray = !empty($userLanguagesArrayJson) ? json_decode($userLanguagesArrayJson[0], true) : [];
+    $userDurationArray = !empty($userDurationArrayJson) ? json_decode($userDurationArrayJson[0], true) : [];
 
     $query = urlencode(implode(' ', array_slice($tagsArray, 0, 10)));
 
-    $vids = search(
-        $token,
-        "q=" . $query,
-        null,
-        null,
-        null,
-        null,
-        'relevance',
-        "&maxResults=" . 24);
+    $qParam = "q=" . $query;
+    if (empty($query) && !empty($categoriesArray)) {
+        $topCategory = $categoriesArray[0];
+        $qParam .= "&videoCategoryId=" . urlencode($topCategory);
+    }
+
+    if (empty($query) && empty($categoriesArray)) {
+        $country = 'US';
+        if (!empty($userPrefs) && !empty($userPrefs[0]['country'])) {
+            $country = $userPrefs[0]['country'];
+        }
+        $vids = countryTrending($token, $country, 24);
+    } else {
+        $vids = search(
+            $token,
+            $qParam,
+            null,
+            null,
+            null,
+            null,
+            'relevance',
+            "&maxResults=" . 24
+        );
+    }
 
     $uniqueVids = array_filter($vids, fn($vidDTO) => !in_array($vidDTO->getId(), $exclVidArray));
 
     usort($uniqueVids, fn($vid1, $vid2) => $calc->calculateWithProfile($vid2, $tagWeights, $categoryWeights, $userLanguagesArray, $userDurationArray)
-        -
+        <=>
         $calc->calculateWithProfile($vid1, $tagWeights, $categoryWeights, $userLanguagesArray, $userDurationArray)
     );
 
