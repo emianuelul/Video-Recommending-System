@@ -35,7 +35,7 @@ async function loadRequests() {
         return;
     }
 
-    const url = `${API_BASE}/get_friend_requests.php?user_id=${encodeURIComponent(userId)}&type=${encodeURIComponent(type)}`;
+    const url = `${API_BASE}/get_friend_requests.php?friend1_id=${encodeURIComponent(userId)}&type=${encodeURIComponent(type)}`;
     const data = await fetchJson(url);
 
     if (data.status !== 200) {

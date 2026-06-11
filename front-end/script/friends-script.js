@@ -35,7 +35,7 @@ async function loadFriends() {
         return;
     }
 
-    const url = `${API_BASE}/get_friends.php?user_id=${encodeURIComponent(userId)}`;
+    const url = `${API_BASE}/get_friends.php?friend1_id=${encodeURIComponent(userId)}`;
     const data = await fetchJson(url);
 
     if (data.status !== 200) {
@@ -101,7 +101,7 @@ async function removeFriendByUsername(username) {
     const data = await fetchJson(`${API_BASE}/remove_friend.php`, {
         method: "POST",
         body: JSON.stringify({
-            user_id: userId,
+            friend1_id: userId,
             friend_username: friendUsername
         })
     });

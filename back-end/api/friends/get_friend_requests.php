@@ -6,10 +6,10 @@ if ($_SERVER["REQUEST_METHOD"] !== "GET") {
     respond(405, "Method not allowed");
 }
 
-$user_id = $_GET["user_id"] ?? null;
+$friend1_id = $_GET["friend1_id"] ?? null;
 $type = $_GET["type"] ?? "incoming";
 
-if (!$user_id) {
+if (!$friend1_id) {
     respond(400, "Missing user ID");
 }
 
@@ -30,11 +30,11 @@ if ($type === "incoming") {
         FROM friends f
         JOIN users requester ON requester.id = f.friend1_id
         JOIN users receiver ON receiver.id = f.friend2_id
-        WHERE f.friend2_id = :user_id
+        WHERE f.friend2_id = :friend1_id
           AND f.status = 'pending'
         ORDER BY f.created_at DESC
     ");
-    $stmt->execute([":user_id" => $user_id]);
+    $stmt->execute([":friend1_id" => $friend1_id]);
 } elseif ($type === "outgoing") {
     $stmt = $db->prepare("
         SELECT
@@ -48,11 +48,11 @@ if ($type === "incoming") {
         FROM friends f
         JOIN users requester ON requester.id = f.friend1_id
         JOIN users receiver ON receiver.id = f.friend2_id
-        WHERE f.friend1_id = :user_id
+        WHERE f.friend1_id = :friend1_id
           AND f.status = 'pending'
         ORDER BY f.created_at DESC
     ");
-    $stmt->execute([":user_id" => $user_id]);
+    $stmt->execute([":friend1_id" => $friend1_id]);
 } else {
     $stmt = $db->prepare("
         SELECT
@@ -63,20 +63,20 @@ if ($type === "incoming") {
             receiver.username AS receiver_username,
             f.created_at,
             CASE
-                WHEN f.friend2_id = :incoming_user_id THEN 'incoming'
+                WHEN f.friend2_id = :incoming_friend1_id THEN 'incoming'
                 ELSE 'outgoing'
             END AS type
         FROM friends f
         JOIN users requester ON requester.id = f.friend1_id
         JOIN users receiver ON receiver.id = f.friend2_id
-        WHERE (f.friend1_id = :outgoing_user_id OR f.friend2_id = :incoming_user_id_where)
+        WHERE (f.friend1_id = :outgoing_friend1_id OR f.friend2_id = :incoming_friend1_id_where)
           AND f.status = 'pending'
         ORDER BY f.created_at DESC
     ");
     $stmt->execute([
-        ":incoming_user_id" => $user_id,
-        ":outgoing_user_id" => $user_id,
-        ":incoming_user_id_where" => $user_id
+        ":incoming_friend1_id" => $friend1_id,
+        ":outgoing_friend1_id" => $friend1_id,
+        ":incoming_friend1_id_where" => $friend1_id
     ]);
 }
 

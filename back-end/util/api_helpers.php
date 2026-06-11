@@ -18,16 +18,6 @@ function readJsonBody() {
     return is_array($data) ? $data : [];
 }
 
-function getRequiredValue($source, $keys) {
-    foreach ($keys as $key) {
-        if (isset($source[$key]) && $source[$key] !== "") {
-            return $source[$key];
-        }
-    }
-
-    return null;
-}
-
 function getUserIdByUsername($username) {
     global $db;
 

@@ -9,7 +9,7 @@ if ($_SERVER["REQUEST_METHOD"] !== "POST") {
 $data = readJsonBody();
 
 $friend1_id = $data["friend1_id"] ?? null;
-$friend2_username = trim(getRequiredValue($data, ["friend2_username", "friend_username", "username"]) ?? "");
+$friend2_username = trim($data["friend_username"] ?? "");
 $friend2_id = $friend2_username !== "" ? getUserIdByUsername($friend2_username) : ($data["friend2_id"] ?? null);
 
 if (!$friend1_id || ($friend2_username === "" && !$friend2_id)) {
