@@ -6,9 +6,10 @@
     <title>Account</title>
     <link rel="stylesheet" href="../styles/cssReset.css">
     <link rel="stylesheet" href="../styles/accountModule.css">
+    <link rel="stylesheet" href="../styles/videoCard.css">
     <script src="../script/utils/LogoutButton.js" defer></script>
     <script src="../script/auth.js" defer></script>
-    <script src="../script/account-script.js" defer></script>
+    <script src="../script/account-script.js" type="module" defer></script>
 </head>
 <body class="account-body">
 <div class="account-shell">
@@ -98,6 +99,11 @@
                 <button type="submit" class="account-btn danger">Delete account</button>
             </form>
         </div>
+    </div>
+
+    <div class="account-history" style="margin-top: 40px;">
+        <h2 style="font-family: 'Doppio One', sans-serif; font-size: 2rem; margin-bottom: 20px;">Liked Videos</h2>
+        <div id="history-results"></div>
     </div>
 </div>
 </body>

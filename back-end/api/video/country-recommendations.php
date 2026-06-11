@@ -57,7 +57,7 @@ function getCountryRecommendations() {
     $uniqueVids = array_filter($vids, fn($vidDTO) => !in_array($vidDTO->getId(), $exclVidArray));
 
     usort($uniqueVids, fn($vid1, $vid2) => $calc->calculateWithProfile($vid2, $tagWeights, $categoryWeights, $userLanguagesArray, $userDurationArray)
-        - $calc->calculateWithProfile($vid1, $tagWeights, $categoryWeights, $userLanguagesArray, $userDurationArray)
+        <=> $calc->calculateWithProfile($vid1, $tagWeights, $categoryWeights, $userLanguagesArray, $userDurationArray)
     );
 
     $recs = array_slice($uniqueVids, 0, 24);

@@ -59,6 +59,7 @@ function getFriendsRecommendations() {
     $result = [];
     foreach ($videoDTOs as $videoJson) {
         $video = json_decode($videoJson, true);
+        $video['isLikedByUser'] = false;
         $result[] = $video;
     }
 

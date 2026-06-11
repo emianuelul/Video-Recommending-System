@@ -76,7 +76,7 @@ $filtered = array_filter($candidates, fn($cand) =>
 
 usort($filtered, fn($a, $b) =>
     $calc->calculateWithProfile($b, $tagWeights, $categoryWeights, $userLanguagesArray, $userDurationArray)
-    - $calc->calculateWithProfile($a, $tagWeights, $categoryWeights, $userLanguagesArray, $userDurationArray)
+    <=> $calc->calculateWithProfile($a, $tagWeights, $categoryWeights, $userLanguagesArray, $userDurationArray)
 );
 
 $top = array_slice($filtered, 0, 15);
