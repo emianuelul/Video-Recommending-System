@@ -1,0 +1,125 @@
+body {
+  background: rgb(247, 248, 252);
+  color: #252437;
+  font-family: Arial, sans-serif;
+}
+
+article {
+  width: 92vw;
+  max-width: 980px;
+  margin: 0 auto;
+  padding: 36px 0 60px;
+}
+
+header {
+  margin-bottom: 28px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid rgb(220, 220, 232);
+}
+
+h1,
+h2,
+h3 {
+  color: #3F3D56;
+  font-family: Georgia, serif;
+}
+
+h1 {
+  margin-bottom: 10px;
+  font-size: 2.4rem;
+  line-height: 1.15;
+}
+
+h2 {
+  margin-top: 30px;
+  margin-bottom: 12px;
+  font-size: 1.65rem;
+}
+
+h3 {
+  margin-top: 18px;
+  margin-bottom: 8px;
+  font-size: 1.2rem;
+}
+
+p,
+li,
+dd,
+dt,
+td,
+th {
+  font-size: 1rem;
+  line-height: 1.65;
+}
+
+p {
+  margin-bottom: 12px;
+}
+
+ol,
+ul {
+  padding-left: 24px;
+}
+
+section {
+  margin-bottom: 18px;
+}
+
+table {
+  width: 100%;
+  margin: 14px 0 24px;
+  border-collapse: collapse;
+  background: white;
+}
+
+th,
+td {
+  padding: 10px;
+  border: 1px solid rgb(220, 220, 232);
+  text-align: left;
+  vertical-align: top;
+}
+
+th {
+  background: rgb(239, 239, 248);
+}
+
+code,
+pre {
+  background: rgb(239, 239, 248);
+  font-family: Consolas, monospace;
+}
+
+code {
+  padding: 2px 4px;
+  border-radius: 3px;
+}
+
+pre {
+  overflow-x: auto;
+  padding: 14px;
+}
+
+a {
+  color: #6C63FF;
+}
+
+@media screen and (max-width: 640px) {
+  article {
+    width: 94vw;
+    padding-top: 22px;
+  }
+
+  h1 {
+    font-size: 1.9rem;
+  }
+
+  h2 {
+    font-size: 1.4rem;
+  }
+
+  table {
+    display: block;
+    overflow-x: auto;
+  }
+}

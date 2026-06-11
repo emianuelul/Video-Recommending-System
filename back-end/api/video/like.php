@@ -1,7 +1,7 @@
 <?php
 
 require_once __DIR__ . '/../../../db/database.php';
-require_once __DIR__ . '/../../util/config.php';
+require_once __DIR__ . '/../../config.php';
 require_once __DIR__ . '/../../class/TokenManager.php';
 require_once __DIR__ . '/../../util/auth.php';
 

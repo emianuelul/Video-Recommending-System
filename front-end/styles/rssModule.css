@@ -68,13 +68,13 @@ body.rss-body {
 
 .btn.primary {
     border-color: #6C63FF;
-    background: #6C63FF;
+    background: #7C63FF;
     color: white;
 }
 
 .btn.primary:hover {
     background: #5750db;
-    border-color: #5750db;
+    border-color: #5750dc;
     color: white;
 }
 

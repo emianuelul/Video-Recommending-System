@@ -184,7 +184,7 @@ body.friends-body {
 
 .btn.primary:hover {
     background: #5750db;
-    border-color: #5750db;
+    border-color: #5750dc;
 }
 
 .btn.success {
@@ -279,10 +279,10 @@ body.friends-body {
     justify-content: flex-end;
     margin-top: 18px;
     gap: 16px;
+}
 
-    a {
-        text-decoration: none;
-    }
+.logout-row a {
+    text-decoration: none;
 }
 
 @media screen and (max-width: 760px) {
