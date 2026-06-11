@@ -24,7 +24,7 @@ submitBtn.addEventListener('click', (e) => {
         return;
     }
 
-    const url = `http://localhost:8081/api/friends/add_friend.php`;
+    const url = `http://127.0.0.1:8081/api/friends/add_friend.php`;
 
     fetch(url, {
         method: "POST",

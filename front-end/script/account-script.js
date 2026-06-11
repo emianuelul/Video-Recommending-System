@@ -1,4 +1,4 @@
-const ACCOUNT_URL = "http://localhost:8081/api/user/account.php";
+const ACCOUNT_URL = "http://127.0.0.1:8081/api/user/account.php";
 
 const usernameText = document.getElementById("account-username");
 const userIdText = document.getElementById("account-user-id");

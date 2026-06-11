@@ -1,4 +1,4 @@
-const API_BASE = "http://localhost:8081/api/friends";
+const API_BASE = "http://127.0.0.1:8081/api/friends";
 
 const loadRequestsForm = document.getElementById("load-requests-form");
 const userIdInput = localStorage.getItem("userId") || "";
