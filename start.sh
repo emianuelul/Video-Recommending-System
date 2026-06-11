@@ -5,14 +5,18 @@ BACKEND_PORT=8081
 FRONTEND_PORT=8001
 
 echo "Starting Backend API on localhost:$BACKEND_PORT..."
-# Route requests via router.php as the project architecture demands
-php -S localhost:$BACKEND_PORT -t back-end back-end/router.php >/dev/null 2>&1 &
+# Start backend from within its directory
+cd back-end
+php -S localhost:$BACKEND_PORT router.php >/dev/null 2>&1 &
 BACKEND_PID=$!
+cd ..
 
 echo "Starting Frontend on localhost:$FRONTEND_PORT..."
-# Serve static frontend files
-php -S localhost:$FRONTEND_PORT -t front-end >/dev/null 2>&1 &
+# Start frontend from within its directory
+cd front-end
+php -S localhost:$FRONTEND_PORT >/dev/null 2>&1 &
 FRONTEND_PID=$!
+cd ..
 
 echo ""
 echo "================================================="
